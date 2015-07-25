@@ -1,0 +1,144 @@
+package com.royken.antic.agroprix.entities;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.annotation.Generated;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
+ */
+@Entity
+@XmlRootElement(name = "marche")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Marche implements Serializable{
+    @OneToMany(mappedBy = "marche")
+    private List<Agent> agents;
+    
+    
+    @Version
+    private int version;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    @Basic
+    private String nom;
+    
+    @Basic
+    private Double longitude;
+    
+    @Basic
+    private Double latitude;
+    
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private Date dateCreation;
+    
+    @Basic
+    private String description;
+    
+    @ManyToMany(mappedBy = "marches")
+    private List<Produit> produits;
+    
+    @ManyToOne
+    private Ville ville;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Agent> getAgents() {
+        return agents;
+    }
+
+    public void setAgents(List<Agent> agents) {
+        this.agents = agents;
+    }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+
+    public Ville getVille() {
+        return ville;
+    }
+
+    public void setVille(Ville ville) {
+        this.ville = ville;
+    }
+    
+    
+}
