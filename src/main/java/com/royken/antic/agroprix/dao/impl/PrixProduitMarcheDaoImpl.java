@@ -1,7 +1,7 @@
-package com.royken.antic.agroprix.entities.dao.impl;
+package com.royken.antic.agroprix.dao.impl;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
-import com.royken.antic.agroprix.entities.dao.IPrixProduitMarcheDao;
+import com.royken.antic.agroprix.dao.IPrixProduitMarcheDao;
 import com.royken.generic.dao.impl.GenericDao;
 import java.io.Serializable;
 

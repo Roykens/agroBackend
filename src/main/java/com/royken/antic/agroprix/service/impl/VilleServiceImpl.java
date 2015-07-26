@@ -1,7 +1,7 @@
 package com.royken.antic.agroprix.service.impl;
 
 import com.royken.antic.agroprix.entities.Ville;
-import com.royken.antic.agroprix.entities.dao.IVilleDao;
+import com.royken.antic.agroprix.dao.IVilleDao;
 import com.royken.antic.agroprix.service.IVilleServcie;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;

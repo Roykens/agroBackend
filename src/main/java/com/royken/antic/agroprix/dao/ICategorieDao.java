@@ -1,4 +1,4 @@
-package com.royken.antic.agroprix.entities.dao;
+package com.royken.antic.agroprix.dao;
 
 import com.royken.antic.agroprix.entities.Categorie;
 import com.royken.generic.dao.IGenericDao;
