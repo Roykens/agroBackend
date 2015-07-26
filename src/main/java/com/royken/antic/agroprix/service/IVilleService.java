@@ -9,7 +9,7 @@ import javax.ejb.Local;
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
 @Local
-public interface IVilleServcie {
+public interface IVilleService {
     
     public Ville saveOrUpdateVille(Ville ville) throws ServiceException;
     

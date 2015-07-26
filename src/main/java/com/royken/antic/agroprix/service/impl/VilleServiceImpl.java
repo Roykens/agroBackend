@@ -2,7 +2,7 @@ package com.royken.antic.agroprix.service.impl;
 
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.dao.IVilleDao;
-import com.royken.antic.agroprix.service.IVilleServcie;
+import com.royken.antic.agroprix.service.IVilleService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import javax.inject.Named;
  */
 @Stateless
 @Named
-public class VilleServiceImpl implements IVilleServcie {
+public class VilleServiceImpl implements IVilleService {
 
     @Inject
     private IVilleDao villeDao;
