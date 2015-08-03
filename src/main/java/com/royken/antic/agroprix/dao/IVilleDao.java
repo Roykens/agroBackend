@@ -2,7 +2,6 @@ package com.royken.antic.agroprix.dao;
 
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.generic.dao.IGenericDao;
-import java.io.Serializable;
 
 /**
  *

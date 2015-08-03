@@ -1,7 +1,9 @@
 package com.royken.antic.agroprix.service.impl;
 
+import com.royken.antic.agroprix.dao.ICategorieDao;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.dao.IProduitDao;
+import com.royken.antic.agroprix.entities.Categorie;
 import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;
@@ -23,6 +25,9 @@ public class ProduitServiceImpl implements IProduitService {
 
     @Inject
     private IProduitDao produitDao;
+    
+    @Inject
+    private ICategorieDao categorieDao;
 
     public IProduitDao getProduitDao() {
         return produitDao;
@@ -30,6 +35,14 @@ public class ProduitServiceImpl implements IProduitService {
 
     public void setProduitDao(IProduitDao produitDao) {
         this.produitDao = produitDao;
+    }
+
+    public ICategorieDao getCategorieDao() {
+        return categorieDao;
+    }
+
+    public void setCategorieDao(ICategorieDao categorieDao) {
+        this.categorieDao = categorieDao;
     }
     
     
@@ -76,9 +89,20 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public List<Produit> findAllCategorie() throws ServiceException {
+    public List<Produit> findAllProduit() throws ServiceException {
         try {
             return produitDao.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(ProduitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Produit> findByCategorie(Long idCategorie) throws ServiceException {
+        try {
+            Categorie categorie = categorieDao.findById(idCategorie);
+            return produitDao.findByCategorie(categorie);
         } catch (DataAccessException ex) {
             Logger.getLogger(ProduitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

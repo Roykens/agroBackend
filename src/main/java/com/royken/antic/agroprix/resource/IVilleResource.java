@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 @Path("/villes")
 public interface IVilleResource {
     @POST
-    @Produces(value = "application/json") 
+    @Produces(value = "application/json")         
     Ville createVille(Ville ville);
 
     @GET
