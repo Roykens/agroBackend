@@ -15,6 +15,8 @@ public interface IAgentService {
     
     public Agent findAgentById(Long id) throws ServiceException;
     
+    public Agent findByLoginaAndPassword(String login, String password) throws ServiceException;
+    
     public void deleteAgent(Long id) throws ServiceException;
     
     public List<Agent> findAllAgent() throws ServiceException;

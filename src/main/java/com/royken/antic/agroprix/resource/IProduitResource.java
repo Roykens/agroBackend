@@ -1,6 +1,5 @@
 package com.royken.antic.agroprix.resource;
 
-import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ws.rs.DELETE;
