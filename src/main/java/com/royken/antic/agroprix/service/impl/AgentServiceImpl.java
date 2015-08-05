@@ -85,4 +85,14 @@ public class AgentServiceImpl implements IAgentService {
         return Collections.EMPTY_LIST;
     }
 
+    @Override
+    public Agent findByLoginaAndPassword(String login, String password) throws ServiceException {
+        try {
+            return agentDao.findAgentByLoginAndPassword(login, password);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(AgentServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }
