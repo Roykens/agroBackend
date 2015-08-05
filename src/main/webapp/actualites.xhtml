@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>        
+        <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link type="text/css" href="css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link type="text/css" href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
+        <link type="text/css" href="css/agroPrix_Css.css" rel="stylesheet"/>
+    </h:head>
+
+    <h:body>
+        <div id="body_id" class="body_class">
+            <div id="entete_id" class="entete_class">                
+                <ui:include src="/autres/entete.xhtml"/>
+            </div>
+
+            <div id="menu_id" class="menu_class " align="center">
+                <ui:include src="#{connexionBean.menu}"/>
+            </div>            
+            <div id="content_id" class="content_class ">                     
+                <ui:include src="/actualites/contenu_actualites.xhtml"/>                                      
+            </div>            
+            <div id="pied_id" class="pied_class">
+                <ui:include src="/autres/pieddepage.xhtml"/>
+            </div>
+        </div>
+    </h:body>
+
+</html>

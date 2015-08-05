@@ -1,0 +1,76 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html" >
+    <h:form >
+        
+        <b:panel title="Prix des Produits" look="primary"  >
+           <div class="Prix_Prod_Class" id="id_Prix_Prod" >
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Ville: *" for="VilleID"  />
+                    </b:column>                
+                </b:row>
+                <b:row styleClass="show-grid">                
+                    <b:column col-xs="12" col-md="8">
+                        <b:inputText value=""  id="VilleID" />  
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Marché: *" for="MarcheID" />
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <b:selectOneMenu value="" id="MarcheID" >
+                            <f:selectItem itemLabel="mokolo" itemValue="1"/>
+                            <f:selectItem itemLabel="central" itemValue="2"/>
+                            <f:selectItem itemLabel="du dimanche" itemValue="3"/>
+                        </b:selectOneMenu>
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Catégorie: *" for="categorieID" />
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+
+                        <b:selectOneMenu value="" id="categorieID" required="true">
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>                
+                            <f:selectItem itemLabel="Cereale" itemValue="1"/>
+                            <f:selectItem itemLabel="Fruit" itemValue="2"/>
+                            <f:selectItem itemLabel="Legumes" itemValue="3"/>
+                            <f:selectItem itemLabel="Tubercules" itemValue="4"/>
+                        </b:selectOneMenu>
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Produit: *" for="ProduitID" />               
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <b:selectOneMenu value="" id="ProduitID" required="true">
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
+                            <f:selectItem itemLabel="Arachide" itemValue="1"/>
+                            <f:selectItem itemLabel="Maïs" itemValue="2"/>
+                            <f:selectItem itemLabel="Riz" itemValue="3"/>
+                        </b:selectOneMenu>  
+                    </b:column>
+                </b:row> 
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <b:commandButton type="submit" style="width: 100%;" icon="ui-icon-check" value="$ Voir Prix             " class="btn btn-primary btn-small "/>
+                    </b:column>
+                </b:row>
+            </div>
+        </b:panel>
+
+    </h:form>
+</div>

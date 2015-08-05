@@ -7,7 +7,6 @@ import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
