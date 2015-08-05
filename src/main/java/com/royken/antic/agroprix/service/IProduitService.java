@@ -1,5 +1,6 @@
 package com.royken.antic.agroprix.service;
 
+import com.royken.antic.agroprix.entities.Categorie;
 import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ejb.Local;
@@ -17,5 +18,7 @@ public interface IProduitService {
     
     public void deleteProduit(Long id) throws ServiceException;
     
-    public List<Produit> findAllCategorie() throws ServiceException;
+    public List<Produit> findAllProduit() throws ServiceException;
+    
+    public List<Produit> findByCategorie(Long  idCategorie) throws ServiceException;
 }

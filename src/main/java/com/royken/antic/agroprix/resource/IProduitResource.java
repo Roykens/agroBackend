@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.resource;
 
 import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,34 +15,29 @@ import javax.ws.rs.Produces;
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
-@Path("marches")
-public interface IMarcheResource {
+@Path("produits")
+public interface IProduitResource {
+    
     @POST
     @Produces(value = "application/json") 
-    Marche createMarche(Marche marche);
+    Produit createProduit(Produit produit);
 
     @GET
     @Produces(value = "application/json")
-    List<Marche> getAllMarches();
+    List<Produit> getAllProduits();
 
     @GET
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Marche getMarche(@PathParam(value = "id")long id);
+    Produit getProduit(@PathParam(value = "id")long id);
 
     @PUT
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Marche updateMarche(@PathParam(value = "id")long id, Marche marche);
+    Produit updateProduit(@PathParam(value = "id")long id, Produit produit);
 
     @DELETE
     @Path(value = "{id : \\d+}")
-    void deleteMarche(@PathParam(value = "id")long id);
-    
-    @GET
-    @Produces(value = "application/json")
-    @Path(value = "{id : \\d+}/villes")
-    List<Marche> getAllMarchesByVille(@PathParam(value = "id")long id);
-    
+    void deleteProduit(@PathParam(value = "id")long id);
     
 }

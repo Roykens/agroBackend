@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.resource;
 
-import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Categorie;
+import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,34 +15,34 @@ import javax.ws.rs.Produces;
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
-@Path("marches")
-public interface IMarcheResource {
+@Path("categories")
+public interface ICategoriesResource {
+    
     @POST
-    @Produces(value = "application/json") 
-    Marche createMarche(Marche marche);
-
-    @GET
     @Produces(value = "application/json")
-    List<Marche> getAllMarches();
+    Categorie createCategorie(Categorie categorie);
 
     @GET
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Marche getMarche(@PathParam(value = "id")long id);
+    Categorie getCategorie(@PathParam(value = "id") long id);
 
     @PUT
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Marche updateMarche(@PathParam(value = "id")long id, Marche marche);
+    Categorie updateCategorie(@PathParam(value = "id") long id, Categorie categorie);
 
-    @DELETE
-    @Path(value = "{id : \\d+}")
-    void deleteMarche(@PathParam(value = "id")long id);
-    
     @GET
     @Produces(value = "application/json")
-    @Path(value = "{id : \\d+}/villes")
-    List<Marche> getAllMarchesByVille(@PathParam(value = "id")long id);
+    List<Categorie> getAllCategorie();
     
+    @DELETE
+    @Path(value = "{id : \\d+}")
+    void deleteCategorie(@PathParam(value = "id")long id);
+    
+    @GET
+    @Path(value = "{id : \\d+}/produits")
+    @Produces(value = "application/json")
+    List<Produit> getAllProduit(@PathParam(value = "id") long idCategorie);
     
 }

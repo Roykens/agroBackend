@@ -3,6 +3,7 @@ package com.royken.antic.agroprix.dao.impl;
 import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.dao.IMarcheDao;
 import com.royken.antic.agroprix.entities.Marche_;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
@@ -15,7 +16,7 @@ import javax.persistence.criteria.Root;
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
-public class MarcheDaoImpl extends GenericDao<Marche, Long> implements IMarcheDao{
+public class MarcheDaoImpl extends GenericDao<Marche, Long> implements IMarcheDao {
 
     @Override
     public List<Marche> findMarcheByVille(Ville ville) throws DataAccessException {
@@ -27,5 +28,13 @@ public class MarcheDaoImpl extends GenericDao<Marche, Long> implements IMarcheDa
         cq.distinct(true);
         return getManager().createQuery(cq).getResultList();
     }
-    
+
+    @Override
+    public List<Marche> findByProduit(Produit produit) throws DataAccessException {
+        CriteriaBuilder cb = getManager().getCriteriaBuilder();
+        CriteriaQuery<Marche> cq = cb.createQuery(Marche.class);
+        
+        return null;
+    }
+
 }
