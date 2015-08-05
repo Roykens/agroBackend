@@ -1,16 +1,169 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>        
+        <title>agroPrix</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <b:panelGrid colSpans="2,2,2,2,4">
+                <h:outputLabel value="Select your car's brand:" for="brandID" />
+                <b:selectOneMenu value="#{carBean.brand}" id="brandID" >
+                    <f:selectItem itemLabel="Fiat" itemValue="1"/>
+                    <f:selectItem itemLabel="Honda" itemValue="2"/>
+                    <f:selectItem itemLabel="Opel" itemValue="3"/>
+                </b:selectOneMenu>
+                <h:message for="brandID"/>
+                <h:outputLabel value="last submitted value:" for="brandOutputID"/>
+                <b:inputText value="#{carBean.brand}" disabled="true" id="brandOutputID"/>
+                <h:outputLabel value="Select your car's type:" for="typeID" />
+                <b:selectOneMenu value="#{carBean.type}" id="typeID" required="true">
+                    <f:selectItem itemLabel="(Please select)" itemValue=""/>
+                    <f:selectItem itemLabel="Cinquecento" itemValue="1"/>
+                    <f:selectItem itemLabel="Civic" itemValue="2"/>
+                    <f:selectItem itemLabel="Astra" itemValue="3"/>
+                </b:selectOneMenu>
+                <h:message for="typeID"/>
+                <h:outputLabel value="last submitted value:" for="typeOutputID" />
+                <b:inputText value="#{carBean.type}" disabled="true" id="typeOutputID"/>
+            </b:panelGrid>
+        </h:form>
+        <h:panelGrid columns="4" cellpadding="10">
+            <b:button outcome="testButton" value="Bookmark" icon="bookmark">  
+                <f:param name="testId" value="11" />  
+            </b:button>  
+
+            <b:button outcome="testButton" value="With Icon" icon="envelope">  
+                <f:param name="testId" value="22" />  
+            </b:button>  
+
+            <b:button outcome="testButton" value="" icon="envelope">  
+                <f:param name="testId" value="33" />  
+            </b:button>  
+
+            <b:button outcome="testButton" value="Bookmark" icon="envelope" disabled="true">  
+                <f:param name="testId" value="44" />  
+            </b:button>
+        </h:panelGrid>
+        <b:navBar brand="" brandHref="#" inverse="true">
+            <b:navbarLinks>
+                <b:navLink value="ACCUEIL" href="accueil.xhtml"></b:navLink>
+                <b:navLink value="PRIX DES PRODUITS" href="prix_des_produits.xhtml"></b:navLink>
+                <b:navLink value="ACTUALITES" href="actualites.xhtml"></b:navLink>
+                <b:navLink value="LAISSER UN COMMENTAIRE" href="commentaires.xhtml"></b:navLink>
+                <b:navLink value="QUI NOUS SOMMES ? " href="qui_nous_sommes.xhtml"></b:navLink>
+            </b:navbarLinks>
+        </b:navBar>
+        <b:panel look="primary">
+            <h:form>
+                <h:panelGrid id="inform" columns="3" cellpadding="5">
+                    <h:outputLabel for="firstname" value="Firstname: *" />
+                    <b:inputText id="firstname" value="">
+                        <f:validateLength minimum="2" />
+                    </b:inputText>
+                    <!--<b:fetchBeanInfos />-->
+                </h:panelGrid>
+                <b:column span="2">
+                    <b:commandButton value="Ajax Modal" ajax="true" update="@form:inform" id="ajaxmodal" look="inverse"
+                                     oncomplete="if(validationFailed) alert('Please enter valid input before opening the modal'); else $('#amodal').modal('show')" />
+                </b:column>
+            </h:form>
+
+            <h3>Personal Information</h3>
+            <b:well>
+                <h:panelGrid id="inform" columns="3" cellpadding="5">
+                    <h:outputLabel for="firstname" value="Firstname: *" />
+                    <b:inputText id="firstname" value="">
+                        <f:validateLength minimum="2" />
+                    </b:inputText>
+                    <h:message for="firstname" />
+
+                    <h:outputLabel for="familyname" value="Family (surname/last) name: *" />
+                    <b:inputText id="familyname" value="" required="true" />
+                    <h:message for="familyname" />
+                    <!--<b:fetchBeanInfos />-->
+                </h:panelGrid>
+            </b:well>
+            <!--            <b:row>
+                            <b:column span="2">
+                                <b:commandButton value="Non-Ajax Submit" id="cb" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton value="Ajax Submit" ajax="true" update="form:inform infoshow" id="ajaxcb" look="primary" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton value="With Icon" ajax="true" update="form:inform infoshow" id="acb" icon="plus-sign" look="success" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton value="Ajax Modal" ajax="true" update="form:inform amodal" id="ajaxmodal" look="inverse"
+                                                 oncomplete="if(validationFailed) alert('Please enter valid input before opening the modal'); else $('#amodal').modal('show')" />
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton value="" ajax="true" update="form:inform infoshow" iconAwesome="thumbs-up" look="info" />
+                            </b:column>
+                        </b:row>-->
+
+            <f:facet name="header">Sidebar</f:facet>   
+            <b:panelGrid colSpans="2,10">
+                <h:outputLabel value="Value 1" />
+                <b:inputText span="8" value="# {settingsBean.value1}"/>
+                <h:outputLabel value="Value 2" />
+                <b:inputText span="10" value="# {settingsBean.value2}"  />
+                <h:outputLabel value="Checkbox 1" />
+                <b:selectBooleanCheckbox value="# {settingsBean.cb1}" />
+                <h:outputLabel value="Checkbox 2" />
+                <b:selectBooleanCheckbox value="# {settingsBean.cb2}" />
+            </b:panelGrid>
+            <b:listLinks>
+                <b:navLink header="BootsFaces" />
+                <b:navLink href="http://www.bootsfaces.net" value="BootsFaces"
+                           icon="globe" iconAlign="right"/>
+                <b:navLink></b:navLink>
+                <b:navLink header="Bootstrap"/>
+                <b:navLink href="http://getbootstrap.com/components/#navbar" value="Bootstrap" icon="link"></b:navLink>
+                <b:navLink></b:navLink>
+                <b:navLink header="Preview"/>
+                <b:navLink value="Labels and Badges" outcome="/bootstrap/labelsbadge"
+                           icon="tag" iconAlign="right"/>
+                <b:navLink value="Slider" outcome="/jquery-ui/slider" iconAwesome="sliders" />
+            </b:listLinks>
+        </b:panel>
+        <b:container>
+            <b:row>
+                <b:column>
+                    <h1>Hello, world!</h1>
+                </b:column>
+            </b:row>
+            <b:row>
+                <b:column span="1">hhhh<p:outputLabel value="span=1"/></b:column>
+                <b:column span="1">vvvv<p:outputLabel value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+                <b:column span="1"><h:outputText value="span=1"/></b:column>
+            </b:row>
+            <b:row>
+                <b:column span="8"><h:outputText value="span=8"/></b:column>
+                <b:column span="4"><h:outputText value="span=4"/></b:column>
+            </b:row>
+            <b:row>
+                <b:column span="4"><h:outputText value="span=4"/></b:column>
+                <b:column span="4"><h:outputText value="span=4"/></b:column>
+                <b:column span="4"><h:outputText value="span=4"/></b:column>
+            </b:row>
+            <b:row>
+                <b:column span="6"><h:outputText value="span=6"/></b:column>
+                <b:column span="6"><h:outputText value="span=6"/></b:column>
+            </b:row>
+        </b:container>        
+    </h:body>
 </html>

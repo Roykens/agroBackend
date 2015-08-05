@@ -1,0 +1,50 @@
+/* 
+    Created on : 4 août 2015, 15:15:02
+    Author     : dorimène
+*/
+
+.Prix_Prod_Class{    
+    width: 100%;    
+    margin: auto;     
+    margin-left: 18%;
+    margin-right: 18%;    
+}
+.body_class{    
+    width: 75%;    
+    margin: auto;        
+    margin-top: 10px;
+    padding: 10px;    
+    /*  color:#000;      
+      font-size: 12px;
+      line-height: 16px;*/
+    /*    font-size:10pt;  */
+}
+.content_class{
+    height: 100%;
+}
+.pied_class{    
+    text-align: center;
+    background-color: #999;    
+    /*margin-top: 10px;*/
+}
+.space_elt{
+    width: 50%;
+}
+.panelGrid_class{
+    width: 100%;  
+    margin: auto;
+    /*    margin-top: 5px;
+        margin-bottom: 5px;*/
+}
+
+table.panelGrid_class tr td:first-child{
+    text-align: right;
+}
+.commande_button_class, .space_elt {
+    margin-left: 10px;
+    margin-bottom: 2px;
+    margin-top: 2px;    
+}
+.commande_button_class{
+    height: 40px;    
+}
