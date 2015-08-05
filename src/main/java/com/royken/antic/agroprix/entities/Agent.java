@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,6 +44,10 @@ public class Agent implements Serializable{
     
     @ManyToOne
     private Marche  marche;
+    
+    @Basic
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
     public int getVersion() {
         return version;
@@ -90,6 +96,15 @@ public class Agent implements Serializable{
     public void setMarche(Marche marche) {
         this.marche = marche;
     }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+    
     
     
 }
