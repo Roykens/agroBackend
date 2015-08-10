@@ -1,0 +1,119 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">   
+    <p:dialog modal="true" closable="false" header="AJOUTER UN MARCHE" widgetVar="dlgAjouterMarche" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterMarche" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterMarche" class="panelGrid_class updateAll" columns="2">                    
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Date De Creation: "  class="syntaxe_content" />  
+                    <b:datepicker value="#{marcheBean.marche.dateCreation}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />                      
+                    <h:outputText  value="Longitude: "  class="syntaxe_content"  />  
+                    <b:inputText value="#{marcheBean.marche.longitude}"   class="syntaxe_content" style="margin-top: 10px;" /> 
+                    <h:outputText  value="Latitude: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.latitude}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Description: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.description}"   class="syntaxe_content" />                      
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{marcheBean.ajouterOuMettreajourMarche}" update="@(.updateAll)" oncomplete="PF('dlgAjouterMarche').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{marcheBean.annuler}" onclick="PF('dlgAjouterMarche').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form> 
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER L'INTITULE DU MARCHE" widgetVar="dlgModifierMarche" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierMarche" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterMarche" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Date De Creation: "  class="syntaxe_content" />  
+                    <b:datepicker value="#{marcheBean.marche.dateCreation}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />                      
+                    <h:outputText  value="Longitude: "  class="syntaxe_content"  />  
+                    <b:inputText value="#{marcheBean.marche.longitude}"   class="syntaxe_content" style="margin-top: 10px;" /> 
+                    <h:outputText  value="Latitude: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.latitude}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Description: "  class="syntaxe_content" />  
+                    <b:inputText value="#{marcheBean.marche.description}"   class="syntaxe_content" />                      
+                    <h:inputHidden value="#{marcheBean.marche.version}"/>
+                    <h:inputHidden value="#{marcheBean.marche.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{marcheBean.ajouterOuMettreajourMarche}" update="@(.updateAll)" oncomplete="PF('dlgModifierMarche').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{marcheBean.annuler}" onclick="PF('dlgModifierMarche').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>        
+
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog message="voulez-vous vraiment supprimer ce marché?"
+                     header="Initialisation de la suppression" severity="alert"
+                     widgetVar="dlgSupMarche" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{marcheBean.supprimerMarche}" oncomplete="PF('dlgSupMarche').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{marcheBean.annuler}" onclick ="PF('dlgSupMarche').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{marcheBean.marche.nom}"/>
+            <h:inputHidden value="#{marcheBean.marche.version}"/>
+            <h:inputHidden value="#{marcheBean.marche.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">                   
+        <p:dataTable id="dataTableId"  value="#{marcheBean.marches}" var="item"
+                     emptyMessage="Aucun marché enregistré" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter un marché" type="button" onclick="PF('dlgAjouterMarche').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Intitulé"/>
+                </f:facet>
+                <h:outputText value="#{item.nom}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Date De Creation"/>
+                </f:facet>
+                <h:outputText value="#{item.dateCreation}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>                 
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Longitude"/>
+                </f:facet>
+                <h:outputText value="#{item.longitude}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Latitude"/>
+                </f:facet>
+                <h:outputText value="#{item.latitude}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Description"/>
+                </f:facet>
+                <h:outputText value="#{item.description}"/>
+            </p:column>            
+            <p:column headerText="Action" width="200">                                            
+                <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierMarche').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{marcheBean.marche}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value=" Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupMarche').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{marcheBean.marche}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
+</div>

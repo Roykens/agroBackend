@@ -1,0 +1,80 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+   
+
+    <p:dialog modal="true" closable="false" header="AJOUTER UNE CATEGORIE" widgetVar="dlgAjouterCategorie" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterCategorie" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterCategorie" class="panelGrid_class updateAll" columns="4">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{categorieBean.categorie.nom}"   class="syntaxe_content" />                      
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{categorieBean.ajouterOuMettreajourCategorie}" update="@(.updateAll)" oncomplete="PF('dlgAjouterCategorie').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{categorieBean.annuler}" onclick="PF('dlgAjouterCategorie').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form>  
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER LA CATEGORIE" widgetVar="dlgModifierCategorie" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierCategorie" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterCategorie" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{categorieBean.categorie.nom}"   class="syntaxe_content" />  
+                    <h:inputHidden value="#{categorieBean.categorie.version}"/>
+                    <h:inputHidden value="#{categorieBean.categorie.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{categorieBean.ajouterOuMettreajourCategorie}" update="@(.updateAll)" oncomplete="PF('dlgModifierCategorie').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{categorieBean.annuler}" onclick="PF('dlgModifierCategorie').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                   
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog  message="voulez-vous vraiment supprimer cette catégorie ?"
+                      header="Initialisation de la suppression" severity="alert"
+                      widgetVar="dlgSupCategorie" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{categorieBean.supprimerCategorie}" oncomplete="PF('dlgSupCategorie').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{categorieBean.annuler}" onclick ="PF('dlgSupCategorie').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{categorieBean.categorie.nom}"/>
+            <h:inputHidden value="#{categorieBean.categorie.version}"/>
+            <h:inputHidden value="#{categorieBean.categorie.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">           
+
+        <p:dataTable id="dataTableId"  value="#{categorieBean.categories}" var="item"
+                     emptyMessage="Aucune catégorie enregistrée" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter une catégorie" type="button" onclick="PF('dlgAjouterCategorie').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Intitulé"/>
+                </f:facet>
+                <h:outputText value="#{item.nom}"/>
+            </p:column>
+            <p:column headerText="Action" width="200">                                            
+                <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierCategorie').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{categorieBean.categorie}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value=" Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupCategorie').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{categorieBean.categorie}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
+</div>

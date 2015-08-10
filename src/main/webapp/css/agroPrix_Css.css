@@ -41,10 +41,25 @@ table.panelGrid_class tr td:first-child{
     text-align: right;
 }
 .commande_button_class, .space_elt {
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     margin-bottom: 2px;
     margin-top: 2px;    
 }
 .commande_button_class{
     height: 40px;    
+}
+.tabViewClass{
+   margin-top: 2%;
+}
+.syntaxe_content{
+    width: 100%;    
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+#center_content_div{
+    text-align: center;
+}
+.cmd_button{
+    width: auto;
 }

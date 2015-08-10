@@ -1,0 +1,117 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <p:dialog modal="true" closable="false" header="AJOUTER UN UTILISATEUR" widgetVar="dlgAjouterAgent" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterAgent" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterAgent" class="panelGrid_class updateAll" columns="2">
+                    <h:outputText  value="Nom d'utilisateur:* "  class="syntaxe_content" />  
+                    <b:inputText   requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.agent.login}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Mot de Passe:* "  class="syntaxe_content" />  
+                    <b:inputSecret requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.pwd1}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Confirmez mot de Passe:* "  class="syntaxe_content" />  
+                    <b:inputSecret required="true" value="#{agentBean.pwd2}"   class="syntaxe_content" />                                    
+                    <h:outputText  value="Identité: "  class="syntaxe_content" />  
+                    <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Rôle: "  class="syntaxe_content" />
+                    <p:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
+                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"
+                                event="change" 
+                                update="march" 
+                                process="@this"/>
+
+                    </p:selectOneMenu>
+                    <h:outputText  value="Marché:  "  class="syntaxe_content" />
+                    <p:selectOneMenu id="march" disabled="#{agentBean.disable}" value="#{agentBean.agent.marche}" style="width: 100%; margin-top: 10px;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
+                        <f:selectItems value="#{agentBean.marches}" var="item" itemLabel="#{item}" itemValue="#{item}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterOuMettreajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgAjouterAgent').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{agentBean.annuler}" onclick="PF('dlgAjouterAgent').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form>  
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER" widgetVar="dlgModifierAgent" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierAgent" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterAgent" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />  
+                    <h:inputHidden value="#{agentBean.agent.version}"/>
+                    <h:inputHidden value="#{agentBean.agent.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterOuMettreajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgModifierAgent').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{agentBean.annuler}" onclick="PF('dlgModifierAgent').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                   
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog  message="voulez-vous vraiment supprimer cet utilisateur ?"
+                      header="Initialisation de la suppression" severity="alert"
+                      widgetVar="dlgSupAgent" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{agentBean.supprimerAgent}" oncomplete="PF('dlgSupAgent').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{agentBean.annuler}" onclick ="PF('dlgSupAgent').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{agentBean.agent.nom}"/>
+            <h:inputHidden value="#{agentBean.agent.version}"/>
+            <h:inputHidden value="#{agentBean.agent.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">           
+
+        <p:dataTable id="dataTableId"  value="#{agentBean.agents}" var="item"
+                     emptyMessage="Aucun utilisateur enregistré" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter un utilisateur" type="button" onclick="PF('dlgAjouterAgent').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Identité"/>
+                </f:facet>
+                <h:outputText value="#{item.nom}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Nom d'utilisateur"/>
+                </f:facet>
+                <h:outputText value="#{item.login}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Rôle"/>
+                </f:facet>
+                <h:outputText value="#{item.roleType}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Marché"/>
+                </f:facet>
+                <h:outputText value="#{agentBean.marcheResult(item.marche)}"/>
+            </p:column>
+            <p:column headerText="Action" width="200">                                            
+                <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierAgent').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{agentBean.agent}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value=" Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupAgent').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{agentBean.agent}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
+</div>

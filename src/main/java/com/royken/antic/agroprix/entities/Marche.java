@@ -139,6 +139,11 @@ public class Marche implements Serializable{
     public void setVille(Ville ville) {
         this.ville = ville;
     }
+
+    @Override
+    public String toString() {
+        return "Marche{" + "version=" + version + ", id=" + id + ", nom=" + nom + ", longitude=" + longitude + ", latitude=" + latitude + ", dateCreation=" + dateCreation + ", description=" + description + '}';
+    }
     
     
 }

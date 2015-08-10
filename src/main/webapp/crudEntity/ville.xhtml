@@ -1,0 +1,78 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <p:dialog modal="true" closable="false" header="AJOUTER UNE VILLE" widgetVar="dlgAjouterVille" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterVille" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterVille" class="panelGrid_class updateAll" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{villeBean.ville.nom}"   class="syntaxe_content" />                      
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{villeBean.ajouterOuMettreajourVille}" update="@(.updateAll)" oncomplete="PF('dlgAjouterVille').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{villeBean.annuler}" onclick="PF('dlgAjouterVille').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form>  
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER L'INTUTILÉ DE LA VILLE" widgetVar="dlgModifierVille" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierVille" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterVille" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{villeBean.ville.nom}"   class="syntaxe_content" />  
+                    <h:inputHidden value="#{villeBean.ville.version}"/>
+                    <h:inputHidden value="#{villeBean.ville.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{villeBean.ajouterOuMettreajourVille}" update="@(.updateAll)" oncomplete="PF('dlgModifierVille').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{villeBean.annuler}" onclick="PF('dlgModifierVille').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                   
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog  message="voulez-vous vraiment supprimer cette ville ?"
+                     header="Initialisation de la suppression" severity="alert"
+                     widgetVar="dlgSupVille" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{villeBean.supprimerVille}" oncomplete="PF('dlgSupVille').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{villeBean.annuler}" onclick ="PF('dlgSupVille').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{villeBean.ville.nom}"/>
+            <h:inputHidden value="#{villeBean.ville.version}"/>
+            <h:inputHidden value="#{villeBean.ville.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">           
+
+        <p:dataTable id="dataTableId"  value="#{villeBean.villes}" var="item"
+                     emptyMessage="Aucune ville enregistrée" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter une ville" type="button" onclick="PF('dlgAjouterVille').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Intitulé"/>
+                </f:facet>
+                <h:outputText value="#{item.nom}"/>
+            </p:column>
+            <p:column headerText="Action" width="200">                                            
+                <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierVille').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{villeBean.ville}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value=" Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupVille').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{villeBean.ville}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
+</div>

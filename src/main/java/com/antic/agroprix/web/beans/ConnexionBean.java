@@ -10,6 +10,7 @@ package com.antic.agroprix.web.beans;
  * @author root
  */
 import com.royken.antic.agroprix.entities.Agent;
+import com.royken.antic.agroprix.entities.RoleType;
 import com.royken.antic.agroprix.service.IAgentService;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -55,18 +56,29 @@ public class ConnexionBean {
 
     public String verifier() {
         // nom=null;
-        if (nom != null && pwd != null) {
+        if (nom != null && pwd != null && !nom.isEmpty() && !pwd.isEmpty()) {
             //agent = agentService.findAgentByNomAndPwd(nom, pwd);          
             agent.setId(1L);
             agent.setLogin("admin");
             agent.setPassword("admin");
+            agent.setRoleType(RoleType.ADMIN);
             pwd = "";
             if (agent != null && agent.getId() != null) {
                 connecter = "déconnexion";
-                nom = new String();
-                pwd = new String();
-                menu = "/autres/menuAgent.xhtml";
-                return "administrateur";
+                if (agent.getRoleType().compareTo(RoleType.ADMIN) == 0) {
+                    nom = new String();
+                    pwd = new String();
+                    menu = "/autres/menuAdmin.xhtml";
+                    return "administrateur";
+                } else if (agent.getRoleType().compareTo(RoleType.AGENT) == 0) {
+                    nom = new String();
+                    pwd = new String();
+                    menu = "/autres/menuAgent.xhtml";
+                    return "agent_marche";
+                } else {
+                    pwd = new String();
+                    return init();
+                }
             } else {
                 return init();
             }

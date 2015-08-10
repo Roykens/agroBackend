@@ -66,6 +66,11 @@ public class Categorie implements Serializable{
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
+
+    @Override
+    public String toString() {
+        return "Categorie{" + "nom=" + nom + '}';
+    }
     
     
 }
