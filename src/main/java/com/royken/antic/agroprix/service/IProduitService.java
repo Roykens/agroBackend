@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.service;
 
 import com.royken.antic.agroprix.entities.Categorie;
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ejb.Local;
@@ -21,4 +22,6 @@ public interface IProduitService {
     public List<Produit> findAllProduit() throws ServiceException;
     
     public List<Produit> findByCategorie(Long  idCategorie) throws ServiceException;
+    
+    public List<Produit> findProduitByMarche(Marche marche) throws ServiceException;
 }

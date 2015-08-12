@@ -144,6 +144,36 @@ public class Marche implements Serializable{
     public String toString() {
         return "Marche{" + "version=" + version + ", id=" + id + ", nom=" + nom + ", longitude=" + longitude + ", latitude=" + latitude + ", dateCreation=" + dateCreation + ", description=" + description + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this.agents != null ? this.agents.hashCode() : 0);
+        hash = 89 * hash + (this.produits != null ? this.produits.hashCode() : 0);
+        hash = 89 * hash + (this.ville != null ? this.ville.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Marche other = (Marche) obj;
+        if (this.agents != other.agents && (this.agents == null || !this.agents.equals(other.agents))) {
+            return false;
+        }
+        if (this.produits != other.produits && (this.produits == null || !this.produits.equals(other.produits))) {
+            return false;
+        }
+        if (this.ville != other.ville && (this.ville == null || !this.ville.equals(other.ville))) {
+            return false;
+        }
+        return true;
+    }
     
     
 }

@@ -3,6 +3,7 @@ package com.royken.antic.agroprix.service.impl;
 import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.dao.IMarcheDao;
 import com.royken.antic.agroprix.dao.IVilleDao;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.ServiceException;
@@ -97,6 +98,16 @@ public class MarcheServiceImpl implements IMarcheService {
             else{
                 throw new ServiceException("La ville est introuvable");
             }
+        } catch (DataAccessException ex) {
+            Logger.getLogger(MarcheServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Marche> findByProduit(Produit produit) throws ServiceException {
+        try {
+            return marcheDao.findByProduit(produit);
         } catch (DataAccessException ex) {
             Logger.getLogger(MarcheServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

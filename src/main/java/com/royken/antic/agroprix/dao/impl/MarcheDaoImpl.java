@@ -33,8 +33,10 @@ public class MarcheDaoImpl extends GenericDao<Marche, Long> implements IMarcheDa
     public List<Marche> findByProduit(Produit produit) throws DataAccessException {
         CriteriaBuilder cb = getManager().getCriteriaBuilder();
         CriteriaQuery<Marche> cq = cb.createQuery(Marche.class);
-        
-        return null;
+        Root<Marche> marcheRoot = cq.from(Marche.class);
+        cq.where(cb.isMember(produit, marcheRoot.get(Marche_.produits)));
+        cq.distinct(true);
+        return getManager().createQuery(cq).getResultList();
     }
 
 }

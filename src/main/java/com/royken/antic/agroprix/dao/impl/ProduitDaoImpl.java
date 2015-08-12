@@ -3,6 +3,7 @@ package com.royken.antic.agroprix.dao.impl;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.dao.IProduitDao;
 import com.royken.antic.agroprix.entities.Categorie;
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.Produit_;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
@@ -26,6 +27,17 @@ public class ProduitDaoImpl extends GenericDao<Produit, Long> implements IProdui
         cq.orderBy(cb.asc(niveauRoot.get(Produit_.nom)));
         cq.distinct(true);
         return getManager().createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<Produit> findByMarche(Marche marche) throws DataAccessException {
+         CriteriaBuilder cb = getManager().getCriteriaBuilder();
+        CriteriaQuery<Produit> cq = cb.createQuery(Produit.class);
+        Root<Produit> aRoot = cq.from(Produit.class);
+        cq.where(cb.isMember(marche, aRoot.get(Produit_.marches)));
+        cq.distinct(true);
+        return getManager().createQuery(cq).getResultList();
+        
     }
     
 }

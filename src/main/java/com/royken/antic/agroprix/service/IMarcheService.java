@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.service;
 
 import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
 import java.util.List;
 import javax.ejb.Local;
@@ -21,4 +22,6 @@ public interface IMarcheService {
     public List<Marche> findAllMarche() throws ServiceException;
     
     public List<Marche> findMarcheByVille(Long idVille) throws ServiceException;
+    
+    public List<Marche> findByProduit(Produit produit) throws ServiceException;
 }
