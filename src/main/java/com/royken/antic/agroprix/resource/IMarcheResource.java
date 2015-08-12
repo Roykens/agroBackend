@@ -38,10 +38,7 @@ public interface IMarcheResource {
     @Path(value = "{id : \\d+}")
     void deleteMarche(@PathParam(value = "id")long id);
     
-    @GET
-    @Produces(value = "application/json")
-    @Path(value = "{id : \\d+}/villes")
-    List<Marche> getAllMarchesByVille(@PathParam(value = "id")long id);
+   
     
     
 }

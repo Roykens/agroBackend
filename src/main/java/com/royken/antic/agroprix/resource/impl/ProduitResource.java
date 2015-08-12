@@ -5,7 +5,6 @@ import com.royken.antic.agroprix.resource.IProduitResource;
 import com.royken.antic.agroprix.service.ICategorieService;
 import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,7 +1,9 @@
 package com.royken.antic.agroprix.service.impl;
 
+import com.royken.antic.agroprix.dao.IMarcheDao;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.dao.IVilleDao;
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.service.IVilleService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;
@@ -23,6 +25,9 @@ public class VilleServiceImpl implements IVilleService {
 
     @Inject
     private IVilleDao villeDao;
+    
+    @Inject
+    private IMarcheDao  marcheDao;
 
     public IVilleDao getVilleDao() {
         return villeDao;
@@ -30,6 +35,14 @@ public class VilleServiceImpl implements IVilleService {
 
     public void setVilleDao(IVilleDao villeDao) {
         this.villeDao = villeDao;
+    }
+
+    public IMarcheDao getMarcheDao() {
+        return marcheDao;
+    }
+
+    public void setMarcheDao(IMarcheDao marcheDao) {
+        this.marcheDao = marcheDao;
     }
     
     
@@ -78,6 +91,20 @@ public class VilleServiceImpl implements IVilleService {
     public List<Ville> findAllVille() throws ServiceException {
         try {
             return villeDao.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(VilleServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Marche> findAllMarcheByVille(Long idVille) throws ServiceException {
+        try {
+            Ville ville = villeDao.findById(idVille);
+            if(ville == null){
+                throw new ServiceException("Service not found");
+            }
+            return marcheDao.findMarcheByVille(ville);
         } catch (DataAccessException ex) {
             Logger.getLogger(VilleServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

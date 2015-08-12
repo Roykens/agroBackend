@@ -1,5 +1,6 @@
 package com.royken.antic.agroprix.resource.impl;
 
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.resource.IVilleResource;
 import com.royken.antic.agroprix.service.IVilleService;
@@ -87,6 +88,16 @@ public class VilleResource implements IVilleResource {
         } catch (ServiceException ex) {
             Logger.getLogger(VilleResource.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public List<Marche> getAllMarchesByVille(long id) {
+        try {
+            return villeService.findAllMarcheByVille(id);
+        } catch (ServiceException ex) {
+            Logger.getLogger(VilleResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
 }

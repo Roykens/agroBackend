@@ -1,8 +1,6 @@
 package com.royken.antic.agroprix.service;
 
-import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
-import com.royken.antic.agroprix.entities.Produit;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;

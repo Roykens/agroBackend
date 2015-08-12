@@ -1,5 +1,6 @@
 package com.royken.antic.agroprix.resource;
 
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.Ville;
 import java.util.List;
 import javax.ws.rs.DELETE;
@@ -16,8 +17,9 @@ import javax.ws.rs.Produces;
  */
 @Path("/villes")
 public interface IVilleResource {
+
     @POST
-    @Produces(value = "application/json")         
+    @Produces(value = "application/json")
     Ville createVille(Ville ville);
 
     @GET
@@ -27,15 +29,20 @@ public interface IVilleResource {
     @GET
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Ville getVille(@PathParam(value = "id")long id);
+    Ville getVille(@PathParam(value = "id") long id);
 
     @PUT
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    Ville updateVille(@PathParam(value = "id")long id, Ville ville);
+    Ville updateVille(@PathParam(value = "id") long id, Ville ville);
 
     @DELETE
     @Path(value = "{id : \\d+}")
-    void deleteVille(@PathParam(value = "id")long id);
-    
+    void deleteVille(@PathParam(value = "id") long id);
+
+    @GET
+    @Produces(value = "application/json")
+    @Path(value = "{id : \\d+}/marches")
+    List<Marche> getAllMarchesByVille(@PathParam(value = "id") long id);
+
 }

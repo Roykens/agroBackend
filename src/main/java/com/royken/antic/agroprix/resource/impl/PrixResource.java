@@ -1,7 +1,6 @@
 package com.royken.antic.agroprix.resource.impl;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
-import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.ServiceException;
