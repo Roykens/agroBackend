@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -60,6 +62,10 @@ public class PrixProduitMarche implements Serializable{
     
     @ManyToOne
     private Marche marche;
+    
+    @Basic
+    @Enumerated(EnumType.STRING)
+    private EtatPrix etatPrix;
 
     public int getVersion() {
         return version;
@@ -107,6 +113,22 @@ public class PrixProduitMarche implements Serializable{
 
     public void setMarche(Marche marche) {
         this.marche = marche;
+    }
+
+    public DateFormat getDf() {
+        return df;
+    }
+
+    public void setDf(DateFormat df) {
+        this.df = df;
+    }
+
+    public EtatPrix getEtatPrix() {
+        return etatPrix;
+    }
+
+    public void setEtatPrix(EtatPrix etatPrix) {
+        this.etatPrix = etatPrix;
     }
     
     
