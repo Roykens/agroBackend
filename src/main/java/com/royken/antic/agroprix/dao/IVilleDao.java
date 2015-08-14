@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface IVilleDao extends IGenericDao<Ville, Long>{
  
-  //  public List<Ville> findAllVilleByProduit(Produit produit) throws DataAccessException;
+    public List<Ville> findAllVilleByProduit(Produit produit) throws DataAccessException;
 }

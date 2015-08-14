@@ -12,6 +12,7 @@ import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Categorie implements Serializable{
     @Basic
     private String nom;
     
+    @XmlTransient
     @OneToMany(mappedBy = "categorie")
     private List<Produit> produits;
 
