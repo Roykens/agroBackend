@@ -2,6 +2,7 @@ package com.royken.antic.agroprix.service.impl;
 
 import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.dao.IMarcheDao;
+import com.royken.antic.agroprix.dao.IProduitDao;
 import com.royken.antic.agroprix.dao.IVilleDao;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
@@ -29,6 +30,9 @@ public class MarcheServiceImpl implements IMarcheService {
     
     @Inject
     private IVilleDao villeDao;
+    
+    @Inject
+    private IProduitDao produitDao;
 
     public IMarcheDao getMarcheDao() {
         return marcheDao;
@@ -37,6 +41,24 @@ public class MarcheServiceImpl implements IMarcheService {
     public void setMarcheDao(IMarcheDao marcheDao) {
         this.marcheDao = marcheDao;
     }
+
+    public IVilleDao getVilleDao() {
+        return villeDao;
+    }
+
+    public void setVilleDao(IVilleDao villeDao) {
+        this.villeDao = villeDao;
+    }
+
+    public IProduitDao getProduitDao() {
+        return produitDao;
+    }
+
+    public void setProduitDao(IProduitDao produitDao) {
+        this.produitDao = produitDao;
+    }
+    
+    
 
     @Override
     public Marche saveOrUpdateMarche(Marche marche) throws ServiceException {
@@ -108,6 +130,25 @@ public class MarcheServiceImpl implements IMarcheService {
     public List<Marche> findByProduit(Produit produit) throws ServiceException {
         try {
             return marcheDao.findByProduit(produit);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(MarcheServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Marche> findByProduitAndVille(Long idProduit, Long idVille) throws ServiceException {
+        try {
+            Produit produit = produitDao.findById(idProduit);
+            if(produit == null){
+                throw new ServiceException("Service not found");
+            }
+            Ville ville  = villeDao.findById(idVille);
+            if(ville == null){
+                throw new ServiceException("Service not found");
+            }
+            
+            return marcheDao.findByProduitVille(produit, ville);
         } catch (DataAccessException ex) {
             Logger.getLogger(MarcheServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

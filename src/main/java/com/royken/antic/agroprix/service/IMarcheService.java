@@ -24,4 +24,6 @@ public interface IMarcheService {
     public List<Marche> findMarcheByVille(Long idVille) throws ServiceException;
     
     public List<Marche> findByProduit(Produit produit) throws ServiceException;
+    
+    public List<Marche> findByProduitAndVille(Long idProduit, Long idVille) throws ServiceException;
 }

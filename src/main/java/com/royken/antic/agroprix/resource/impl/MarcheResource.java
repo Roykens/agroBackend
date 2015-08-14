@@ -100,5 +100,15 @@ public class MarcheResource implements IMarcheResource{
         }
     }
 
+    @Override
+    public List<Marche> getMarcheByProduitVille(long idProduit, long idVille) {
+        try {
+            return marcheService.findByProduitAndVille(idProduit, idVille);
+        } catch (ServiceException ex) {
+            Logger.getLogger(MarcheResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
     
 }
