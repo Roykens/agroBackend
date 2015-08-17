@@ -1,9 +1,11 @@
 package com.royken.antic.agroprix.resource.impl;
 
 import com.royken.antic.agroprix.entities.Produit;
+import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.resource.IProduitResource;
 import com.royken.antic.agroprix.service.ICategorieService;
 import com.royken.antic.agroprix.service.IProduitService;
+import com.royken.antic.agroprix.service.IVilleService;
 import com.royken.antic.agroprix.service.ServiceException;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +26,9 @@ public class ProduitResource implements IProduitResource{
     
     @EJB
     private ICategorieService categorieService;
+    
+    @EJB
+    private IVilleService villeService;
 
     public IProduitService getProduitService() {
         return produitService;
@@ -39,6 +44,14 @@ public class ProduitResource implements IProduitResource{
 
     public void setCategorieService(ICategorieService categorieService) {
         this.categorieService = categorieService;
+    }
+
+    public IVilleService getVilleService() {
+        return villeService;
+    }
+
+    public void setVilleService(IVilleService villeService) {
+        this.villeService = villeService;
     }
     
     
@@ -99,6 +112,16 @@ public class ProduitResource implements IProduitResource{
             Logger.getLogger(ProduitResource.class.getName()).log(Level.SEVERE, null, ex);
         }
       
+    }
+
+    @Override
+    public List<Ville> getAllVille(long id) {
+        try {
+            return villeService.findAllByProduit(id);
+        } catch (ServiceException ex) {
+            Logger.getLogger(ProduitResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
     }
 
 

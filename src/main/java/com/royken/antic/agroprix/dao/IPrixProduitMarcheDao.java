@@ -2,6 +2,7 @@ package com.royken.antic.agroprix.dao;
 
 import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.IGenericDao;
@@ -15,9 +16,11 @@ import java.util.List;
 public interface IPrixProduitMarcheDao extends IGenericDao<PrixProduitMarche, Long>{
     //public PrixProduitMarche findByMarche(Marche marche) throws DataAccessException;
     
-    public PrixProduit findByMarche(Marche marche, Date date) throws DataAccessException;
+    public PrixProduit findByMarche(Produit produit,Marche marche, Date date) throws DataAccessException;
     
-    public List<PrixProduitMarche> findByMarche(Marche marche, Date debut, Date fin) throws DataAccessException;
+    public List<PrixProduitMarche> findPrixByMarcheAndProduit(Marche marche, Produit produit) throws DataAccessException;
+    
+    public List<PrixProduitMarche> findByMarche(Marche marche,Produit produit, Date debut, Date fin) throws DataAccessException;
     
     
 }

@@ -12,6 +12,7 @@ import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +34,7 @@ public class Ville implements Serializable{
     @Basic
     private String nom;
     
+    @XmlTransient
     @OneToMany(mappedBy = "ville")
     private List<Marche> marches;
 
@@ -66,6 +68,37 @@ public class Ville implements Serializable{
 
     public void setMarches(List<Marche> marches) {
         this.marches = marches;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + this.version;
+        hash = 83 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 83 * hash + (this.nom != null ? this.nom.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ville other = (Ville) obj;
+        if (this.version != other.version) {
+            return false;
+        }
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.nom == null) ? (other.nom != null) : !this.nom.equals(other.nom)) {
+            return false;
+        }
+        
+        return true;
     }
     
     

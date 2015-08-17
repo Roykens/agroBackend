@@ -4,6 +4,7 @@ import com.royken.antic.agroprix.dao.ICategorieDao;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.dao.IProduitDao;
 import com.royken.antic.agroprix.entities.Categorie;
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;
@@ -103,6 +104,16 @@ public class ProduitServiceImpl implements IProduitService {
         try {
             Categorie categorie = categorieDao.findById(idCategorie);
             return produitDao.findByCategorie(categorie);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(ProduitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Produit> findProduitByMarche(Marche marche) throws ServiceException {
+        try {
+            return produitDao.findByMarche(marche);
         } catch (DataAccessException ex) {
             Logger.getLogger(ProduitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

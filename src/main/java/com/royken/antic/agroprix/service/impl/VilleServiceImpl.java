@@ -1,7 +1,11 @@
 package com.royken.antic.agroprix.service.impl;
 
+import com.royken.antic.agroprix.dao.IMarcheDao;
+import com.royken.antic.agroprix.dao.IProduitDao;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.dao.IVilleDao;
+import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.service.IVilleService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.generic.dao.DataAccessException;
@@ -23,6 +27,12 @@ public class VilleServiceImpl implements IVilleService {
 
     @Inject
     private IVilleDao villeDao;
+    
+    @Inject
+    private IMarcheDao  marcheDao;
+    
+    @Inject
+    private IProduitDao produitDao;
 
     public IVilleDao getVilleDao() {
         return villeDao;
@@ -31,6 +41,24 @@ public class VilleServiceImpl implements IVilleService {
     public void setVilleDao(IVilleDao villeDao) {
         this.villeDao = villeDao;
     }
+
+    public IMarcheDao getMarcheDao() {
+        return marcheDao;
+    }
+
+    public void setMarcheDao(IMarcheDao marcheDao) {
+        this.marcheDao = marcheDao;
+    }
+
+    public IProduitDao getProduitDao() {
+        return produitDao;
+    }
+
+    public void setProduitDao(IProduitDao produitDao) {
+        this.produitDao = produitDao;
+    }
+    
+    
     
     
 
@@ -81,6 +109,35 @@ public class VilleServiceImpl implements IVilleService {
         } catch (DataAccessException ex) {
             Logger.getLogger(VilleServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Marche> findAllMarcheByVille(Long idVille) throws ServiceException {
+        try {
+            Ville ville = villeDao.findById(idVille);
+            if(ville == null){
+                throw new ServiceException("Service not found");
+            }
+            return marcheDao.findMarcheByVille(ville);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(VilleServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Ville> findAllByProduit(Long idProduit) throws ServiceException {
+        try {
+            Produit  produit = produitDao.findById(idProduit);
+            if(produit == null){
+                throw new ServiceException("Service not found");
+            }
+            return villeDao.findAllVilleByProduit(produit);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(VilleServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return Collections.EMPTY_LIST;
     }
 

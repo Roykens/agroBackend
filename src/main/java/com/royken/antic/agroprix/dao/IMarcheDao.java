@@ -18,4 +18,6 @@ public interface IMarcheDao extends IGenericDao<Marche, Long>{
     
     public List<Marche> findByProduit(Produit produit) throws DataAccessException;
     
+    public List<Marche> findByProduitVille(Produit produit, Ville ville) throws DataAccessException;
+    
 }

@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.resource;
 
 import com.royken.antic.agroprix.entities.Produit;
+import com.royken.antic.agroprix.entities.Ville;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -38,5 +39,11 @@ public interface IProduitResource {
     @DELETE
     @Path(value = "{id : \\d+}")
     void deleteProduit(@PathParam(value = "id")long id);
+    
+    
+    @GET
+    @Path(value = "{id : \\d+}/villes")
+    @Produces(value = "application/json")
+    List<Ville> getAllVille(@PathParam(value = "id")long id);
     
 }
