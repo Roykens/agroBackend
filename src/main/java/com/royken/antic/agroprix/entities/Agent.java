@@ -42,6 +42,15 @@ public class Agent implements Serializable{
     @Column(nullable = false)
     private String password;
     
+    @Basic
+    private String phone;
+    
+    @Basic
+    private String mail;
+    
+    @Basic
+    private String adresse;
+    
     @ManyToOne
     private Marche  marche;
     
@@ -103,6 +112,30 @@ public class Agent implements Serializable{
 
     public void setRoleType(RoleType roleType) {
         this.roleType = roleType;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
     
     
