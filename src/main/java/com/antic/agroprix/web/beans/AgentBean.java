@@ -32,23 +32,30 @@ public class AgentBean {
     IAgentService agentService;
     @EJB
     IMarcheService marcheService;
-    Marche marche = new Marche();
+//    Marche marche = new Marche();    
     List<Marche> marches = new ArrayList<Marche>();
     public Agent agent = new Agent();
     public List<Agent> agents;
     public String pwd1 = new String();
     public String pwd2 = new String();
     public boolean disable;
+    private Long marche = null;
     public List<RoleType> roleTypes = new ArrayList<RoleType>();
 
     public AgentBean() {
         disable = true;
+        roleTypes.add(RoleType.ADMIN);
+        roleTypes.add(RoleType.AGENT);
     }
 
-    public void ajouterOuMettreajourAgent(ActionEvent event) throws ServiceException {        
+    public void ajouterOuMettreajourAgent(ActionEvent event) throws ServiceException {
         if (agent != null && pwd1 != null && pwd2 != null && pwd1.trim().compareTo(pwd2.trim()) == 0) {
             agent.setPassword(pwd1);
-            System.out.println("************"+agent.getMarche());
+            if (marche != null) {
+                Marche marchelocal = marcheService.findMarcheById(marche);
+                System.out.println(marche + "===============================================" + marchelocal);
+                agent.setMarche(marchelocal);
+            }
             if (agent.getId() == null && agent.getNom() != null && agent.getNom().length() != 0) {
                 agent = agentService.saveOrUpdateAgent(agent);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été ajouté "));
@@ -72,19 +79,26 @@ public class AgentBean {
         }
     }
 
-    public void handleRoleTypesChange() {        
+    public void handleUserChange() {
+        System.out.println("------------------------" + marche);
+    }
+
+    public void handleRoleTypesChange() {
         disable = !(agent != null && agent.getRoleType() != null && agent.getRoleType().compareTo(RoleType.AGENT) == 0);
     }
 
     public void annuler(ActionEvent event) throws ServiceException {
         agent = new Agent();
+        pwd1 = new String();
+        pwd2 = new String();
+        marche = null;
     }
 
     public String marcheResult(Marche m) {
-        if(m!=null){
-        return m.getNom();
-        }else{
-        return "pas d'affection à un Marché";
+        if (m != null) {
+            return m.getNom();
+        } else {
+            return "";
         }
     }
 
@@ -113,9 +127,7 @@ public class AgentBean {
         this.agents = agents;
     }
 
-    public List<RoleType> getRoleTypes() {
-        roleTypes.add(RoleType.ADMIN);
-        roleTypes.add(RoleType.AGENT);
+    public List<RoleType> getRoleTypes() {        
         return roleTypes;
     }
 
@@ -162,19 +174,24 @@ public class AgentBean {
         this.marcheService = marcheService;
     }
 
-    public Marche getMarche() {
-        if (agent != null) {
-            marche = agent.getMarche();
+    public Long getMarche() {
+        if (agent != null && agent.getMarche() != null) {
+            marche = agent.getMarche().getId();
         }
         return marche;
     }
 
-    public void setMarche(Marche marche) {
+    public void setMarche(Long marche) {
         this.marche = marche;
     }
 
+
     public List<Marche> getMarches() throws ServiceException {
-        marches = marcheService.findAllMarche();
+//        if (disable) {
+//            marches = new ArrayList<Marche>();
+//        } else {
+            marches = marcheService.findAllMarche();
+       // }
         return marches;
     }
 

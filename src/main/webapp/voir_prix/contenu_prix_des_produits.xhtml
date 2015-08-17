@@ -13,9 +13,12 @@
                         <h:outputLabel value="Ville: *" for="VilleID"  />
                     </b:column>                
                 </b:row>
-                <b:row styleClass="show-grid">                
+                <b:row styleClass="show-grid">                                    
                     <b:column col-xs="12" col-md="8">
-                        <b:inputText value=""  id="VilleID" />  
+                        <b:selectOneMenu value="" id="VilleID" >
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
+                            <f:selectItems value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
+                        </b:selectOneMenu>
                     </b:column>
                 </b:row>
                 <b:row styleClass="show-grid">
@@ -26,9 +29,8 @@
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
                         <b:selectOneMenu value="" id="MarcheID" >
-                            <f:selectItem itemLabel="mokolo" itemValue="1"/>
-                            <f:selectItem itemLabel="central" itemValue="2"/>
-                            <f:selectItem itemLabel="du dimanche" itemValue="3"/>
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
+                            <f:selectItems value="#{marcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}"/>
                         </b:selectOneMenu>
                     </b:column>
                 </b:row>
@@ -41,11 +43,7 @@
                     <b:column col-xs="12" col-md="8">
 
                         <b:selectOneMenu value="" id="categorieID" required="true">
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>                
-                            <f:selectItem itemLabel="Cereale" itemValue="1"/>
-                            <f:selectItem itemLabel="Fruit" itemValue="2"/>
-                            <f:selectItem itemLabel="Legumes" itemValue="3"/>
-                            <f:selectItem itemLabel="Tubercules" itemValue="4"/>
+                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
                         </b:selectOneMenu>
                     </b:column>
                 </b:row>
@@ -58,9 +56,7 @@
                     <b:column col-xs="12" col-md="8">
                         <b:selectOneMenu value="" id="ProduitID" required="true">
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItem itemLabel="Arachide" itemValue="1"/>
-                            <f:selectItem itemLabel="Maïs" itemValue="2"/>
-                            <f:selectItem itemLabel="Riz" itemValue="3"/>
+                            <f:selectItems value="#{produitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>
                         </b:selectOneMenu>  
                     </b:column>
                 </b:row> 

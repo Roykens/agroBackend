@@ -1,8 +1,138 @@
 <div xmlns="http://www.w3.org/1999/xhtml"
      xmlns:b="http://bootsfaces.net/ui"
-     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
      xmlns:p="http://primefaces.org/ui"
      xmlns:f="http://xmlns.jcp.org/jsf/core"
-     xmlns:h="http://xmlns.jcp.org/jsf/html">
-        
+     xmlns:h="http://xmlns.jcp.org/jsf/html">   
+    <p:dialog modal="true" closable="true" header="MARCHÉS QUI VENDENT LE PRODUIT #{produitBean.produit.nom}" widgetVar="dlgVoirMarche" hideEffect="drop" showEffect="blind" >       
+        <p:dataList value="#{produitBean.marchesProduit}"  var="produit" type="ordered" class="updateAll" paginator="true" rows="10" emptyMessage="aucune association à un marché"  paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >  
+            #{produit.nom}, #{produit.description}  
+        </p:dataList>  
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="AJOUTER UN PRODUIT" widgetVar="dlgAjouterProduit" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterProduit" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterProduit" class="panelGrid_class updateAll" columns="2">                    
+                    <h:outputText  value="Intitulé: "   class="syntaxe_content" />  
+                    <b:inputText  value="#{produitBean.produit.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Conditionnement: "  class="syntaxe_content" />  
+                    <b:inputText value="#{produitBean.produit.conditionnement}"   class="syntaxe_content" />
+                    <h:outputText  value="Information: "  class="syntaxe_content"  />  
+                    <b:inputText value="#{produitBean.produit.info}"   class="syntaxe_content" style="margin-top: 10px;" /> 
+                    <h:outputText  value="Familles du produit: "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
+                    </p:selectOneMenu> 
+                    <h:outputText  value="Marchés: "  class="syntaxe_content" />  
+                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100">                          
+                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche}" />                                                 
+                        <p:column style="width: 100%;">
+                            #{marcheSelect.nom}
+                        </p:column>
+                    </p:selectManyMenu> 
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{produitBean.ajouterOuMettreajourProduit}" update="@(.updateAll)" oncomplete="PF('dlgAjouterProduit').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{produitBean.annuler}" onclick="PF('dlgAjouterProduit').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form> 
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER LES INFORMATIONS SUR LE PRODUIT" widgetVar="dlgModifierProduit" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierProduit" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterProduit" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "   class="syntaxe_content" />  
+                    <b:inputText  value="#{produitBean.produit.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Conditionnement: "  class="syntaxe_content" />  
+                    <b:inputText value="#{produitBean.produit.conditionnement}"   class="syntaxe_content" />
+                    <h:outputText  value="Information: "  class="syntaxe_content"  />  
+                    <b:inputText value="#{produitBean.produit.info}"   class="syntaxe_content" style="margin-top: 10px;" /> 
+                    <h:outputText  value="Familles du produit: "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
+                    </p:selectOneMenu> 
+                    <h:outputText  value="Marchés: "  class="syntaxe_content" />  
+                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100">                          
+                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche}" />                                                 
+                        <p:column style="width: 100%;">
+                            #{marcheSelect.nom}
+                        </p:column>
+                    </p:selectManyMenu>  
+                    <h:inputHidden value="#{produitBean.produit.version}"/>
+                    <h:inputHidden value="#{produitBean.produit.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{produitBean.ajouterOuMettreajourProduit}" update="@(.updateAll)" oncomplete="PF('dlgModifierProduit').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{produitBean.annuler}" onclick="PF('dlgModifierProduit').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>        
+
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog message="voulez-vous vraiment supprimer ce produit?"
+                     header="Initialisation de la suppression" severity="alert"
+                     widgetVar="dlgSupProduit" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{produitBean.supprimerProduit}" oncomplete="PF('dlgSupProduit').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{produitBean.annuler}" onclick ="PF('dlgSupProduit').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{produitBean.produit.nom}"/>
+            <h:inputHidden value="#{produitBean.produit.version}"/>
+            <h:inputHidden value="#{produitBean.produit.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">                   
+        <p:dataTable id="dataTableId"  value="#{produitBean.produits}" var="item"
+                     emptyMessage="Aucun produit enregistré" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter un produit" type="button" onclick="PF('dlgAjouterProduit').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Intitulé"/>
+                </f:facet>
+                <h:outputText value="#{item.nom}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Conditionnement"/>
+                </f:facet>
+                <h:outputText value="#{item.conditionnement}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>                 
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Information"/>
+                </f:facet>
+                <h:outputText value="#{item.info}"/>
+            </p:column>              
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Famille du Produit"/>
+                </f:facet>
+                <h:outputText value="#{produitBean.afficheNomCategorie(item.categorie)}"/>
+            </p:column> 
+            <p:column headerText="Action" width="400">                                                                  
+                <p:commandLink  id="voir_marchés" value="Marché(s) où trouver le produit " type="button" update="@(.updateAll)"   onclick="PF('dlgVoirMarche').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{produitBean.produit}"/>
+                </p:commandLink> 
+                <p:outputLabel value="|"/>          
+                <p:commandLink  id="modifier" value=" Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierProduit').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{produitBean.produit}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value="Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupProduit').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{produitBean.produit}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
 </div>

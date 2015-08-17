@@ -17,6 +17,11 @@
                     <b:inputText value="#{marcheBean.marche.latitude}"   class="syntaxe_content" />                      
                     <h:outputText  value="Description: "  class="syntaxe_content" />  
                     <b:inputText value="#{marcheBean.marche.description}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Ville d'appartenance: "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{marcheBean.id}" class="syntaxe_content" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{marcheBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}" />
+                    </p:selectOneMenu> 
                 </h:panelGrid>  
             </h:panelGroup>
             <p:separator/>
@@ -26,7 +31,7 @@
             </div>                    
         </h:form> 
     </p:dialog>
-    <p:dialog modal="true" closable="false" header="MODIFIER L'INTITULE DU MARCHE" widgetVar="dlgModifierMarche" hideEffect="drop" showEffect="blind">
+    <p:dialog modal="true" closable="false" header="MODIFIER LES INFORMATIONS SUR LE MARCHE" widgetVar="dlgModifierMarche" hideEffect="drop" showEffect="blind">
         <h:form id="formModifierMarche" class="updateAll" >                                                        
             <h:panelGroup >
                 <h:panelGrid  id="displayAjouterMarche" class="panelGrid_class" columns="2">
@@ -40,6 +45,11 @@
                     <b:inputText value="#{marcheBean.marche.latitude}"   class="syntaxe_content" />                      
                     <h:outputText  value="Description: "  class="syntaxe_content" />  
                     <b:inputText value="#{marcheBean.marche.description}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Ville d'appartenance: "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{marcheBean.id}" class="syntaxe_content" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{marcheBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}" />
+                    </p:selectOneMenu> 
                     <h:inputHidden value="#{marcheBean.marche.version}"/>
                     <h:inputHidden value="#{marcheBean.marche.id}"/>
                 </h:panelGrid>  
@@ -104,7 +114,13 @@
                     <h:outputText value="Description"/>
                 </f:facet>
                 <h:outputText value="#{item.description}"/>
-            </p:column>            
+            </p:column>    
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Ville d'appartenance"/>
+                </f:facet>
+                <h:outputText value="#{marcheBean.afficheNomVille(item.ville)}"/>
+            </p:column> 
             <p:column headerText="Action" width="200">                                            
                 <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierMarche').show()">
                     <f:setPropertyActionListener  value="#{item}" target="#{marcheBean.marche}"/>

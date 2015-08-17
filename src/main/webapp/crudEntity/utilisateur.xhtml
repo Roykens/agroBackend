@@ -27,9 +27,9 @@
 
                     </p:selectOneMenu>
                     <h:outputText  value="Marché:  "  class="syntaxe_content" />
-                    <p:selectOneMenu id="march" disabled="#{agentBean.disable}" value="#{agentBean.agent.marche}" style="width: 100%; margin-top: 10px;">
+                    <p:selectOneMenu id="march" value="#{agentBean.marche}" style="width: 100%; margin-top: 10px;">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems value="#{agentBean.marches}" var="item" itemLabel="#{item}" itemValue="#{item}"/>
+                        <f:selectItems value="#{agentBean.marches}" var="user" itemLabel="#{user.nom}"  itemValue="#{user.id}"/>
                     </p:selectOneMenu>
                 </h:panelGrid>  
             </h:panelGroup>
@@ -43,12 +43,31 @@
     <p:dialog modal="true" closable="false" header="MODIFIER" widgetVar="dlgModifierAgent" hideEffect="drop" showEffect="blind">
         <h:form id="formModifierAgent" class="updateAll" >                                                        
             <h:panelGroup >
-                <h:panelGrid  id="displayAjouterAgent" class="panelGrid_class" columns="2">
-                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
-                    <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />  
-                    <h:inputHidden value="#{agentBean.agent.version}"/>
-                    <h:inputHidden value="#{agentBean.agent.id}"/>
-                </h:panelGrid>  
+               <h:panelGrid  id="displayModifiersAgent" class="panelGrid_class updateAll" columns="2">
+                    <h:outputText  value="Nom d'utilisateur:* "  class="syntaxe_content" />  
+                    <b:inputText   requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.agent.login}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Mot de Passe:* "  class="syntaxe_content" />  
+                    <b:inputSecret requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.pwd1}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Confirmez mot de Passe:* "  class="syntaxe_content" />  
+                    <b:inputSecret required="true" value="#{agentBean.pwd2}"   class="syntaxe_content" />                                    
+                    <h:outputText  value="Identité: "  class="syntaxe_content" />  
+                    <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Rôle: "  class="syntaxe_content" />
+                    <p:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
+                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"
+                                event="change" 
+                                update="march" 
+                                process="@this"/>
+
+                    </p:selectOneMenu>
+                    <h:outputText  value="Marché:  "  class="syntaxe_content" />
+                    <p:selectOneMenu id="march" value="#{agentBean.marche}" style="width: 100%; margin-top: 10px;">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
+                        <f:selectItems value="#{agentBean.marches}" var="user" itemLabel="#{user.nom}"  itemValue="#{user.id}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid> 
             </h:panelGroup>
             <p:separator/>
             <div  style="text-align: center;">

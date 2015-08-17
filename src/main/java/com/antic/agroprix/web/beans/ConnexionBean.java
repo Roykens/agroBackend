@@ -12,6 +12,7 @@ package com.antic.agroprix.web.beans;
 import com.royken.antic.agroprix.entities.Agent;
 import com.royken.antic.agroprix.entities.RoleType;
 import com.royken.antic.agroprix.service.IAgentService;
+import com.royken.antic.agroprix.service.ServiceException;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -54,14 +55,9 @@ public class ConnexionBean {
         }
     }
 
-    public String verifier() {
-        // nom=null;
+    public String verifier() throws ServiceException {        
         if (nom != null && pwd != null && !nom.isEmpty() && !pwd.isEmpty()) {
-            //agent = agentService.findAgentByNomAndPwd(nom, pwd);          
-            agent.setId(1L);
-            agent.setLogin("admin");
-            agent.setPassword("admin");
-            agent.setRoleType(RoleType.ADMIN);
+            agent = agentService.findByLoginaAndPassword(nom, pwd);            
             pwd = "";
             if (agent != null && agent.getId() != null) {
                 connecter = "déconnexion";
