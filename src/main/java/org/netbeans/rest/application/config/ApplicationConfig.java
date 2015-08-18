@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.royken.antic.agroprix.resource.impl.CategoriesResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.MarcheResource.class);
+        resources.add(com.royken.antic.agroprix.resource.impl.PrixResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.ProduitResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.VilleResource.class);
     }

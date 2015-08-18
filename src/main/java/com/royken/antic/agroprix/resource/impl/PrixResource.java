@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
+@Path("/prix")
 public class PrixResource implements IPrixResource{
     
     @EJB
