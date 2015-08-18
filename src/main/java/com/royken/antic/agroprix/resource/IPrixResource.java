@@ -41,7 +41,7 @@ public interface IPrixResource {
     @GET
     @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}")
     @Produces(value = "application/json")
-    List<PrixProduitMarche> getPrix(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche);
+    PrixProduitMarche getPrix(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche);
     
     @GET
     @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}/date1/date2")

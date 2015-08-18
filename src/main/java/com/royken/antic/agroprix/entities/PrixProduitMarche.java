@@ -57,9 +57,11 @@ public class PrixProduitMarche implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date datePrix;
     
+    @XmlTransient
     @ManyToOne
     private Produit produit;
     
+    @XmlTransient
     @ManyToOne
     private Marche marche;
     
