@@ -15,7 +15,7 @@
                 </b:row>
                 <b:row styleClass="show-grid">                                    
                     <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="" id="VilleID" >
+                        <b:selectOneMenu value="#{prixDesProduitBean.villeId}" id="VilleID" onchange="#{prixDesProduitBean.handleVilleChange()}" >
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
                         </b:selectOneMenu>
