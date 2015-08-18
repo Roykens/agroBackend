@@ -82,7 +82,7 @@ public class PrixServiceImpl implements IPrixService{
     }
 
     @Override
-    public List<PrixProduitMarche> findByMarche(Long idMarche, Long idProduit) throws ServiceException {
+    public PrixProduitMarche findByMarche(Long idMarche, Long idProduit) throws ServiceException {
         try {
             Marche marche = marcheDao.findById(idMarche);
             if(marche == null){
@@ -96,7 +96,7 @@ public class PrixServiceImpl implements IPrixService{
         } catch (DataAccessException ex) {
             Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Collections.EMPTY_LIST;
+        return null;
     }
 
     @Override

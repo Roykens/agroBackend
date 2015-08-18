@@ -80,13 +80,13 @@ public class PrixResource implements IPrixResource{
    
 
     @Override
-    public List<PrixProduitMarche> getPrix(long idProduit, long idMarche) {
+    public PrixProduitMarche getPrix(long idProduit, long idMarche) {
         try {
             return prixService.findByMarche(idMarche, idProduit);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Collections.EMPTY_LIST;
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 
     @Override

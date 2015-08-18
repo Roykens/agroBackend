@@ -44,18 +44,19 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
     }
 
     @Override
-    public List<PrixProduitMarche> findPrixByMarcheAndProduit(Marche marche, Produit produit) throws DataAccessException {
+    public PrixProduitMarche findPrixByMarcheAndProduit(Marche marche, Produit produit) throws DataAccessException {
         CriteriaBuilder cb = getManager().getCriteriaBuilder();
         CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
         Root<PrixProduitMarche> pRoot = cq.from(PrixProduitMarche.class);
-        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit)));
-        List<PrixProduitMarche> prixI =  getManager().createQuery(cq).getResultList();
-        List<PrixProduitMarche> result = new ArrayList<PrixProduitMarche>();
-        result.add(prixI.get(0));
-        if(prixI.size() > 1){
-            result.add(prixI.get(1));
-        }
-        return result;
+        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit))).orderBy(cb.desc(pRoot.get(PrixProduitMarche_.datePrix)));
+//        List<PrixProduitMarche> prixI =  getManager().createQuery(cq).getResultList();
+//        List<PrixProduitMarche> result = new ArrayList<PrixProduitMarche>();
+//        result.add(prixI.get(0));
+//        if(prixI.size() > 1){
+//            result.add(prixI.get(1));
+//        }
+        return getManager().createQuery(cq).getResultList().get(0);
+        ///return result;
     }
     
 }
