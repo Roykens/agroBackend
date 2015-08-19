@@ -34,10 +34,7 @@ public class PrixProduitMarche implements Serializable{
     public PrixProduitMarche() {
         df = new SimpleDateFormat("dd-MM-yyyy");
     }
-    
-    
-    
-    
+ 
     @Version
     private int version;
     
