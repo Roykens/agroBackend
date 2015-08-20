@@ -66,7 +66,7 @@ public class PrixDesProduitBean {
     }
 
     public void voirPrixProduit() throws ServiceException {
-        prixProduitMarches = prixService.findByMarche(marcheId, produitId);
+        //prixProduitMarches = prixService.findByMarche(marcheId, produitId);
     }
 
     public IVilleService getVilleService() {

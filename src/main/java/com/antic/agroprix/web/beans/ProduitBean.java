@@ -54,7 +54,7 @@ public class ProduitBean {
             Categorie categorie = categorieService.findCategorieById(id);
             produit.setCategorie(categorie);
             produit.setMarches(marcheSelectionner);
-            System.out.println(produit+ "================="+marcheSelectionner);
+            System.err.println("============================="+produit);
             if (produit.getId() == null && produit.getNom() != null && produit.getNom().length() != 0) {
                 produit = produitService.saveOrUpdateProduit(produit);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", produit.getNom() + " a été ajouté "));
@@ -64,7 +64,7 @@ public class ProduitBean {
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
-        }
+        }        
         produit = new Produit();
     }
     

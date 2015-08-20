@@ -102,6 +102,11 @@ public class Produit implements Serializable{
     public void setMarches(List<Marche> marches) {
         this.marches = marches;
     }
+
+    @Override
+    public String toString() {
+        return "Produit{" + "version=" + version + ", id=" + id + ", nom=" + nom + ", conditionnement=" + conditionnement + ", info=" + info + ", categorie=" + categorie + ", marches=" + marches + '}';
+    }
  
     
 }

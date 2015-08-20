@@ -94,7 +94,7 @@
                     <p:commandButton  icon="ui-icon-disk" value="Ajouter un produit" type="button" onclick="PF('dlgAjouterProduit').show()" />                    
                 </f:facet>  
             </div>
-            <p:column>
+            <p:column filterBy="#{item.nom}" filterMatchMode="contains">
                 <f:facet name="header">
                     <h:outputText value="Intitulé"/>
                 </f:facet>
@@ -114,9 +114,9 @@
                 </f:facet>
                 <h:outputText value="#{item.info}"/>
             </p:column>              
-            <p:column>
-                <f:facet name="header">
-                    <h:outputText value="Famille du Produit"/>
+            <p:column filterBy="#{item.categorie.nom}" filterMatchMode="contains">
+                <f:facet name="header" >
+                    <h:outputText value="Famille du Produit" />
                 </f:facet>
                 <h:outputText value="#{produitBean.afficheNomCategorie(item.categorie)}"/>
             </p:column> 

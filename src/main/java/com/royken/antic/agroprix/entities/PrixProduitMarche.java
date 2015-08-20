@@ -132,6 +132,11 @@ public class PrixProduitMarche implements Serializable{
     public void setEtatPrix(EtatPrix etatPrix) {
         this.etatPrix = etatPrix;
     }
+
+    @Override
+    public String toString() {
+        return "PrixProduitMarche{" + "version=" + version + ", df=" + df + ", id=" + id + ", prix=" + prix + ", datePrix=" + datePrix + ", produit=" + produit + ", marche=" + marche + ", etatPrix=" + etatPrix + '}';
+    }
     
     
     
