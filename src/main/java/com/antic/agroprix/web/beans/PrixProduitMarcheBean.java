@@ -53,7 +53,7 @@ public class PrixProduitMarcheBean {
 
     public void ajouterOuMettreajourPrixProduitMarche(ActionEvent event) throws ServiceException {
 
-        if (prixProduitMarche != null) {            
+        if (prixProduitMarche != null) {
             if (produitId != null) {
                 Produit produit = produitService.findProduitById(produitId);
                 prixProduitMarche.setProduit(produit);
@@ -135,7 +135,13 @@ public class PrixProduitMarcheBean {
     }
 
     public List<PrixProduitMarche> getPrixProduitMarches() throws ServiceException {
-        prixProduitMarche = prixProduitMarcheService.findByMarche(marchesId, produitsId);
+        prixProduitMarches = prixProduitMarcheService.findAll();
+        if (marchesId != null) {
+            prixProduitMarches = prixProduitMarcheService.findByMarche(marchesId);
+        }
+//        if (marchesId != null && produitsId != null) {
+//            prixProduitMarches = prixProduitMarcheService.findByMarche(marcheId, produitId);
+//        }
         return prixProduitMarches;
     }
 

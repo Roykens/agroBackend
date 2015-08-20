@@ -38,8 +38,24 @@
         <h:form id="formModifierPrix" class="updateAll" >                                                        
             <h:panelGroup >
                 <h:panelGrid  id="displayAjouterPrix" class="panelGrid_class" columns="2">
-                    <h:outputText  value="Marché:* "  class="syntaxe_content" />  
-                    
+                     <h:outputText  value="Marché:* "  class="syntaxe_content" />  
+                     <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}" />
+                    </p:selectOneMenu> 
+                      <h:outputText  value="Produit:* "  class="syntaxe_content" />  
+                      <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                        <f:selectItems value="#{prixProduitMarcheBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" />
+                    </p:selectOneMenu> 
+                    <h:outputText  value="Prix:* "  class="syntaxe_content" />  
+                    <b:inputText value="#{prixProduitMarcheBean.prixProduitMarche.prix}"   class="syntaxe_content" />                      
+                    <h:outputText  value="Date du changement: "  class="syntaxe_content" />  
+                    <b:datepicker value="#{prixProduitMarcheBean.prixProduitMarche.datePrix}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />                      
+                    <h:outputText  value="Etat du Prix: "  class="syntaxe_content" />                 
+                    <p:selectOneRadio value="#{prixProduitMarcheBean.prixProduitMarche.etatPrix}"  >  
+                        <f:selectItems value="#{prixProduitMarcheBean.etatPrixs}" var="etat" itemLabel="#{etat}" itemValue="#{etat}" />  
+                    </p:selectOneRadio>  
                     <h:inputHidden value="#{prixProduitMarcheBean.prixProduitMarche.version}"/>
                     <h:inputHidden value="#{prixProduitMarcheBean.prixProduitMarche.id}"/>
                 </h:panelGrid>  

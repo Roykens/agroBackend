@@ -19,12 +19,12 @@
                     <h:outputText  value="Information: "  class="syntaxe_content"  />  
                     <b:inputText value="#{produitBean.produit.info}"   class="syntaxe_content" style="margin-top: 10px;" /> 
                     <h:outputText  value="Familles du produit: "  class="syntaxe_content" />  
-                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;">
+                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Marchés: "  class="syntaxe_content" />  
-                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100">                          
+                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100" filterMatchMode="contains">
                         <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche}" />                                                 
                         <p:column style="width: 100%;">
                             #{marcheSelect.nom}
