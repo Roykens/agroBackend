@@ -58,5 +58,14 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
         return getManager().createQuery(cq).getResultList().get(0);
         ///return result;
     }
+
+    @Override
+    public List<PrixProduitMarche> findByMarche(Marche marche) throws DataAccessException {
+        CriteriaBuilder cb = getManager().getCriteriaBuilder();
+        CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
+        Root<PrixProduitMarche> prixRoot = cq.from(PrixProduitMarche.class);
+        cq.where(cb.equal(prixRoot.get(PrixProduitMarche_.marche), marche));
+        return getManager().createQuery(cq).getResultList();
+    }
     
 }
