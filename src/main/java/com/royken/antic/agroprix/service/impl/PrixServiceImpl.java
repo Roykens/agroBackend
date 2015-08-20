@@ -144,5 +144,15 @@ public class PrixServiceImpl implements IPrixService{
         }
         return Collections.EMPTY_LIST;
     }
+
+    @Override
+    public List<PrixProduitMarche> findAll() throws ServiceException {
+        try {
+            return prixProduitMarcheDao.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
     
 }
