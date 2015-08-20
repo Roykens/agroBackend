@@ -130,5 +130,29 @@ public class PrixServiceImpl implements IPrixService{
         }
         return null;
     }
+
+    @Override
+    public List<PrixProduitMarche> findByMarche(Long idMarche) throws ServiceException {
+        try {
+            Marche marche = marcheDao.findById(idMarche);
+            if(marche == null){
+                throw new ServiceException("Service not found");
+            }
+            return prixProduitMarcheDao.findByMarche(marche);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<PrixProduitMarche> findAll() throws ServiceException {
+        try {
+            return prixProduitMarcheDao.findAll();
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
     
 }

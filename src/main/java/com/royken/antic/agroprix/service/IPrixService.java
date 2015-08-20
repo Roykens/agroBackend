@@ -16,7 +16,11 @@ public interface IPrixService {
     
     public PrixProduitMarche findById(Long id) throws ServiceException;
     
+    public List<PrixProduitMarche> findByMarche(Long idMarche) throws ServiceException;
+    
     public PrixProduitMarche findByMarche(Long idMarche, Long idProduit) throws ServiceException;
     
     public List<PrixProduitMarche> findByProduitAndMarcheBetweenDate(Long idMarche, Long idProduit, Date date1, Date date2) throws ServiceException;
+    
+    public List<PrixProduitMarche> findAll() throws ServiceException;
 }

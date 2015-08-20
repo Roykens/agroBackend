@@ -20,6 +20,11 @@ public interface IPrixProduitMarcheDao extends IGenericDao<PrixProduitMarche, Lo
     
     public PrixProduitMarche findPrixByMarcheAndProduit(Marche marche, Produit produit) throws DataAccessException;
     
+    
+    public List<PrixProduitMarche> findAllPrixByMarcheAndProduit(Marche marche, Produit produit) throws DataAccessException;
+    
+    public List<PrixProduitMarche> findByMarche(Marche marche) throws DataAccessException;
+    
     public List<PrixProduitMarche> findByMarche(Marche marche,Produit produit, Date debut, Date fin) throws DataAccessException;
     
     
