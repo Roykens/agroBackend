@@ -10,9 +10,14 @@ package com.antic.agroprix.web.beans;
  * @author root
  */
 import com.royken.antic.agroprix.entities.Agent;
+import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.RoleType;
 import com.royken.antic.agroprix.service.IAgentService;
+import com.royken.antic.agroprix.service.IPrixService;
+import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,11 +32,17 @@ public class ConnexionBean {
 
     @EJB
     IAgentService agentService;
+    @EJB
+    IProduitService produitService;
+    @EJB
+    IPrixService prixService;
     String connecter;
     String menu;
     String message;
     String nom;
     String pwd;
+    List<Produit> produits;
+    List<PrixProduitMarche> prixProduitMarches;
     //String action;
     Agent agent;
 
@@ -55,9 +66,9 @@ public class ConnexionBean {
         }
     }
 
-    public String verifier() throws ServiceException {        
+    public String verifier() throws ServiceException {
         if (nom != null && pwd != null && !nom.isEmpty() && !pwd.isEmpty()) {
-            agent = agentService.findByLoginaAndPassword(nom, pwd);            
+            agent = agentService.findByLoginaAndPassword(nom, pwd);
             pwd = "";
             if (agent != null && agent.getId() != null) {
                 connecter = "déconnexion";
@@ -146,6 +157,28 @@ public class ConnexionBean {
 
     public void setAgent(Agent agent) {
         this.agent = agent;
+    }
+
+    public List<Produit> getProduits() throws ServiceException {
+        if (agent != null && agent.getMarche() != null && agent.getMarche().getId() != null) {
+            produits = produitService.findProduitByMarche(agent.getMarche().getId());
+        }
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+
+    public List<PrixProduitMarche> getPrixProduitMarches() throws ServiceException {
+        if (agent != null && agent.getMarche() != null && agent.getMarche().getId() != null) {
+            prixProduitMarches = prixService.findByMarche(agent.getMarche().getId());
+        }
+        return prixProduitMarches;
+    }
+
+    public void setPrixProduitMarches(List<PrixProduitMarche> prixProduitMarches) {
+        this.prixProduitMarches = prixProduitMarches;
     }
 
 }

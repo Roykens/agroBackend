@@ -51,6 +51,30 @@ public class PrixProduitMarcheBean {
         prixProduitMarche.setDatePrix(new Date());
     }
 
+    public void ajouterOuMettreajourPrixProduitMarche(Long id) throws ServiceException {
+        marcheId = id;
+        if (prixProduitMarche != null) {
+            if (produitId != null) {
+                Produit produit = produitService.findProduitById(produitId);
+                prixProduitMarche.setProduit(produit);
+                marchesId = marcheId;
+            }
+            if (marcheId != null) {
+                Marche marche = marcheService.findMarcheById(marcheId);
+                prixProduitMarche.setMarche(marche);
+                produitsId = produitId;
+            }
+            System.out.println("------------------------------------------" + prixProduitMarche);
+            if (prixProduitMarche.getId() == null && prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
+                prixProduitMarche = prixProduitMarcheService.saveOrUpdatePrix(prixProduitMarche);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", prixProduitMarche.getPrix() + " a été ajouté "));
+            }
+        }
+        produitId = null;
+        marcheId = null;
+        prixProduitMarche = new PrixProduitMarche();
+    }
+
     public void ajouterOuMettreajourPrixProduitMarche(ActionEvent event) throws ServiceException {
 
         if (prixProduitMarche != null) {
