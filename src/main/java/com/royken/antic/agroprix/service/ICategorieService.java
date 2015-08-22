@@ -1,7 +1,6 @@
 package com.royken.antic.agroprix.service;
 
 import com.royken.antic.agroprix.entities.Categorie;
-import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ejb.Local;
 
