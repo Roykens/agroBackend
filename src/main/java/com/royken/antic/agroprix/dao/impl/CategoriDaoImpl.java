@@ -3,15 +3,12 @@ package com.royken.antic.agroprix.dao.impl;
 import com.royken.antic.agroprix.entities.Categorie;
 import com.royken.antic.agroprix.dao.ICategorieDao;
 import com.royken.antic.agroprix.entities.Agent;
-import com.royken.antic.agroprix.entities.Categorie_;
 import com.royken.antic.agroprix.entities.Produit;
-import com.royken.antic.agroprix.entities.Produit_;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 
 /**
