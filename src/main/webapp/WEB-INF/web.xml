@@ -29,9 +29,10 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
         <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>agent_marche.xhtml</welcome-file>
+        <welcome-file>accueil.xhtml</welcome-file>
         <welcome-file>index.xhtml</welcome-file>
         <welcome-file>administrateur.xhtml</welcome-file>
-        <welcome-file>accueil.xhtml</welcome-file>               
+        
+        <welcome-file>agent_marche.xhtml</welcome-file>                 
     </welcome-file-list>
 </web-app>
