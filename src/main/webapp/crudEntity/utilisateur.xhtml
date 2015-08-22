@@ -23,18 +23,20 @@
                     <h:outputText  value="Identité: "  class="syntaxe_content" />  
                     <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />                      
                     <h:outputText  value="Rôle: "  class="syntaxe_content" />                   
-                     <h:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
+                     <p:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />                       
-                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"  event="change" update="march" process="@this"/>
+                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"
+                                event="change" 
+                                update="march" 
+                                process="@this"/>
 
-
-                    </h:selectOneMenu>
+                    </p:selectOneMenu>
                     <h:outputText  value="Marché:  "  class="syntaxe_content" />
-                    <h:selectOneMenu id="march" value="#{agentBean.marcheId}" style="width: 100%; margin-top: 10px;" >
+                    <p:selectOneMenu id="march" value="#{agentBean.marcheId}" style="width: 100%; margin-top: 10px;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
                         <f:selectItems value="#{agentBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}"  itemValue="#{marche.id}"/>
-                    </h:selectOneMenu>
+                    </p:selectOneMenu> 
 
 
                 </h:panelGrid>  

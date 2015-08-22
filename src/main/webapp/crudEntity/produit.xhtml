@@ -4,8 +4,8 @@
      xmlns:f="http://xmlns.jcp.org/jsf/core"
      xmlns:h="http://xmlns.jcp.org/jsf/html">   
     <p:dialog modal="true" closable="true" header="MARCHÉS QUI VENDENT LE PRODUIT #{produitBean.produit.nom}" widgetVar="dlgVoirMarche" hideEffect="drop" showEffect="blind" >       
-        <p:dataList value="#{produitBean.marchesProduit}"  var="produit" type="ordered" class="updateAll" paginator="true" rows="10" emptyMessage="aucune association à un marché"  paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >  
-            #{produit.nom}, #{produit.description}  
+        <p:dataList value="#{produitBean.marchesProduit}"  var="marche" type="ordered" class="updateAll" paginator="true" rows="10" emptyMessage="aucune association à un marché"  paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >              
+            #{agentBean.marcheResult(marche)}
         </p:dataList>  
     </p:dialog>
     <p:dialog modal="true" closable="false" header="AJOUTER UN PRODUIT" widgetVar="dlgAjouterProduit" hideEffect="drop" showEffect="blind" >       
@@ -24,14 +24,12 @@
                         <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Marchés: "  class="syntaxe_content" />  
-                    <p:selectCheckboxMenu id="toto" value="#{produitBean.idMarches}"  label="Liste des Marche" filter="true" filterMatchMode="startsWith" converter="javax.faces.Long" class="syntaxe_content">
-                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}" />
+                    <p:selectCheckboxMenu id="toto" value="#{produitBean.idMarches}"  label="Liste des Marche" filter="true" filterMatchMode="contains" converter="javax.faces.Long" class="syntaxe_content">
+                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
                         <p:column style="width: 100%;">
-                            #{marcheSelect.nom}
+                            #{agentBean.marcheResult(marche)}
                         </p:column>
                     </p:selectCheckboxMenu>
-
-
                 </h:panelGrid>  
             </h:panelGroup>
             <p:separator/>
@@ -45,24 +43,24 @@
         <h:form id="formModifierProduit" class="updateAll" >                                                        
             <h:panelGroup >
                 <h:panelGrid  id="displayAjouterProduit" class="panelGrid_class" columns="2">
-                    <h:outputText  value="Intitulé: "   class="syntaxe_content" />  
+                   <h:outputText  value="Intitulé: "   class="syntaxe_content" />  
                     <b:inputText  value="#{produitBean.produit.nom}"   class="syntaxe_content" />                      
                     <h:outputText  value="Conditionnement: "  class="syntaxe_content" />  
                     <b:inputText value="#{produitBean.produit.conditionnement}"   class="syntaxe_content" />
                     <h:outputText  value="Information: "  class="syntaxe_content"  />  
                     <b:inputText value="#{produitBean.produit.info}"   class="syntaxe_content" style="margin-top: 10px;" /> 
                     <h:outputText  value="Familles du produit: "  class="syntaxe_content" />  
-                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;">
+                    <p:selectOneMenu value="#{produitBean.id}" filter="true" class="syntaxe_content" style="width: 100%;" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Marchés: "  class="syntaxe_content" />  
-                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100" filterMatchMode="contains">
-                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche}" />
-                        <p:column style="width: 100%;">                            
-                            #{agentBean.marcheResult(marcheSelect)}
+                    <p:selectCheckboxMenu id="toto" value="#{produitBean.idMarches}"  label="Liste des Marche" filter="true" filterMatchMode="contains" converter="javax.faces.Long" class="syntaxe_content">
+                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
+                        <p:column style="width: 100%;">
+                            #{agentBean.marcheResult(marche)}
                         </p:column>
-                    </p:selectManyMenu>  
+                    </p:selectCheckboxMenu>
                     <h:inputHidden value="#{produitBean.produit.version}"/>
                     <h:inputHidden value="#{produitBean.produit.id}"/>
                 </h:panelGrid>  

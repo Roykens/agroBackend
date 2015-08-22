@@ -96,10 +96,10 @@ public class AgentBean {
     }
 
     public void handleRoleTypesChange() throws ServiceException {        
-        if (!(agent != null && agent.getRoleType() != null && agent.getRoleType().compareTo(RoleType.AGENT) == 0)) {
-            marches = null;
-        } else {
+        if ((agent != null && agent.getRoleType() != null && agent.getRoleType().compareTo(RoleType.AGENT) == 0)) {            
             marches = marcheService.findAllMarche();
+        } else {
+            marches = null;
         }
     }
 

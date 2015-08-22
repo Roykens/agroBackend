@@ -11,9 +11,9 @@
                      <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
-                    </p:selectOneMenu> 
+                        <p:ajax listener="#{prixProduitMarcheBean.handleMarchChange()}"  event="change" update="pduit" process="@this"/>                    </p:selectOneMenu> 
                       <h:outputText  value="Produit:* "  class="syntaxe_content" />  
-                      <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                      <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" id="pduit" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" />
                     </p:selectOneMenu> 
