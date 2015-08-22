@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.resource;
 
 import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Produit;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -42,6 +43,11 @@ public interface IMarcheResource {
     @Path(value = "{idProduit : \\d+}/{idVille : \\d+}/marches")
     @Produces(value = "application/json")
     List<Marche> getMarcheByProduitVille(@PathParam(value = "idProduit")long idProduit, @PathParam(value = "idVille")long idVille);
+    
+    @GET
+    @Path(value = "{idMarche : \\d+}/produits")
+    @Produces(value = "application/json")
+    List<Produit> getProduitByMarche(@PathParam(value = "idMarche")long idMarche);
     
     
 }

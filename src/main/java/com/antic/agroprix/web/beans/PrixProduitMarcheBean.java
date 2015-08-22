@@ -153,7 +153,7 @@ public class PrixProduitMarcheBean {
         produits = produitService.findAllProduit();
         if (marcheId != null) {
             Marche marche = marcheService.findMarcheById(marcheId);
-            produits = produitService.findProduitByMarche(marche);
+            produits = produitService.findProduitByMarche(marcheId);
         }
         return produits;
     }

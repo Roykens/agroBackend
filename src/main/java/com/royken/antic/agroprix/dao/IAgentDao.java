@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.dao;
 
 import com.royken.antic.agroprix.entities.Agent;
+import com.royken.antic.agroprix.entities.projection.AgentMarche;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.IGenericDao;
 import java.io.Serializable;
