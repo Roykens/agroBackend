@@ -145,7 +145,7 @@ public class Marche implements Serializable{
 
     @Override
     public String toString() {
-        return "Marche{" + "version=" + version + ", id=" + id + ", nom=" + nom + ", longitude=" + longitude + ", latitude=" + latitude + ", dateCreation=" + dateCreation + ", description=" + description + '}';
+        return nom +" - " + ville.getNom();
     }
 
     @Override

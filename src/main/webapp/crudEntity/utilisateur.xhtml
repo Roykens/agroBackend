@@ -35,7 +35,7 @@
                     <h:outputText  value="Marché:  "  class="syntaxe_content" />
                     <p:selectOneMenu id="march" value="#{agentBean.marcheId}" style="width: 100%; margin-top: 10px;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems value="#{agentBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}"  itemValue="#{marche.id}"/>
+                        <f:selectItems value="#{agentBean.marches}" var="marche"   itemValue="#{marche.id}"/>
                     </p:selectOneMenu> 
 
 
@@ -43,7 +43,7 @@
             </h:panelGroup>
             <p:separator/>
             <div  style="text-align: center;">
-                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgAjouterAgent').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Soumettre" action ="#{agentBean.ajouterajourAgent()}" update="@(.updateAll)" oncomplete="PF('dlgAjouterAgent').hide()"   />
                 <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{agentBean.annuler}" onclick="PF('dlgAjouterAgent').hide()" update="@(.updateAll)" ajax="true"  />
             </div>                    
         </h:form>  
