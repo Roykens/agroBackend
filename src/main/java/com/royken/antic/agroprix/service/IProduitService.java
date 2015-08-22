@@ -23,5 +23,5 @@ public interface IProduitService {
     
     public List<Produit> findByCategorie(Long  idCategorie) throws ServiceException;
     
-    public List<Produit> findProduitByMarche(Marche marche) throws ServiceException;
+    public List<Produit> findProduitByMarche(Long idMarche) throws ServiceException;
 }

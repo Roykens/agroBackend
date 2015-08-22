@@ -13,6 +13,9 @@ import com.royken.antic.agroprix.service.ICategorieService;
 import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.ServiceException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -42,6 +45,7 @@ public class ProduitBean {
     List<Marche> marchesProduit = new ArrayList<Marche>();
     Long id = 0L;
     List<Marche> marcheSelectionner = new ArrayList<Marche>();
+    private Long[] idMarches = new Long[1000];
     
     public ProduitBean() {
         
@@ -53,6 +57,14 @@ public class ProduitBean {
             
             Categorie categorie = categorieService.findCategorieById(id);
             produit.setCategorie(categorie);
+            for (Long idM : idMarches) {
+                if(idM != 0L){
+                    Marche m = marcheService.findMarcheById(idM);
+                    marcheSelectionner.add(m);
+                }
+                
+            }
+            
             produit.setMarches(marcheSelectionner);
             System.err.println("============================="+produit);
             if (produit.getId() == null && produit.getNom() != null && produit.getNom().length() != 0) {
@@ -66,6 +78,7 @@ public class ProduitBean {
             }
         }        
         produit = new Produit();
+        idMarches = new Long[1000];
     }
     
     public String afficheNomCategorie(Categorie categorie) {
@@ -170,6 +183,23 @@ public class ProduitBean {
     public void setMarcheService(IMarcheService marcheService) {
         this.marcheService = marcheService;
     }
+
+    public Long[] getIdMarches() {
+        if (produit != null && produit.getMarches() != null) {
+            int i = 0;
+            for (Marche next : produit.getMarches()) {
+                idMarches[i] = next.getId();
+                i++;
+            }
+        }
+        return idMarches;
+    }
+
+    public void setIdMarches(Long[] idMarches) {
+        this.idMarches = idMarches;
+    }
+    
+    
     
     public List<Marche> getMarcheSelectionner() {
         if (produit != null) {

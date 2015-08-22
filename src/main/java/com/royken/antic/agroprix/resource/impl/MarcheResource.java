@@ -1,8 +1,10 @@
 package com.royken.antic.agroprix.resource.impl;
 
 import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.resource.IMarcheResource;
 import com.royken.antic.agroprix.service.IMarcheService;
+import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +25,9 @@ public class MarcheResource implements IMarcheResource{
     
     @EJB
     private IMarcheService marcheService;
+    
+    @EJB
+    private IProduitService produitService;
 
     public IMarcheService getMarcheService() {
         return marcheService;
@@ -30,6 +35,14 @@ public class MarcheResource implements IMarcheResource{
 
     public void setMarcheService(IMarcheService marcheService) {
         this.marcheService = marcheService;
+    }
+
+    public IProduitService getProduitService() {
+        return produitService;
+    }
+
+    public void setProduitService(IProduitService produitService) {
+        this.produitService = produitService;
     }
     
     
@@ -104,6 +117,16 @@ public class MarcheResource implements IMarcheResource{
     public List<Marche> getMarcheByProduitVille(long idProduit, long idVille) {
         try {
             return marcheService.findByProduitAndVille(idProduit, idVille);
+        } catch (ServiceException ex) {
+            Logger.getLogger(MarcheResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<Produit> getProduitByMarche(long idMarche) {
+        try {
+            return produitService.findProduitByMarche(idMarche);
         } catch (ServiceException ex) {
             Logger.getLogger(MarcheResource.class.getName()).log(Level.SEVERE, null, ex);
         }

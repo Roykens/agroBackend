@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.service.impl;
 
 import com.royken.antic.agroprix.dao.ICategorieDao;
+import com.royken.antic.agroprix.dao.IMarcheDao;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.dao.IProduitDao;
 import com.royken.antic.agroprix.entities.Categorie;
@@ -14,14 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
 @Stateless
-@Named
 public class ProduitServiceImpl implements IProduitService {
 
     @Inject
@@ -29,6 +28,9 @@ public class ProduitServiceImpl implements IProduitService {
     
     @Inject
     private ICategorieDao categorieDao;
+    
+    @Inject
+    private IMarcheDao marcheDao;
 
     public IProduitDao getProduitDao() {
         return produitDao;
@@ -44,6 +46,14 @@ public class ProduitServiceImpl implements IProduitService {
 
     public void setCategorieDao(ICategorieDao categorieDao) {
         this.categorieDao = categorieDao;
+    }
+
+    public IMarcheDao getMarcheDao() {
+        return marcheDao;
+    }
+
+    public void setMarcheDao(IMarcheDao marcheDao) {
+        this.marcheDao = marcheDao;
     }
     
     
@@ -111,9 +121,12 @@ public class ProduitServiceImpl implements IProduitService {
     }
 
     @Override
-    public List<Produit> findProduitByMarche(Marche marche) throws ServiceException {
+    public List<Produit> findProduitByMarche(Long idMarche) throws ServiceException {
         try {
-            return produitDao.findByMarche(marche);
+            Marche marche = marcheDao.findById(idMarche);
+            if(marche != null){
+                return produitDao.findByMarche(marche);
+            }
         } catch (DataAccessException ex) {
             Logger.getLogger(ProduitServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
