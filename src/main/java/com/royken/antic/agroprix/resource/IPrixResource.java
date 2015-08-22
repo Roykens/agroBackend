@@ -17,8 +17,9 @@ import javax.ws.rs.Produces;
 @Path("prix")
 public interface IPrixResource {
     @POST
+    @Path(value = "{etatPrix}")
     @Produces(value = "application/json")
-    PrixProduitMarche createPrix(PrixProduitMarche ppmZ);
+    PrixProduitMarche createPrix(@PathParam(value = "etatPrix") String etat,PrixProduitMarche ppmZ);
 
     @GET
     @Path(value = "{id : \\d+}")
@@ -26,9 +27,9 @@ public interface IPrixResource {
     PrixProduitMarche getPrixProduitMarche(@PathParam(value = "id") long id);
 
     @PUT
-    @Path(value = "{id : \\d+}")
+    @Path(value = "{id : \\d+}/{etatPrix}")
     @Produces(value = "application/json")
-    PrixProduitMarche updateCategorie(@PathParam(value = "id") long id, PrixProduitMarche ppm);
+    PrixProduitMarche updatePrix(@PathParam(value = "id") long id,@PathParam(value = "etatPrix") String etat ,PrixProduitMarche ppm);
 
     @GET
     @Produces(value = "application/json")
