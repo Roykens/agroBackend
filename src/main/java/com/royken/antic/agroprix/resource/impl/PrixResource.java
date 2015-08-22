@@ -1,9 +1,11 @@
 package com.royken.antic.agroprix.resource.impl;
 
+import com.royken.antic.agroprix.entities.EtatPrix;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.ServiceException;
+import com.royken.antic.agroprix.service.Util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -37,8 +39,9 @@ public class PrixResource implements IPrixResource{
     
 
     @Override
-    public PrixProduitMarche createPrix(PrixProduitMarche ppm) {
+    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppm) {
         try {
+            ppm.setEtatPrix(Util.stringToEtatPrix(etat));
             return prixService.saveOrUpdatePrix(ppm);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,11 +60,13 @@ public class PrixResource implements IPrixResource{
     }
 
     @Override
-    public PrixProduitMarche updateCategorie(long id, PrixProduitMarche ppm) {
+    public PrixProduitMarche updatePrix(long id, String etat, PrixProduitMarche ppm) {
         try {
             PrixProduitMarche ppmo = prixService.findById(id);
             if(ppmo != null){
-                ppmo.setDatePrix(null);
+                ppmo.setDatePrix(ppm.getDatePrix());
+                ppmo.setEtatPrix(Util.stringToEtatPrix(etat));
+                ppmo.setPrix(ppm.getPrix());
             }
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);

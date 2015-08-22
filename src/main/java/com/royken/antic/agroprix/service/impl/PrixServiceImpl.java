@@ -24,14 +24,14 @@ import javax.inject.Named;
  */
 @Stateless
 @Named
-public class PrixServiceImpl implements IPrixService{
+public class PrixServiceImpl implements IPrixService {
 
     @Inject
     private IPrixProduitMarcheDao prixProduitMarcheDao;
-    
+
     @Inject
     private IMarcheDao marcheDao;
-    
+
     @Inject
     private IProduitDao produitDao;
 
@@ -58,42 +58,36 @@ public class PrixServiceImpl implements IPrixService{
     public void setProduitDao(IProduitDao produitDao) {
         this.produitDao = produitDao;
     }
-    
-    
-    
-    
-    
+
 //    @Override
 //    public PrixProduitMarche saveOrUpdatePrix(int prix, Long idProduit, Long idMarche, Date date) throws ServiceException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
     @Override
     public PrixProduitMarche saveOrUpdatePrix(PrixProduitMarche prix) throws ServiceException {
-         try {
-        if(prix.getId() == null){
-           
+        try {
+            if (prix.getId() == null) {
+
                 return prixProduitMarcheDao.create(prix);
-                 }
-        else{
-            return prixProduitMarcheDao.update(prix);
-        }
-            } catch (DataAccessException ex) {
-                Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                return prixProduitMarcheDao.update(prix);
             }
-         return null;
-       
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
     }
 
     @Override
     public PrixProduitMarche findByMarche(Long idMarche, Long idProduit) throws ServiceException {
         try {
             Marche marche = marcheDao.findById(idMarche);
-            if(marche == null){
+            if (marche == null) {
                 throw new ServiceException("Service not found");
             }
             Produit produit = produitDao.findById(idProduit);
-            if(produit == null){
+            if (produit == null) {
                 throw new ServiceException("Service not found");
             }
             return prixProduitMarcheDao.findPrixByMarcheAndProduit(marche, produit);
@@ -107,11 +101,11 @@ public class PrixServiceImpl implements IPrixService{
     public List<PrixProduitMarche> findByProduitAndMarcheBetweenDate(Long idMarche, Long idProduit, Date date1, Date date2) throws ServiceException {
         try {
             Marche marche = marcheDao.findById(idMarche);
-            if(marche == null){
+            if (marche == null) {
                 throw new ServiceException("Resource not found");
             }
             Produit produit = produitDao.findById(idProduit);
-            if(produit == null){
+            if (produit == null) {
                 throw new ServiceException("Service not found");
             }
             return prixProduitMarcheDao.findByMarche(marche, produit, date1, date2);
@@ -135,7 +129,7 @@ public class PrixServiceImpl implements IPrixService{
     public List<PrixProduitMarche> findByMarche(Long idMarche) throws ServiceException {
         try {
             Marche marche = marcheDao.findById(idMarche);
-            if(marche == null){
+            if (marche == null) {
                 throw new ServiceException("Service not found");
             }
             return prixProduitMarcheDao.findByMarche(marche);
@@ -154,5 +148,5 @@ public class PrixServiceImpl implements IPrixService{
         }
         return Collections.EMPTY_LIST;
     }
-    
+
 }
