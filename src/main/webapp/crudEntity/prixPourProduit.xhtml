@@ -10,7 +10,7 @@
                      <h:outputText  value="Marché:* "  class="syntaxe_content" />  
                      <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
-                        <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}" />
+                        <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
                     </p:selectOneMenu> 
                       <h:outputText  value="Produit:* "  class="syntaxe_content" />  
                       <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
@@ -41,7 +41,7 @@
                      <h:outputText  value="Marché:* "  class="syntaxe_content" />  
                      <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
-                        <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}" />
+                        <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
                     </p:selectOneMenu> 
                       <h:outputText  value="Produit:* "  class="syntaxe_content" />  
                       <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
@@ -77,7 +77,7 @@
                     <p:commandButton  icon="ui-icon-disk" value="Nouveau Prix" type="button" onclick="PF('dlgAjouterPrix').show()" />                    
                 </f:facet>  
             </div>
-            <p:column filterBy="#{item.marche}" filterMatchMode="contains">
+            <p:column filterBy="#{agentBean.marcheResult(item.marche)}" filterMatchMode="contains">
                 <f:facet name="header">
                     <h:outputText value="Marche"/>
                 </f:facet>

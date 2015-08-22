@@ -22,26 +22,26 @@
                     <b:inputText   value="#{agentBean.agent.adresse}"   class="syntaxe_content" />                                                            
                     <h:outputText  value="Identité: "  class="syntaxe_content" />  
                     <b:inputText value="#{agentBean.agent.nom}"   class="syntaxe_content" />                      
-                    <h:outputText  value="Rôle: "  class="syntaxe_content" />
-                    <p:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
+                    <h:outputText  value="Rôle: "  class="syntaxe_content" />                   
+                     <h:selectOneMenu value="#{agentBean.agent.roleType}" style="width: 100%;">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />
-                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"
-                                event="change" 
-                                update="march" 
-                                process="@this"/>
+                        <f:selectItems  value="#{agentBean.roleTypes}" var="item" itemLabel="#{item}" itemValue="#{item}" />                       
+                        <p:ajax listener="#{agentBean.handleRoleTypesChange()}"  event="change" update="march" process="@this"/>
 
-                    </p:selectOneMenu>
+
+                    </h:selectOneMenu>
                     <h:outputText  value="Marché:  "  class="syntaxe_content" />
-                    <p:selectOneMenu id="march" value="#{agentBean.marche}" style="width: 100%; margin-top: 10px;" filter="true" filterMatchMode="contains">
+                    <h:selectOneMenu id="march" value="#{agentBean.marcheId}" style="width: 100%; margin-top: 10px;" >
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems value="#{agentBean.marches}" var="user" itemLabel="#{user.nom}"  itemValue="#{user.id}"/>
-                    </p:selectOneMenu>
+                        <f:selectItems value="#{agentBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}"  itemValue="#{marche.id}"/>
+                    </h:selectOneMenu>
+
+
                 </h:panelGrid>  
             </h:panelGroup>
             <p:separator/>
             <div  style="text-align: center;">
-                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterOuMettreajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgAjouterAgent').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgAjouterAgent').hide()"  ajax="true"   />
                 <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{agentBean.annuler}" onclick="PF('dlgAjouterAgent').hide()" update="@(.updateAll)" ajax="true"  />
             </div>                    
         </h:form>  
@@ -51,11 +51,7 @@
             <h:panelGroup >
                 <h:panelGrid  id="displayModifiersAgent" class="panelGrid_class updateAll" columns="2">
                     <h:outputText  value="Nom d'utilisateur:* "  class="syntaxe_content" />  
-                    <b:inputText   requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.agent.login}"   class="syntaxe_content" />                      
-                    <h:outputText  value="Mot de Passe:* "  class="syntaxe_content" />  
-                    <b:inputSecret requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.pwd1}"   class="syntaxe_content" />                      
-                    <h:outputText  value="Confirmez mot de Passe:* "  class="syntaxe_content" />  
-                    <b:inputSecret required="true" value="#{agentBean.pwd2}"   class="syntaxe_content" />                                    
+                    <b:inputText   requiredMessage="mot de passe obligatoire" required="true" value="#{agentBean.agent.login}"   class="syntaxe_content" />                                          
                     <h:outputText  value="Tel|Contact: "  class="syntaxe_content" />  
                     <b:inputText   value="#{agentBean.agent.phone}"   class="syntaxe_content" />                                         
                     <h:outputText  value="Couriel: "  class="syntaxe_content" />  
@@ -75,15 +71,19 @@
 
                     </p:selectOneMenu>
                     <h:outputText  value="Marché:  "  class="syntaxe_content" />
-                    <p:selectOneMenu id="march" value="#{agentBean.marche}" style="width: 100%; margin-top: 10px;" filter="true" filterMatchMode="contains">
+                    <p:selectOneMenu id="march" value="#{agentBean.marcheId}" style="width: 100%; margin-top: 10px;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}"/>                    
-                        <f:selectItems value="#{agentBean.marches}" var="user" itemLabel="#{user.nom}"  itemValue="#{user.id}"/>
-                    </p:selectOneMenu>
+                        <f:selectItems value="#{agentBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}"  itemValue="#{marche.id}"/>
+                    </p:selectOneMenu>              
+                    <h:inputHidden value="#{agentBean.agent.password}"/>
+                    <h:inputHidden value="#{agentBean.agent.password}"/>
+                    <h:inputHidden value="#{agentBean.agent.version}"/>
+                    <h:inputHidden value="#{agentBean.agent.id}"/>
                 </h:panelGrid> 
             </h:panelGroup>
             <p:separator/>
             <div  style="text-align: center;">
-                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.ajouterOuMettreajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgModifierAgent').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{agentBean.mettreajourAgent}" update="@(.updateAll)" oncomplete="PF('dlgModifierAgent').hide()"  ajax="true"   />
                 <p:commandButton class="cmd_button" value="Annuler" actionListener="#{agentBean.annuler}" onclick="PF('dlgModifierAgent').hide()" update="@(.updateAll)" ajax="true"  />
             </div>                   
         </h:form>  
@@ -110,7 +110,7 @@
                     <p:commandButton  icon="ui-icon-disk" value="Ajouter un utilisateur" type="button" onclick="PF('dlgAjouterAgent').show()" />                    
                 </f:facet>  
             </div>
-            <p:column>
+            <p:column filterBy="#{item.nom}" filterMatchMode="contains">
                 <f:facet name="header">
                     <h:outputText value="Identité"/>
                 </f:facet>
@@ -122,11 +122,17 @@
                 </f:facet>
                 <h:outputText value="#{item.login}"/>
             </p:column>
-             <p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Mot de passe"/>
+                </f:facet>
+                <h:outputText value="#{item.password}"/>
+            </p:column>
+            <p:column>
                 <f:facet name="header">
                     <h:outputText value="Tel | Contact"/>
                 </f:facet>
-                 <h:outputText value="#{item.phone}"/>
+                <h:outputText value="#{item.phone}"/>
             </p:column>
             <p:column>
                 <f:facet name="header">
@@ -140,13 +146,13 @@
                 </f:facet>
                 <h:outputText value="#{item.adresse}"/>
             </p:column>
-            <p:column>
+            <p:column filterBy="#{item.roleType}" filterMatchMode="contains">
                 <f:facet name="header">
                     <h:outputText value="Rôle"/>
                 </f:facet>
                 <h:outputText value="#{item.roleType}"/>
             </p:column>
-            <p:column>
+            <p:column filterBy="#{agentBean.marcheResult(item.marche)}" filterMatchMode="contains">
                 <f:facet name="header">
                     <h:outputText value="Marché"/>
                 </f:facet>

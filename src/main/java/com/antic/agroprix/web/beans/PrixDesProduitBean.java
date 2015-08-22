@@ -21,6 +21,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -50,10 +51,11 @@ public class PrixDesProduitBean {
     List<Categorie> categories;
     List<PrixProduitMarche> prixProduitMarches;
 
-    public void handleVilleChange() throws ServiceException {
-        marches = marcheService.findMarcheByVille(villeId);
+    public void handleVilleChange(ActionEvent event) throws ServiceException {
+        marches = marcheService.findMarcheByVille(villeId);        
         produits = new ArrayList<Produit>();
         prixProduitMarches = new ArrayList<PrixProduitMarche>();
+        System.out.println(""+marches);
     }
 
     public void handleMarcheChange() throws ServiceException {
@@ -131,6 +133,54 @@ public class PrixDesProduitBean {
 
     public void setCategories(List<Categorie> categories) {
         this.categories = categories;
+    }
+
+    public IPrixService getPrixService() {
+        return prixService;
+    }
+
+    public void setPrixService(IPrixService prixService) {
+        this.prixService = prixService;
+    }
+
+    public Long getVilleId() {
+        return villeId;
+    }
+
+    public void setVilleId(Long villeId) {
+        this.villeId = villeId;
+    }
+
+    public Long getMarcheId() {
+        return marcheId;
+    }
+
+    public void setMarcheId(Long marcheId) {
+        this.marcheId = marcheId;
+    }
+
+    public Long getCategorieId() {
+        return categorieId;
+    }
+
+    public void setCategorieId(Long categorieId) {
+        this.categorieId = categorieId;
+    }
+
+    public Long getProduitId() {
+        return produitId;
+    }
+
+    public void setProduitId(Long produitId) {
+        this.produitId = produitId;
+    }
+
+    public List<PrixProduitMarche> getPrixProduitMarches() {
+        return prixProduitMarches;
+    }
+
+    public void setPrixProduitMarches(List<PrixProduitMarche> prixProduitMarches) {
+        this.prixProduitMarches = prixProduitMarches;
     }
 
 }
