@@ -15,9 +15,9 @@
                 </b:row>
                 <b:row styleClass="show-grid">                                    
                     <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="#{prixDesProduitBean.villeId}" id="VilleID" onchange="#{prixDesProduitBean.handleVilleChange()}" >
+                        <b:selectOneMenu  value="#{prixDesProduitBean.villeId}" id="VilleID" onchange="this.form.submit();" >
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItems value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
+                            <f:selectItems  actionListener="#{prixDesProduitBean.handleVilleChange}"  value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
                         </b:selectOneMenu>
                     </b:column>
                 </b:row>
@@ -28,7 +28,7 @@
                 </b:row>
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="" id="MarcheID" >
+                        <b:selectOneMenu value="#{prixDesProduitBean.marcheId}" id="MarcheID" >
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems value="#{marcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}"/>
                         </b:selectOneMenu>
@@ -42,7 +42,7 @@
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
 
-                        <b:selectOneMenu value="" id="categorieID" required="true">
+                        <b:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID" required="true">
                             <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
                         </b:selectOneMenu>
                     </b:column>
@@ -54,7 +54,7 @@
                 </b:row>
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="" id="ProduitID" required="true">
+                        <b:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID" required="true">
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems value="#{produitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>
                         </b:selectOneMenu>  

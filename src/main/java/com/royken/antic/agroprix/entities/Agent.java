@@ -139,6 +139,11 @@ public class Agent implements Serializable{
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
+
+    @Override
+    public String toString() {
+        return "Agent{" + "version=" + version + ", id=" + id + ", nom=" + nom + ", login=" + login + ", password=" + password + ", phone=" + phone + ", mail=" + mail + ", adresse=" + adresse + ", marche=" + marche + ", roleType=" + roleType + '}';
+    }
     
     
     

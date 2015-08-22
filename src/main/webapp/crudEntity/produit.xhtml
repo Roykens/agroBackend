@@ -24,9 +24,6 @@
                         <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Marchés: "  class="syntaxe_content" />  
-                    
-
-
                     <p:selectCheckboxMenu id="toto" value="#{produitBean.idMarches}"  label="Liste des Marche" filter="true" filterMatchMode="startsWith" converter="javax.faces.Long" class="syntaxe_content">
                         <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}" />
                         <p:column style="width: 100%;">
@@ -60,10 +57,10 @@
                         <f:selectItems value="#{produitBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Marchés: "  class="syntaxe_content" />  
-                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100">                          
-                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche}" />                                                 
-                        <p:column style="width: 100%;">
-                            #{marcheSelect.nom}
+                    <p:selectManyMenu id="scroll"  filter="true" value="#{produitBean.marcheSelectionner}" style="width:100%;" var="marcheSelect" showCheckbox="true" scrollHeight="100" filterMatchMode="contains">
+                        <f:selectItems value="#{produitBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche}" />
+                        <p:column style="width: 100%;">                            
+                            #{agentBean.marcheResult(marcheSelect)}
                         </p:column>
                     </p:selectManyMenu>  
                     <h:inputHidden value="#{produitBean.produit.version}"/>
