@@ -13,6 +13,8 @@ import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -39,25 +41,34 @@ public class AgentBean {
     public List<Agent> agents;
     public String pwd1 = new String();
     public String pwd2 = new String();   
-    private Long marcheId = null;
+    private Long marcheId;
     public List<RoleType> roleTypes = new ArrayList<RoleType>();
 
     public AgentBean() {       
+        this.marcheId = 0L;
         roleTypes.add(RoleType.ADMIN);
         roleTypes.add(RoleType.AGENT);
     }
 
-    public void ajouterajourAgent(ActionEvent event) throws ServiceException {
+    public void ajouterajourAgent(){
         if (agent != null && pwd1 != null && pwd2 != null && pwd1.trim().compareTo(pwd2.trim()) == 0) {
             agent.setPassword(pwd1);
             if (marcheId != null) {
-                Marche marchelocal = marcheService.findMarcheById(marcheId);
-                System.out.println(marcheId + "===============================================" + marchelocal);
-                agent.setMarche(marchelocal);
+                try {
+                    Marche marchelocal = marcheService.findMarcheById(marcheId);
+                    System.out.println(marcheId + "===============================================" + marchelocal);
+                    agent.setMarche(marchelocal);
+                } catch (ServiceException ex) {
+                    Logger.getLogger(AgentBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if (agent.getId() == null && agent.getNom() != null && agent.getNom().length() != 0) {
-                agent = agentService.saveOrUpdateAgent(agent);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été ajouté "));
+                try {
+                    agent = agentService.saveOrUpdateAgent(agent);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été ajouté "));
+                } catch (ServiceException ex) {
+                    Logger.getLogger(AgentBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
@@ -142,8 +153,8 @@ public class AgentBean {
         agents = agentService.findAllAgent();
         return agents;
     }
-
-    public void setAgents(List<Agent> agents) {
+    
+   public void setAgents(List<Agent> agents) {
         this.agents = agents;
     }
 
@@ -198,6 +209,7 @@ public class AgentBean {
     }
 
     public List<Marche> getMarches() throws ServiceException {
+       marches =  marcheService.findAllMarche();
         return marches;
     }
 
