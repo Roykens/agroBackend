@@ -31,6 +31,10 @@ public class Actualite implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Basic
+    private String nomImage;
+    
+    
     @Lob
     @Basic
     private Byte[] photo;
@@ -38,8 +42,8 @@ public class Actualite implements Serializable{
     @Basic
     private String contact;
     
-    @Basic
     @Lob
+    @Basic
     private String info;
     
     
@@ -93,5 +97,15 @@ public class Actualite implements Serializable{
     public void setDateInfo(Date dateInfo) {
         this.dateInfo = dateInfo;
     }
+
+    public String getNomImage() {
+        return nomImage;
+    }
+
+    public void setNomImage(String nomImage) {
+        this.nomImage = nomImage;
+    }
+    
+    
         
 }

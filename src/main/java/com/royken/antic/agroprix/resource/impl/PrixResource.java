@@ -99,7 +99,7 @@ public class PrixResource implements IPrixResource{
     @Override
     public List<PrixProduitMarche> getPrixBetweenDates(long idProduit, long idMarche, String date1, String date2) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date datedeb = sdf.parse(date1);
             Date datefin = sdf.parse(date2);
             return prixService.findByProduitAndMarcheBetweenDate(idMarche, idProduit, datedeb, datefin);
