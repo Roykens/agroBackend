@@ -2,6 +2,7 @@ package com.royken.antic.agroprix.resource.impl;
 
 import com.royken.antic.agroprix.entities.EtatPrix;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.ServiceException;
@@ -105,6 +106,16 @@ public class PrixResource implements IPrixResource{
             return prixService.findByProduitAndMarcheBetweenDate(idMarche, idProduit, datedeb, datefin);
         } catch (ParseException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServiceException ex) {
+            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<PrixMarche> compare(long idProduit, long idVille) {
+        try {
+            return prixService.findByProduitAndVille(idProduit, idVille);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }

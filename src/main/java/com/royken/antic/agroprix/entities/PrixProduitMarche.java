@@ -132,7 +132,7 @@ public class PrixProduitMarche implements Serializable{
 
     @Override
     public String toString() {
-        return "PrixProduitMarche{" + "version=" + version + ", df=" + df + ", id=" + id + ", prix=" + prix + ", datePrix=" + datePrix + ", produit=" + produit + ", marche=" + marche + ", etatPrix=" + etatPrix + '}';
+        return "PrixProduitMarche{" + " id=" + id + ", prix=" + prix + ", datePrix=" + datePrix + ", produit=" + produit + ", marche=" + marche + ", etatPrix=" + etatPrix + '}';
     }
     
     

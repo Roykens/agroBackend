@@ -3,15 +3,19 @@ package com.royken.antic.agroprix.dao.impl;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.dao.IPrixProduitMarcheDao;
 import com.royken.antic.agroprix.entities.Marche;
+import com.royken.antic.agroprix.entities.Marche_;
 import com.royken.antic.agroprix.entities.PrixProduitMarche_;
 import com.royken.antic.agroprix.entities.Produit;
+import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -54,6 +58,8 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
 //        if(prixI.size() > 1){
 //            result.add(prixI.get(1));
 //        }
+        List<PrixProduitMarche> result = getManager().createQuery(cq).getResultList();
+        System.out.println(result);
         return getManager().createQuery(cq).getResultList().get(0);
         ///return result;
     }
@@ -80,6 +86,22 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
 //            result.add(prixI.get(1));
 //        }
         return getManager().createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<PrixMarche> findByProduit(Produit produit) throws DataAccessException {
+//        CriteriaBuilder cb = getManager().getCriteriaBuilder();
+//        CriteriaQuery<PrixMarche> cq = cb.createQuery(PrixMarche.class);
+//        Root<Marche> marRoot = cq.from(Marche.class);
+//        Root<PrixProduitMarche> prixRoot = cq.from(PrixProduitMarche.class);
+//        cq.where(cb.isMember(produit, marRoot.get(Marche_.produits)));
+//        List<Predicate> predicates = new ArrayList<Predicate>();
+//        predicates.add(cb.equal(prixRoot.get(PrixProduitMarche_.produit),produit));
+//        predicates.add(cb.max(prixRoot.get(PrixProduitMarche_.datePrix)));
+//        cq.distinct(true);
+//        cq.multiselect(null);
+        return null;
+        
     }
     
 }
