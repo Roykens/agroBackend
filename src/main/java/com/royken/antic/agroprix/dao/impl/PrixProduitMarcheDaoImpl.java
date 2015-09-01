@@ -58,10 +58,13 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
 //        if(prixI.size() > 1){
 //            result.add(prixI.get(1));
 //        }
-        List<PrixProduitMarche> result = getManager().createQuery(cq).getResultList();
-        System.out.println(result);
-        return getManager().createQuery(cq).getResultList().get(0);
-        ///return result;
+       try{
+           return getManager().createQuery(cq).getResultList().get(0);          
+       }catch(Exception ex){
+           
+       }
+        
+        return null;
     }
 
     @Override
