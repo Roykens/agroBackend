@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.service;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,4 +24,6 @@ public interface IPrixService {
     public List<PrixProduitMarche> findByProduitAndMarcheBetweenDate(Long idMarche, Long idProduit, Date date1, Date date2) throws ServiceException;
     
     public List<PrixProduitMarche> findAll() throws ServiceException;
+    
+    public List<PrixMarche> findByProduitAndVille(Long idProduit, Long idVille) throws ServiceException;
 }

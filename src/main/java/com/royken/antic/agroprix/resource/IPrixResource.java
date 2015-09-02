@@ -1,6 +1,7 @@
 package com.royken.antic.agroprix.resource;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -45,10 +46,13 @@ public interface IPrixResource {
     PrixProduitMarche getPrix(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche);
     
     @GET
-    @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}/date1/date2")
+    @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}/{date1}/{date2}")
     @Produces(value = "application/json")
     List<PrixProduitMarche> getPrixBetweenDates(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche, @PathParam(value = "date1") String date1, @PathParam(value = "date2") String date2);
     
-    
+    @GET
+    @Path(value = "{idProduit : \\d+}/{idVille : \\d+}/compare")
+    @Produces(value = "application/json")
+    List<PrixMarche> compare(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idVille") long idVille);
     
 }
