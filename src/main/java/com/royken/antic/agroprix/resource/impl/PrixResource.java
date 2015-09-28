@@ -3,10 +3,12 @@ package com.royken.antic.agroprix.resource.impl;
 import com.royken.antic.agroprix.entities.EtatPrix;
 import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
+import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.IPrixService;
+import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.antic.agroprix.service.Util;
 import java.text.ParseException;
@@ -34,6 +36,9 @@ public class PrixResource implements IPrixResource{
     @EJB
     private IMarcheService marcheService;
 
+    @EJB
+    private IProduitService produitService;
+    
     public IPrixService getPrixService() {
         return prixService;
     }
@@ -49,12 +54,25 @@ public class PrixResource implements IPrixResource{
     public void setMarcheService(IMarcheService marcheService) {
         this.marcheService = marcheService;
     }
+
+    public IProduitService getProduitService() {
+        return produitService;
+    }
+
+    public void setProduitService(IProduitService produitService) {
+        this.produitService = produitService;
+    }
     
     
 
     @Override
-    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ, long marcheId) {
+    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ, long produitId, long marcheId) {
         try {
+            Produit produit = produitService.findProduitById(produitId);
+            if(produit == null){
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            }
+            ppmZ.setProduit(produit);
             Marche marche = marcheService.findMarcheById(marcheId);
             if(marche == null){
                 throw new WebApplicationException(Response.Status.NOT_FOUND);

@@ -20,7 +20,9 @@ public interface IPrixResource {
     @POST
     @Path(value = "{etatPrix}/{marcheId : \\d+}")
     @Produces(value = "application/json")
-    PrixProduitMarche createPrix(@PathParam(value = "etatPrix") String etat, PrixProduitMarche ppmZ, @PathParam(value = "marcheId")long marcheId);
+    PrixProduitMarche createPrix(@PathParam(value = "etatPrix")
+            String etat, PrixProduitMarche ppmZ, long produitId, @PathParam(value = "marcheId")
+    long marcheId);
 
     @GET
     @Path(value = "{id : \\d+}")
