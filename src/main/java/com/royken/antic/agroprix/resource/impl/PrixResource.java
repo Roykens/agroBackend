@@ -1,9 +1,11 @@
 package com.royken.antic.agroprix.resource.impl;
 
 import com.royken.antic.agroprix.entities.EtatPrix;
+import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import com.royken.antic.agroprix.resource.IPrixResource;
+import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.antic.agroprix.service.Util;
@@ -28,6 +30,9 @@ public class PrixResource implements IPrixResource{
     
     @EJB
     private IPrixService prixService;
+    
+    @EJB
+    private IMarcheService marcheService;
 
     public IPrixService getPrixService() {
         return prixService;
@@ -36,14 +41,27 @@ public class PrixResource implements IPrixResource{
     public void setPrixService(IPrixService prixService) {
         this.prixService = prixService;
     }
+
+    public IMarcheService getMarcheService() {
+        return marcheService;
+    }
+
+    public void setMarcheService(IMarcheService marcheService) {
+        this.marcheService = marcheService;
+    }
     
     
 
     @Override
-    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppm) {
+    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ, long marcheId) {
         try {
-            ppm.setEtatPrix(Util.stringToEtatPrix(etat));
-            return prixService.saveOrUpdatePrix(ppm);
+            Marche marche = marcheService.findMarcheById(marcheId);
+            if(marche == null){
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            }
+            ppmZ.setMarche(marche);
+            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
+            return prixService.saveOrUpdatePrix(ppmZ);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }

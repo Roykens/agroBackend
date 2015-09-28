@@ -18,9 +18,9 @@ import javax.ws.rs.Produces;
 @Path("prix")
 public interface IPrixResource {
     @POST
-    @Path(value = "{etatPrix}")
+    @Path(value = "{etatPrix}/{marcheId : \\d+}")
     @Produces(value = "application/json")
-    PrixProduitMarche createPrix(@PathParam(value = "etatPrix") String etat,PrixProduitMarche ppmZ);
+    PrixProduitMarche createPrix(@PathParam(value = "etatPrix") String etat, PrixProduitMarche ppmZ, @PathParam(value = "marcheId")long marcheId);
 
     @GET
     @Path(value = "{id : \\d+}")

@@ -3,6 +3,7 @@ package com.antic.agroprix.web.beans;
 import com.royken.antic.agroprix.entities.Actualite;
 import com.royken.antic.agroprix.service.IActualiteService;
 import com.royken.antic.agroprix.service.ServiceException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.apache.commons.io.IOUtils;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -82,10 +84,17 @@ public class ActualiteBean {
         this.actualites = actualites;
     }
 
-    public void saveOrUpdateActualite() {
+    public void saveOrUpdateActualite() throws IOException {
         try {
             if (actualite != null && actualite.getId() == null) {
-                actualiteService.saveOrUpdateActuaite(actualite);
+                 System.out.println("L'image\n");
+                System.out.println(image);
+                byte[] img = image.getContents();
+                System.out.println("Le contenu");
+                System.out.println(img);
+                //byte[] img = IOUtils.toByteArray(image.getInputstream());
+                //actualiteService.saveOrUpdateActuaite(actualite);
+               
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Opération réussie", " L'info a été ajoutée "));
             }
             if(actualite != null && actualite.getId() != null){
