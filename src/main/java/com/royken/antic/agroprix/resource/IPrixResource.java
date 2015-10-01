@@ -18,10 +18,10 @@ import javax.ws.rs.Produces;
 @Path("prix")
 public interface IPrixResource {
     @POST
-    @Path(value = "{etatPrix}/{marcheId : \\d+}")
+    @Path(value = "{etatPrix}/{produitIdId : \\d+}/{marcheId : \\d+}")
     @Produces(value = "application/json")
     PrixProduitMarche createPrix(@PathParam(value = "etatPrix")
-            String etat, PrixProduitMarche ppmZ, long produitId, @PathParam(value = "marcheId")
+            String etat, PrixProduitMarche ppmZ, @PathParam(value = "produitId")long produitId, @PathParam(value = "marcheId")
     long marcheId);
 
     @GET
@@ -46,6 +46,11 @@ public interface IPrixResource {
     @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}")
     @Produces(value = "application/json")
     PrixProduitMarche getPrix(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche);
+    
+    @GET
+    @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}/{debut : \\d+}/{fin : \\d+}")
+    @Produces(value = "application/json")
+    List<PrixProduitMarche> getPrixBetweenRange(@PathParam(value = "idProduit") long idProduit, @PathParam(value = "idMarche") long idMarche, @PathParam(value = "debut") int debut, @PathParam(value = "fin") int fin);
     
     @GET
     @Path(value = "{idProduit : \\d+}/{idMarche : \\d+}/{date1}/{date2}")

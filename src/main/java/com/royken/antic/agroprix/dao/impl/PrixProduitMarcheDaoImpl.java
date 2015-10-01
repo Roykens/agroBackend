@@ -11,6 +11,7 @@ import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,7 +26,7 @@ import javax.persistence.criteria.Root;
 public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long> implements IPrixProduitMarcheDao {
 
     @Override
-    public PrixProduit findByMarche( Produit produit,Marche marche, Date date) throws DataAccessException {
+    public PrixProduit findByMarche(Produit produit, Marche marche, Date date) throws DataAccessException {
 //        CriteriaBuilder cb = getManager().getCriteriaBuilder();
 //            CriteriaQuery<PrixProduit> cq = cb.createQuery(PrixProduit.class);
 //            Root<PrixProduit> aRoot = cq.from(PrixProduit.class);
@@ -42,7 +43,7 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
         CriteriaBuilder cb = getManager().getCriteriaBuilder();
         CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
         Root<PrixProduitMarche> pRoot = cq.from(PrixProduitMarche.class);
-        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit),cb.between(pRoot.get(PrixProduitMarche_.datePrix), debut, fin)));
+        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit), cb.between(pRoot.get(PrixProduitMarche_.datePrix), debut, fin)));
         return getManager().createQuery(cq).getResultList();
     }
 
@@ -58,12 +59,12 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
 //        if(prixI.size() > 1){
 //            result.add(prixI.get(1));
 //        }
-       try{
-           return getManager().createQuery(cq).getResultList().get(0);          
-       }catch(Exception ex){
-           
-       }
-        
+        try {
+            return getManager().createQuery(cq).getResultList().get(0);
+        } catch (Exception ex) {
+
+        }
+
         return null;
     }
 
@@ -104,7 +105,19 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
 //        cq.distinct(true);
 //        cq.multiselect(null);
         return null;
-        
+
     }
-    
+
+    @Override
+    public List<PrixProduitMarche> findByRange(Marche marche, Produit produit, int debut, int fin) throws DataAccessException {
+        CriteriaBuilder cb = getManager().getCriteriaBuilder();
+        CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
+        Root<PrixProduitMarche> pRoot = cq.from(PrixProduitMarche.class);
+        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit))).orderBy(cb.desc(pRoot.get(PrixProduitMarche_.datePrix)));
+        try {
+            return getManager().createQuery(cq).setMaxResults(fin - debut + 1).setFirstResult(debut).getResultList();
+        } catch (Exception e) {
+        }
+        return Collections.EMPTY_LIST;
+    }
 }

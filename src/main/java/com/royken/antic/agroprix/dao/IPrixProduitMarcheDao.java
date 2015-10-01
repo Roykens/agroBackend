@@ -30,5 +30,7 @@ public interface IPrixProduitMarcheDao extends IGenericDao<PrixProduitMarche, Lo
     
     public List<PrixMarche> findByProduit(Produit produit) throws DataAccessException;
     
+    public List<PrixProduitMarche> findByRange(Marche marche,Produit produit, int debut, int fin) throws DataAccessException;
+    
     
 }

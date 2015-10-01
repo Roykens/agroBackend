@@ -23,6 +23,8 @@ public interface IPrixService {
     
     public List<PrixProduitMarche> findByProduitAndMarcheBetweenDate(Long idMarche, Long idProduit, Date date1, Date date2) throws ServiceException;
     
+    public List<PrixProduitMarche> findByProduitAndMarcheBetweenRange(Long idMarche, Long idProduit, int debut, int fin) throws ServiceException;
+    
     public List<PrixProduitMarche> findAll() throws ServiceException;
     
     public List<PrixMarche> findByProduitAndVille(Long idProduit, Long idVille) throws ServiceException;

@@ -157,5 +157,15 @@ public class PrixResource implements IPrixResource{
         }
         return Collections.EMPTY_LIST;
     }
+
+    @Override
+    public List<PrixProduitMarche> getPrixBetweenRange(long idProduit, long idMarche, int debut, int fin) {
+        try {
+            return prixService.findByProduitAndMarcheBetweenRange(idMarche, idProduit, debut, fin);
+        } catch (ServiceException ex) {
+            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
     
 }

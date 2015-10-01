@@ -213,4 +213,21 @@ public class PrixServiceImpl implements IPrixService {
         return Collections.EMPTY_LIST;
     }
 
+    @Override
+    public List<PrixProduitMarche> findByProduitAndMarcheBetweenRange(Long idMarche, Long idProduit, int debut, int fin) throws ServiceException {
+        try {
+            Marche marche = marcheDao.findById(idMarche);
+            if(marche == null){
+                throw new ServiceException("Service not found");
+            }
+            Produit produit = produitDao.findById(idProduit);
+            if(produit == null){
+                throw new  ServiceException("Service not found");
+            }
+            return prixProduitMarcheDao.findByRange(marche, produit, debut, fin);
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Collections.EMPTY_LIST;
+    }
 }
