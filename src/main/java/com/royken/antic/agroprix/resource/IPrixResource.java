@@ -10,6 +10,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
@@ -17,20 +18,23 @@ import javax.ws.rs.Produces;
  */
 @Path("prix")
 public interface IPrixResource {
+    
     @POST
-    @Path(value = "{etatPrix}/{produitIdId : \\d+}/{marcheId : \\d+}")
+    @Path(value = "{etatPrix}")
     @Produces(value = "application/json")
-    PrixProduitMarche createPrix(@PathParam(value = "etatPrix")
-            String etat, PrixProduitMarche ppmZ, @PathParam(value = "produitId")long produitId, @PathParam(value = "marcheId")
-    long marcheId);
+    PrixProduitMarche createPrix(@PathParam("etatPrix") String etat,PrixProduitMarche ppmZ);
+    
+    //    @POST
+//    @Produces(value = "application/json")
+//    PrixProduitMarche createPrix(@FormDataParam("etatPrix") String etat,@FormDataParam("produitIdId") Long produitId,@FormDataParam("marcheId") Long marcheId,PrixProduitMarche ppmZ);
 
     @GET
     @Path(value = "{id : \\d+}")
     @Produces(value = "application/json")
-    PrixProduitMarche getPrixProduitMarche(@PathParam(value = "id") long id);
+    PrixProduitMarche getPrixProduitMarche(@PathParam(value = "id")long id);
 
     @PUT
-    @Path(value = "{id : \\d+}/{etatPrix}")
+    @Path(value = "{id : \\d+}/{etatPrix}") 
     @Produces(value = "application/json")
     PrixProduitMarche updatePrix(@PathParam(value = "id") long id,@PathParam(value = "etatPrix") String etat ,PrixProduitMarche ppm);
 

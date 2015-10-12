@@ -48,6 +48,4 @@ public interface IMarcheResource {
     @Path(value = "{idMarche : \\d+}/produits")
     @Produces(value = "application/json")
     List<Produit> getProduitByMarche(@PathParam(value = "idMarche")long idMarche);
-    
-    
 }

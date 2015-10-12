@@ -65,26 +65,26 @@ public class PrixResource implements IPrixResource{
     
     
 
-    @Override
-    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ, long produitId, long marcheId) {
-        try {
-            Produit produit = produitService.findProduitById(produitId);
-            if(produit == null){
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            }
-            ppmZ.setProduit(produit);
-            Marche marche = marcheService.findMarcheById(marcheId);
-            if(marche == null){
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            }
-            ppmZ.setMarche(marche);
-            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
-            return prixService.saveOrUpdatePrix(ppmZ);
-        } catch (ServiceException ex) {
-            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+//    @Override
+//    public PrixProduitMarche createPrix(String etat, Long produitId, Long marcheId, PrixProduitMarche ppmZ) {
+//        try {
+//            Produit produit = produitService.findProduitById(produitId);
+//            if(produit == null){
+//                throw new WebApplicationException(Response.Status.NOT_FOUND);
+//            }
+//            ppmZ.setProduit(produit);
+//            Marche marche = marcheService.findMarcheById(marcheId);
+//            if(marche == null){
+//                throw new WebApplicationException(Response.Status.NOT_FOUND);
+//            }
+//            ppmZ.setMarche(marche);
+//            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
+//            return prixService.saveOrUpdatePrix(ppmZ);
+//        } catch (ServiceException ex) {
+//            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
 
     @Override
     public PrixProduitMarche getPrixProduitMarche(long id) {
@@ -166,6 +166,17 @@ public class PrixResource implements IPrixResource{
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ) {
+        try {
+            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
+            return prixService.saveOrUpdatePrix(ppmZ);
+        } catch (ServiceException ex) {
+            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
 }
