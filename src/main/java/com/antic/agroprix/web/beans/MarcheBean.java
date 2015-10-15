@@ -33,28 +33,23 @@ public class MarcheBean {
     Marche marche = new Marche();
     List<Marche> marches;
     List<Ville> villes;
-    Long id = 0L;
+    Long id = null;
 
     public MarcheBean() {
 
     }
 
-    public void ajouterOuMettreajourMarche(ActionEvent event) throws ServiceException {
+    public void ajouterOuMettreajourMarche() throws ServiceException {
 //        System.out.println(" " + marche); 
-        if (marche != null && id != 0L) {
+        if (marche != null && id != null) {
             Ville ville = villeService.findVilleById(id);
             marche.setVille(ville);
-            if (marche.getId() == null && marche.getNom() != null && marche.getNom().length() != 0) {
+            if (marche.getNom() != null && marche.getNom().length() != 0) {
                 marche = marcheService.saveOrUpdateMarche(marche);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", marche.getNom() + " a été ajouté "));
-            } else if (marche.getId() != null && marche.getNom() != null && marche.getNom().length() != 0) {
-                marche = marcheService.saveOrUpdateMarche(marche);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", marche.getNom() + " a été mis à jour "));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
         }
         marche = new Marche();
+        id = null;
     }
 
     public String afficheNomVille(Ville ville) {
@@ -66,13 +61,11 @@ public class MarcheBean {
 
     }
 
-    public void supprimerMarche(ActionEvent event) throws ServiceException {
+    public void supprimerMarche() throws ServiceException {
         if (marche != null && marche.getNom() != null && marche.getId() != null) {
             marcheService.deleteMarche(marche.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", marche.getNom() + " a été supprimé "));
         }
-        marche = new Marche();
-        System.out.println("" + marche);
+        marche = new Marche();        
     }
 
     public void annuler(ActionEvent event) throws ServiceException {

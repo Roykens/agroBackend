@@ -47,7 +47,7 @@ public class ProduitBean {
 
     }
 
-    public void ajouterOuMettreajourProduit(ActionEvent event) throws ServiceException {
+    public void ajouterOuMettreajourProduit() throws ServiceException {
 //        System.out.println(" " + produit); 
         if (produit != null && id != null) {
             List<Marche> marcheSelectionner = new ArrayList<Marche>();
@@ -62,14 +62,8 @@ public class ProduitBean {
             }
 
             produit.setMarches(marcheSelectionner);
-            if (produit.getId() == null && produit.getNom() != null && produit.getNom().length() != 0) {
+            if (produit.getNom() != null && produit.getNom().length() != 0) {
                 produit = produitService.saveOrUpdateProduit(produit);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", produit.getNom() + " a été ajouté "));
-            } else if (produit.getId() != null && produit.getNom() != null && produit.getNom().length() != 0) {
-                produit = produitService.saveOrUpdateProduit(produit);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", produit.getNom() + " a été mis à jour "));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
         }
         id = null;
@@ -86,13 +80,11 @@ public class ProduitBean {
 
     }
 
-    public void supprimerProduit(ActionEvent event) throws ServiceException {
+    public void supprimerProduit() throws ServiceException {
         if (produit != null && produit.getNom() != null && produit.getId() != null) {
             produitService.deleteProduit(produit.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", produit.getNom() + " a été supprimé "));
         }
         produit = new Produit();
-        System.out.println("" + produit);
     }
 
     public void annuler(ActionEvent event) throws ServiceException {

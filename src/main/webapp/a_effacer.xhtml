@@ -5,17 +5,13 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <p:dialog modal="true" closable="true"  width="1200" height="500"  style="text-align: center;" widgetVar="dlgVoirVariation" hideEffect="drop" showEffect="blind" >           
-        <h:form class="updateAll">
-            <p:chart type="line" model="#{prixDesProduitBean.model}"  /> 
-        </h:form>
-    </p:dialog>
     <table>
         <tr>
             <td><img src="./pictures/bg.jpg" width="250"/> </td>
             <td style="width: 100%;" valign="top">
                 <h3 class=" btn-success " style="text-align: center">VARIATIONS DES PRIX DES PRODUITS SUR LE MARCHE</h3>
                 <h:form class="updateAll">
+                    <!--<b:panel title="Prix des Produits" look="success"  >-->
                     <div class="Prix_Prod_Class" id="id_Prix_Prod" >
 
                         <b:row styleClass="show-grid">
@@ -76,16 +72,18 @@
                         </b:row>
                         <b:row styleClass="show-grid">
                             <b:column col-xs="12" col-md="8">
-                                <p:commandButton  id="cmbID" value="VARIATION" style="width: 100%; " class="btn btn-success btn-small " actionListener="#{prixDesProduitBean.voirVariationPrixProduit}" onclick="PF('dlgVoirVariation').show()" update="@(.updateAll)" ajax="true"  />
+                                <p:commandButton  id="cmbID" value="VARIATION" style="width: 100%; " class="btn btn-success btn-small " actionListener="#{prixDesProduitBean.voirVariationPrixProduit}" onclick="PF('dlgVoirPrix').show()" update="@(.updateAll)" ajax="true"  />
                             </b:column>
                         </b:row>
-
+                        
                     </div>
+                    <!--</b:panel>-->
 
                 </h:form>
-                <p:separator/>
+
             </td>
         </tr>
-    </table>     
+    </table> 
+    <p:separator/>
 
 </div>
