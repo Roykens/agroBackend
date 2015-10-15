@@ -22,15 +22,36 @@
                         <h:outputLabel value="Catégorie: *" for="categorieID" />
                     </b:column>
                 </b:row>
+               <b:row styleClass="show-grid">                                    
+                    <b:column col-xs="12" col-md="8">
+                        <p:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID"  style="width: 100%; " filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
+                            <p:ajax listener="#{prixDesProduitBean.handleCategorieChange()}"  event="change" update="ProduitID" process="@this"/>                    
+                        </p:selectOneMenu>
+                    </b:column>
+                </b:row>
+                
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
-
-                        <p:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID" required="true" onchange="#{prixDesProduitBean.handleCategorieChange()}" >
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>
-                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
-                            <f:ajax listener="#{prixDesProduitBean.handleCategorieChange()}" />
+                        <h:outputLabel value="Produit: *" for="ProduitID" />               
+                    </b:column>
+                </b:row>
+               <b:row styleClass="show-grid">   
+                    <b:column col-xs="12" col-md="8">                          
+                        <p:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID"  style="width: 100%; " filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                            <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>                        
                         </p:selectOneMenu>
+                    </b:column>
+                </b:row>
 
+                 <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Ville: *" for="VilleID"  />
+                    </b:column>                
+                </b:row>
+                
                 <b:row styleClass="show-grid">                                    
                     <b:column col-xs="12" col-md="8">                        
                         <p:selectOneMenu value="#{prixDesProduitBean.villeId}" id="VilleID"  style="width: 100%;" filter="true" filterMatchMode="contains" >
@@ -41,17 +62,13 @@
 
                     </b:column>
                 </b:row>
-                <b:row styleClass="show-grid">
+                
+                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
-                        <h:outputLabel value="Produit: *" for="ProduitID" />               
+                        <h:outputLabel value="Marché: *" for="MarcheID" />
                     </b:column>
                 </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID" required="true" >
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" actionListener="#{prixDesProduitBean.handleProduitChange()}"/>
-                        </b:selectOneMenu>  
+                         <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">                      
                         <p:selectOneMenu value="#{prixDesProduitBean.marcheId}" id="MarcheID"  style="width: 100%; " filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
@@ -60,46 +77,7 @@
                         </p:selectOneMenu>
                     </b:column>
                 </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <h:outputLabel value="Ville: *" for="VilleID"  />
-                    </b:column>                
-                </b:row>
-                <b:row styleClass="show-grid">                                    
-                    <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu  value="#{prixDesProduitBean.villeId}" id="VilleID" onchange="this.form.submit();" >
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItems  actionListener="#{prixDesProduitBean.handleVilleChange}"  value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
-                        </b:selectOneMenu>
-                        <p:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID"  style="width: 100%; " filter="true" filterMatchMode="contains">
-                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
-                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
-                            <p:ajax listener="#{prixDesProduitBean.handleCategorieChange()}"  event="change" update="ProduitID" process="@this"/>                    
-                        </p:selectOneMenu>
-                    </b:column>
-                </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <h:outputLabel value="Marché: *" for="MarcheID" />
-                    </b:column>
-                </b:row>
-                <b:row styleClass="show-grid">
-
-                    <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="#{prixDesProduitBean.marcheId}" id="MarcheID" >
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItems value="#{marcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}"/>
-                        </b:selectOneMenu>
-                    <b:column col-xs="12" col-md="8">                          
-                        <p:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID"  style="width: 100%; " filter="true" filterMatchMode="contains">
-                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
-                            <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>                        
-                        </p:selectOneMenu>
-
-                    </b:column>
-                </b:row>
-
-
+               
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
                         <h:outputLabel value="" for="cmbID" />               

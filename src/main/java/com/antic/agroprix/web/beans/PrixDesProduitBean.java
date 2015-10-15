@@ -79,8 +79,8 @@ public class PrixDesProduitBean {
 
     public void handleMarcheChange() throws ServiceException {
 
-        Marche marche = marcheService.findMarcheById(marcheId);
-        produits = produitService.findProduitByMarche(marche.getId());
+       // Marche marche = marcheService.findMarcheById(marcheId);
+       // produits = produitService.findProduitByMarche(marche.getId());
 
     }
 
