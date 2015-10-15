@@ -5,9 +5,37 @@
      xmlns:f="http://xmlns.jcp.org/jsf/core"
      xmlns:h="http://xmlns.jcp.org/jsf/html" >
     <h:form >
-        
+
         <b:panel title="Prix des Produits" look="success"  >
-           <div class="Prix_Prod_Class" id="id_Prix_Prod" >
+            <div class="Prix_Prod_Class" id="id_Prix_Prod" >
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Catégorie: *" for="categorieID" />
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+
+                        <p:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID" required="true" onchange="#{prixDesProduitBean.handleCategorieChange()}" >
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>
+                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
+                            <f:ajax listener="#{prixDesProduitBean.handleCategorieChange()}" />
+                        </p:selectOneMenu>
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <h:outputLabel value="Produit: *" for="ProduitID" />               
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <b:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID" required="true" >
+                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
+                            <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" actionListener="#{prixDesProduitBean.handleProduitChange()}"/>
+                        </b:selectOneMenu>  
+                    </b:column>
+                </b:row>
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
                         <h:outputLabel value="Ville: *" for="VilleID"  />
@@ -34,32 +62,8 @@
                         </b:selectOneMenu>
                     </b:column>
                 </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <h:outputLabel value="Catégorie: *" for="categorieID" />
-                    </b:column>
-                </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
 
-                        <b:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID" required="true">
-                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
-                        </b:selectOneMenu>
-                    </b:column>
-                </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <h:outputLabel value="Produit: *" for="ProduitID" />               
-                    </b:column>
-                </b:row>
-                <b:row styleClass="show-grid">
-                    <b:column col-xs="12" col-md="8">
-                        <b:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID" required="true">
-                            <f:selectItem itemLabel="selectionner" itemValue=""/>                                
-                            <f:selectItems value="#{produitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>
-                        </b:selectOneMenu>  
-                    </b:column>
-                </b:row> 
+
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
                         <b:commandButton type="submit" style="width: 45%;"  value="$ Voir Prix" class="btn btn-success btn-small "/>

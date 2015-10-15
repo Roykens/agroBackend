@@ -45,26 +45,46 @@ public class PrixDesProduitBean {
     Long marcheId = null;
     Long categorieId = null;
     Long produitId = null;
-    List<Produit> produits;
+    List<Produit> produits = new ArrayList<Produit>();
     List<Marche> marches;
     List<Ville> villes;
     List<Categorie> categories;
     List<PrixProduitMarche> prixProduitMarches;
 
     public void handleVilleChange(ActionEvent event) throws ServiceException {
-        marches = marcheService.findMarcheByVille(villeId);        
-        produits = new ArrayList<Produit>();
-        prixProduitMarches = new ArrayList<PrixProduitMarche>();
-        System.out.println(""+marches);
+        if (villeId != null) {
+            marches = marcheService.findMarcheByVille(villeId);
+            //  produits = new ArrayList<Produit>();
+            prixProduitMarches = new ArrayList<PrixProduitMarche>();
+            System.out.println("" + marches);
+            marches = marcheService.findByProduitAndVille(produitId, villeId);
+        }
     }
 
     public void handleMarcheChange() throws ServiceException {
         Marche marche = marcheService.findMarcheById(marcheId);
         produits = produitService.findProduitByMarche(marche.getId());
+
+    }
+
+    public void handleProduitChange() throws ServiceException {
+        if (produitId != null) {
+            villes = villeService.findAllByProduit(produitId);
+            prixProduitMarches = new ArrayList<PrixProduitMarche>();
+            // marches = marcheService.findByProduitAndVille(produitId, villeId);
+            marches = new ArrayList<Marche>();
+        }
     }
 
     public void handleCategorieChange() throws ServiceException {
-        produits = produitService.findByCategorie(categorieId);
+        if (categorieId != null) {
+            System.out.println("Je suis ici");
+            System.out.println("L'id " + categorieId);
+            produits = produitService.findByCategorie(categorieId);
+            for (Produit produit : produits) {
+                System.out.println(produit);
+            }
+        }
     }
 
     public void voirPrixProduit() throws ServiceException {
