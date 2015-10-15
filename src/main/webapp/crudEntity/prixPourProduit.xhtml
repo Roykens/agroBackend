@@ -2,25 +2,30 @@
      xmlns:b="http://bootsfaces.net/ui"
      xmlns:p="http://primefaces.org/ui"
      xmlns:f="http://xmlns.jcp.org/jsf/core"
-     xmlns:h="http://xmlns.jcp.org/jsf/html">   
+     xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+    <p:dialog modal="true" closable="true" header="MARCHÉS QUI VENDENT LE PRODUIT #{produitBean.produit.nom}" widgetVar="dlgVoirMarche" hideEffect="drop" showEffect="blind" >       
+        <p:dataList value="#{produitBean.marchesProduit}"  var="marche" type="ordered" class="updateAll" paginator="true" rows="10" emptyMessage="aucune association à un marché"  paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >              
+            #{agentBean.marcheResult(marche)}
+        </p:dataList>  
+    </p:dialog>
     <p:dialog modal="true" closable="false" header="INSERER UN PRIX" widgetVar="dlgAjouterPrix" hideEffect="drop" showEffect="blind" >       
         <h:form id="formAjouterPrix" >                                                        
             <h:panelGroup >
                 <h:panelGrid  id="displayAjouterPrix" class="panelGrid_class updateAll" columns="2">                    
-                     <h:outputText  value="Marché:* "  class="syntaxe_content" />  
-                     <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                    <h:outputText  value="Marché:* "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
                         <p:ajax listener="#{prixProduitMarcheBean.handleMarchChange()}"  event="change" update="pduit" process="@this"/>                    </p:selectOneMenu> 
-                      <h:outputText  value="Produit:* "  class="syntaxe_content" />  
-                      <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" id="pduit" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                    <h:outputText  value="Produit:* "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" id="pduit" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" />
                     </p:selectOneMenu> 
                     <h:outputText  value="Prix:* "  class="syntaxe_content" />  
                     <b:inputText value="#{prixProduitMarcheBean.prixProduitMarche.prix}"   class="syntaxe_content" />                      
                     <h:outputText  value="Date du changement: "  class="syntaxe_content" />  
-                    <b:datepicker value="#{prixProduitMarcheBean.prixProduitMarche.datePrix}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />                      
+                    <b:datepicker value="#{prixProduitMarche.datePrix}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />                      
                     <h:outputText  value="Etat du Prix: "  class="syntaxe_content" />                 
                     <p:selectOneRadio value="#{prixProduitMarcheBean.prixProduitMarche.etatPrix}"  >  
                         <f:selectItems value="#{prixProduitMarcheBean.etatPrixs}" var="etat" itemLabel="#{etat}" itemValue="#{etat}" />  
@@ -38,13 +43,13 @@
         <h:form id="formModifierPrix" class="updateAll" >                                                        
             <h:panelGroup >
                 <h:panelGrid  id="displayAjouterPrix" class="panelGrid_class" columns="2">
-                     <h:outputText  value="Marché:* "  class="syntaxe_content" />  
-                     <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                    <h:outputText  value="Marché:* "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{prixProduitMarcheBean.marcheId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}" itemValue="#{marche.id}" />
-                    </p:selectOneMenu> 
-                      <h:outputText  value="Produit:* "  class="syntaxe_content" />  
-                      <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
+                        <p:ajax listener="#{prixProduitMarcheBean.handleMarchChange()}"  event="change" update="pduit" process="@this"/>                    </p:selectOneMenu> 
+                    <h:outputText  value="Produit:* "  class="syntaxe_content" />  
+                    <p:selectOneMenu value="#{prixProduitMarcheBean.produitId}" id="pduit" class="syntaxe_content" style="width: 100%;" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
                         <f:selectItems value="#{prixProduitMarcheBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" />
                     </p:selectOneMenu> 
@@ -55,7 +60,7 @@
                     <h:outputText  value="Etat du Prix: "  class="syntaxe_content" />                 
                     <p:selectOneRadio value="#{prixProduitMarcheBean.prixProduitMarche.etatPrix}"  >  
                         <f:selectItems value="#{prixProduitMarcheBean.etatPrixs}" var="etat" itemLabel="#{etat}" itemValue="#{etat}" />  
-                    </p:selectOneRadio>  
+                    </p:selectOneRadio> 
                     <h:inputHidden value="#{prixProduitMarcheBean.prixProduitMarche.version}"/>
                     <h:inputHidden value="#{prixProduitMarcheBean.prixProduitMarche.id}"/>
                 </h:panelGrid>  
@@ -68,11 +73,11 @@
 
         </h:form>  
     </p:dialog>
-   
+
     <h:form  class="updateAll">                   
         <p:dataTable id="dataTableId"  value="#{prixProduitMarcheBean.prixProduitMarches}" var="item"
                      emptyMessage="Aucun marché enregistré" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
-                       <div style="text-align: right;">
+            <div style="text-align: right;">
                 <f:facet name="header" >  
                     <p:commandButton  icon="ui-icon-disk" value="Nouveau Prix" type="button" onclick="PF('dlgAjouterPrix').show()" />                    
                 </f:facet>  
@@ -99,8 +104,8 @@
                 <f:facet name="header">
                     <h:outputText value="Enregistré le"/>
                 </f:facet>
-                <h:outputText value="#{item.datePrix}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                <h:outputText value="#{prixDesProduitBean.df.format(item.datePrix)}">
+                    <!--<f:convertDateTime pattern="dd/MM/yyyy" />-->
                 </h:outputText>                 
             </p:column>
             <p:column>

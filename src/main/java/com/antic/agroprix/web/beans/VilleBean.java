@@ -10,10 +10,8 @@ import com.royken.antic.agroprix.service.IVilleService;
 import com.royken.antic.agroprix.service.ServiceException;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -33,28 +31,22 @@ public class VilleBean {
 
     }
 
-    public void ajouterOuMettreajourVille(ActionEvent event) throws ServiceException {        
-        if (ville != null && ville.getId() == null && ville.getNom() != null && ville.getNom().length() != 0) {
+    public void ajouterOuMettreajourVille() throws ServiceException {
+        if (ville != null && ville.getNom() != null && ville.getNom().length() != 0) {
             ville = villeService.saveOrUpdateVille(ville);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", ville.getNom() + " a été ajouté "));
-        } else if (ville != null && ville.getId() != null && ville.getNom() != null && ville.getNom().length() != 0) {
-            ville = villeService.saveOrUpdateVille(ville);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", ville.getNom() + " a été mis à jour "));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
         }
         ville = new Ville();
     }
 
-    public void supprimerVille(ActionEvent event) throws ServiceException {        
-        if (ville != null && ville.getNom() != null && ville.getId() != null) {            
+    public void supprimerVille() throws ServiceException {
+        if (ville != null && ville.getNom() != null && ville.getId() != null) {
             villeService.deleteVille(ville.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", ville.getNom() + " a été supprimé "));
-            ville = new Ville();
+
         }
+        ville = new Ville();
     }
 
-    public void annuler(ActionEvent event) throws ServiceException {
+    public void annuler() throws ServiceException {
         ville = new Ville();
     }
 

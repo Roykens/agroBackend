@@ -120,11 +120,11 @@
                 </f:facet>
                 <h:outputText value="#{produitBean.afficheNomCategorie(item.categorie)}"/>
             </p:column> 
-            <p:column headerText="Action" width="400">                                                                  
+            <p:column headerText="Action" width="250" style="text-align: center;">                                                                  
                 <p:commandLink  id="voir_marchés" value="Marché(s) où trouver le produit " type="button" update="@(.updateAll)"   onclick="PF('dlgVoirMarche').show()">
                     <f:setPropertyActionListener  value="#{item}" target="#{produitBean.produit}"/>
                 </p:commandLink> 
-                <p:outputLabel value="|"/>          
+                        
                 <p:commandLink  id="modifier" value=" Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierProduit').show()">
                     <f:setPropertyActionListener  value="#{item}" target="#{produitBean.produit}"/>
                 </p:commandLink>

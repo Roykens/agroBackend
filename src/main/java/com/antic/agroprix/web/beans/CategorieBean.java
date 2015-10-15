@@ -33,25 +33,18 @@ public class CategorieBean {
 
     }
 
-    public void ajouterOuMettreajourCategorie(ActionEvent event) throws ServiceException {        
-        if (categorie != null && categorie.getId() == null && categorie.getNom() != null && categorie.getNom().length() != 0) {
+    public void ajouterOuMettreajourCategorie() throws ServiceException {
+        if (categorie != null && categorie.getNom() != null && categorie.getNom().length() != 0) {
             categorie = categorieService.saveOrUpdateCategorie(categorie);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", categorie.getNom() + " a été ajouté "));
-        } else if (categorie != null && categorie.getId() != null && categorie.getNom() != null && categorie.getNom().length() != 0) {
-            categorie = categorieService.saveOrUpdateCategorie(categorie);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", categorie.getNom() + " a été mis à jour "));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
         }
         categorie = new Categorie();
     }
 
-    public void supprimerCategorie(ActionEvent event) throws ServiceException {        
-        if (categorie != null && categorie.getNom() != null && categorie.getId() != null) {            
+    public void supprimerCategorie() throws ServiceException {
+        if (categorie != null && categorie.getNom() != null && categorie.getId() != null) {
             categorieService.deleteCategorie(categorie.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", categorie.getNom() + " a été supprimé "));
-            categorie = new Categorie();
         }
+        categorie = new Categorie();
     }
 
     public void annuler(ActionEvent event) throws ServiceException {

@@ -41,74 +41,64 @@ public class AgentBean {
     public Agent agent = new Agent();
     public List<Agent> agents;
     public String pwd1 = new String();
-    public String pwd2 = new String();   
-    private Long marcheId;
+    public String pwd2 = new String();
+    private Long marcheId = null;
     public List<RoleType> roleTypes = new ArrayList<RoleType>();
 
-    public AgentBean() {       
-        this.marcheId = 0L;
+    public AgentBean() {
+        this.marcheId = null;
         roleTypes.add(RoleType.ADMIN);
         roleTypes.add(RoleType.AGENT);
     }
 
-    public void ajouterajourAgent(){
+    public void ajouterajourAgent() {
         if (agent != null && pwd1 != null && pwd2 != null && pwd1.trim().compareTo(pwd2.trim()) == 0) {
             agent.setPassword(pwd1);
             if (marcheId != null) {
                 try {
                     Marche marchelocal = marcheService.findMarcheById(marcheId);
-                    System.out.println(marcheId + "===============================================" + marchelocal);
                     agent.setMarche(marchelocal);
                 } catch (ServiceException ex) {
                     Logger.getLogger(AgentBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (agent.getId() == null && agent.getNom() != null && agent.getNom().length() != 0) {
+            if (agent.getNom() != null && agent.getNom().length() != 0) {
                 try {
                     agent = agentService.saveOrUpdateAgent(agent);
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été ajouté "));
                 } catch (ServiceException ex) {
                     Logger.getLogger(AgentBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
         }
         pwd1 = new String();
         pwd2 = new String();
         agent = new Agent();
+        marcheId = null;
     }
 
-    public void mettreajourAgent(ActionEvent event) throws ServiceException {
+    public void mettreajourAgent() throws ServiceException {
         if (agent != null) {
             if (marcheId != null) {
                 Marche marchelocal = marcheService.findMarcheById(marcheId);
-                System.out.println(marcheId + "===============================================" + marchelocal);
                 agent.setMarche(marchelocal);
             }
-            if (agent.getId() == null && agent.getNom() != null && agent.getNom().length() != 0) {
+            if (agent.getId() != null && agent.getNom() != null && agent.getNom().length() != 0) {
                 agent = agentService.saveOrUpdateAgent(agent);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été ajouté "));
-            } else if (agent.getId() != null && agent.getNom() != null && agent.getNom().length() != 0) {
-                agent = agentService.saveOrUpdateAgent(agent);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été mis à jour "));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
+        }
+        agent = new Agent();
+        marcheId = null;
+    }
+
+    public void supprimerAgent() throws ServiceException {
+        if (agent != null && agent.getNom() != null && agent.getId() != null) {
+            agentService.deleteAgent(agent.getId());
         }
         agent = new Agent();
     }
 
-    public void supprimerAgent(ActionEvent event) throws ServiceException {
-        if (agent != null && agent.getNom() != null && agent.getId() != null) {
-            agentService.deleteAgent(agent.getId());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", agent.getNom() + " a été supprimé "));
-            agent = new Agent();
-        }
-    }
-
-    public void handleRoleTypesChange() throws ServiceException {        
-        if ((agent != null && agent.getRoleType() != null && agent.getRoleType().compareTo(RoleType.AGENT) == 0)) {            
+    public void handleRoleTypesChange() throws ServiceException {
+        if ((agent != null && agent.getRoleType() != null && agent.getRoleType().compareTo(RoleType.AGENT) == 0)) {
             marches = marcheService.findAllMarche();
         } else {
             marches = null;
@@ -154,8 +144,8 @@ public class AgentBean {
         agents = agentService.findAllAgent();
         return agents;
     }
-    
-   public void setAgents(List<Agent> agents) {
+
+    public void setAgents(List<Agent> agents) {
         this.agents = agents;
     }
 
@@ -210,7 +200,7 @@ public class AgentBean {
     }
 
     public List<Marche> getMarches() throws ServiceException {
-       //marches =  marcheService.findAllMarche();
+        //marches =  marcheService.findAllMarche();
         return marches;
     }
 

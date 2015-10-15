@@ -46,7 +46,7 @@ table.panelGrid_class tr td:first-child{
     margin-bottom: 2px;
     margin-top: 2px;    
 }
-.commande_button_class{
+.commande_button_class,.ppClass{
     height: 40px;    
 }
 .tabViewClass{
@@ -62,4 +62,8 @@ table.panelGrid_class tr td:first-child{
 }
 .cmd_button{
     width: auto;
+}
+.labelClass{
+    text-align: center;
+    font-size: 12pt;
 }

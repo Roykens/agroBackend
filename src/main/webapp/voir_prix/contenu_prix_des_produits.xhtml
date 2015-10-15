@@ -4,8 +4,17 @@
      xmlns:p="http://primefaces.org/ui"
      xmlns:f="http://xmlns.jcp.org/jsf/core"
      xmlns:h="http://xmlns.jcp.org/jsf/html" >
-    <h:form >
-
+    
+    <p:dialog modal="true" closable="false" header="PRIX DU PRODUIT" widgetVar="dlgVoirPrix" hideEffect="drop" showEffect="blind" >           
+            <h:form class="updateAll">
+            #{prixDesProduitBean.afficherPrixProduit()}  
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="OK" type="submit"  action="#{prixDesProduitBean.annuler()}" onclick="PF('dlgVoirPrix').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>  
+            </h:form>
+        </p:dialog>
+    <h:form class="updateAll">
         <b:panel title="Prix des Produits" look="success"  >
             <div class="Prix_Prod_Class" id="id_Prix_Prod" >
                 <b:row styleClass="show-grid">
@@ -21,6 +30,15 @@
                             <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}" />
                             <f:ajax listener="#{prixDesProduitBean.handleCategorieChange()}" />
                         </p:selectOneMenu>
+
+                <b:row styleClass="show-grid">                                    
+                    <b:column col-xs="12" col-md="8">                        
+                        <p:selectOneMenu value="#{prixDesProduitBean.villeId}" id="VilleID"  style="width: 100%;" filter="true" filterMatchMode="contains" >
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}"  />                    
+                            <f:selectItems value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}" />
+                            <p:ajax listener="#{prixDesProduitBean.handleVilleChange()}"  event="change" update="MarcheID" process="@this"/>                    
+                        </p:selectOneMenu>                       
+
                     </b:column>
                 </b:row>
                 <b:row styleClass="show-grid">
@@ -34,6 +52,12 @@
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}" actionListener="#{prixDesProduitBean.handleProduitChange()}"/>
                         </b:selectOneMenu>  
+                    <b:column col-xs="12" col-md="8">                      
+                        <p:selectOneMenu value="#{prixDesProduitBean.marcheId}" id="MarcheID"  style="width: 100%; " filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                            <f:selectItems value="#{prixDesProduitBean.marches}" var="marche" itemLabel="#{agentBean.marcheResult(marche)}"  itemValue="#{marche.id}"/>
+                            <p:ajax listener="#{prixDesProduitBean.handleMarcheChange()}"  event="change" update="ProduitID" process="@this"/>                    
+                        </p:selectOneMenu>
                     </b:column>
                 </b:row>
                 <b:row styleClass="show-grid">
@@ -47,6 +71,11 @@
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems  actionListener="#{prixDesProduitBean.handleVilleChange}"  value="#{villeBean.villes}" var="ville" itemLabel="#{ville.nom}" itemValue="#{ville.id}"/>
                         </b:selectOneMenu>
+                        <p:selectOneMenu value="#{prixDesProduitBean.categorieId}" id="categorieID"  style="width: 100%; " filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                            <f:selectItems value="#{categorieBean.categories}" var="categorie" itemLabel="#{categorie.nom}" itemValue="#{categorie.id}"/>
+                            <p:ajax listener="#{prixDesProduitBean.handleCategorieChange()}"  event="change" update="ProduitID" process="@this"/>                    
+                        </p:selectOneMenu>
                     </b:column>
                 </b:row>
                 <b:row styleClass="show-grid">
@@ -55,19 +84,33 @@
                     </b:column>
                 </b:row>
                 <b:row styleClass="show-grid">
+
                     <b:column col-xs="12" col-md="8">
                         <b:selectOneMenu value="#{prixDesProduitBean.marcheId}" id="MarcheID" >
                             <f:selectItem itemLabel="selectionner" itemValue=""/>                                
                             <f:selectItems value="#{marcheBean.marches}" var="marche" itemLabel="#{marche.nom}" itemValue="#{marche.id}"/>
                         </b:selectOneMenu>
+                    <b:column col-xs="12" col-md="8">                          
+                        <p:selectOneMenu value="#{prixDesProduitBean.produitId}" id="ProduitID"  style="width: 100%; " filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Selectionner" itemValue="#{null}" />                    
+                            <f:selectItems value="#{prixDesProduitBean.produits}" var="produit" itemLabel="#{produit.nom}" itemValue="#{produit.id}"/>                        
+                        </p:selectOneMenu>
+
                     </b:column>
                 </b:row>
 
 
                 <b:row styleClass="show-grid">
                     <b:column col-xs="12" col-md="8">
-                        <b:commandButton type="submit" style="width: 45%;"  value="$ Voir Prix" class="btn btn-success btn-small "/>
-                        <b:commandButton type="submit" style="width: 45%;margin-left: 10%;"  value="$ Voir Variation" class="btn btn-success btn-small "/>
+                        <h:outputLabel value="" for="cmbID" />               
+                    </b:column>
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column col-xs="12" col-md="8">
+                        <p:commandButton  id="cmbID" value="VOIR PRIX" style="width: 100%; " class="btn btn-success btn-small " actionListener="#{prixDesProduitBean.voirPrixProduit}" onclick="PF('dlgVoirPrix').show()" update="@(.updateAll)" ajax="true"  />
+            
+                        <!--<p:commandButton  style="width: 100%; " id="cmbID" value="Voir Prix" class="btn btn-success btn-small "  ajax="true" onclick="PF('dlgVoirPrix').show()"/>-->
+                        <!--<b:commandButton type="submit" style="width: 45%;margin-left: 10%;"  value="Voir Variation" class="btn btn-success btn-small "/>-->
                     </b:column>
                 </b:row>
             </div>

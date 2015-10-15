@@ -49,11 +49,34 @@ public class PrixProduitMarcheBean {
     Long produitsId = null;
 
     public PrixProduitMarcheBean() {
-        prixProduitMarche.setDatePrix(new Date());
+        //prixProduitMarche.setDatePrix(new Date());
     }
 
-    public void ajouterOuMettreajourPrixProduitMarche(Long id) throws ServiceException {
-        marcheId = id;
+//    public void ajouterOuMettreajourPrixProduitMarche(Long id) throws ServiceException {
+//        System.out.println("///////////////////" + produitId);
+//        marcheId = id;
+//        if (prixProduitMarche != null) {
+//            if (produitId != null) {
+//                Produit produit = produitService.findProduitById(produitId);
+//                prixProduitMarche.setProduit(produit);
+//                marchesId = marcheId;
+//            }
+//            if (marcheId != null) {
+//                Marche marche = marcheService.findMarcheById(marcheId);
+//                prixProduitMarche.setMarche(marche);
+//                produitsId = produitId;
+//            }
+//            if (prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
+//                prixProduitMarche = prixProduitMarcheService.saveOrUpdatePrix(prixProduitMarche);
+//            }
+//        }
+//        produitId = null;
+//        marcheId = null;
+//        prixProduitMarche = new PrixProduitMarche();
+//    }
+
+    public void ajouterOuMettreajourPrixProduitMarche() throws ServiceException {
+
         if (prixProduitMarche != null) {
             if (produitId != null) {
                 Produit produit = produitService.findProduitById(produitId);
@@ -65,39 +88,8 @@ public class PrixProduitMarcheBean {
                 prixProduitMarche.setMarche(marche);
                 produitsId = produitId;
             }
-            System.out.println("------------------------------------------" + prixProduitMarche);
-            if (prixProduitMarche.getId() == null && prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
+            if (prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
                 prixProduitMarche = prixProduitMarcheService.saveOrUpdatePrix(prixProduitMarche);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", prixProduitMarche.getPrix() + " a été ajouté "));
-            }
-        }
-        produitId = null;
-        marcheId = null;
-        prixProduitMarche = new PrixProduitMarche();
-    }
-
-    public void ajouterOuMettreajourPrixProduitMarche(ActionEvent event) throws ServiceException {
-
-        if (prixProduitMarche != null) {
-            if (produitId != null) {
-                Produit produit = produitService.findProduitById(produitId);
-                prixProduitMarche.setProduit(produit);
-                marchesId = marcheId;
-            }
-            if (marcheId != null) {
-                Marche marche = marcheService.findMarcheById(marcheId);
-                prixProduitMarche.setMarche(marche);
-                produitsId = produitId;
-            }
-            System.out.println("------------------------------------------" + prixProduitMarche);
-            if (prixProduitMarche.getId() == null && prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
-                prixProduitMarche = prixProduitMarcheService.saveOrUpdatePrix(prixProduitMarche);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", prixProduitMarche.getPrix() + " a été ajouté "));
-            } else if (prixProduitMarche.getId() != null && prixProduitMarche.getPrix() != null && prixProduitMarche.getPrix() != 0) {
-                prixProduitMarche = prixProduitMarcheService.saveOrUpdatePrix(prixProduitMarche);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "opération reussie", prixProduitMarche.getPrix() + " a été mis à jour "));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Echec", " l'operation à échouer "));
             }
         }
         produitId = null;
@@ -157,7 +149,7 @@ public class PrixProduitMarcheBean {
     }
 
     public PrixProduitMarche getPrixProduitMarche() {
-        prixProduitMarche.setDatePrix(new Date());
+        //prixProduitMarche.setDatePrix(new Date());
         return prixProduitMarche;
     }
 
@@ -169,10 +161,10 @@ public class PrixProduitMarcheBean {
         prixProduitMarches = prixProduitMarcheService.findAll();
         if (marchesId != null) {
             prixProduitMarches = prixProduitMarcheService.findByMarche(marchesId);
-        }
+        }        
 //        if (marchesId != null && produitsId != null) {
 //            prixProduitMarches = prixProduitMarcheService.findByMarche(marcheId, produitId);
-//        }
+//        }        
         return prixProduitMarches;
     }
 
@@ -213,9 +205,11 @@ public class PrixProduitMarcheBean {
         this.etatPrixs = etatPrixs;
     }
 
-    public Long getProduitId() {
-        if (prixProduitMarche != null && prixProduitMarche.getId() != null && prixProduitMarche.getProduit() != null) {
+    public Long getProduitId() throws ServiceException {
+        if (prixProduitMarche != null && prixProduitMarche.getId() != null && prixProduitMarche.getMarche()!=null && prixProduitMarche.getProduit() != null) {
+            //prixProduitMarches = prixProduitMarcheService.findByMarche(prixProduitMarche.getMarche().getId());
             produitId = prixProduitMarche.getProduit().getId();
+            produits = produitService.findProduitByMarche(prixProduitMarche.getMarche().getId());
         }
         return produitId;
     }
