@@ -9,8 +9,10 @@ import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.Ville;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
+import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.ServiceException;
+import com.royken.antic.agroprix.service.Util;
 import com.royken.generic.dao.DataAccessException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -229,5 +231,38 @@ public class PrixServiceImpl implements IPrixService {
             Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public PrixProduit mettrePrixAJour(PrixProduit prix) throws ServiceException {
+        try {
+            Long produitId = prix.getProduitId();
+            Long marcheId = prix.getMarcheId();
+            int prixP = prix.getNouveauPrix();
+            Date datep = prix.getDatePrix();
+            String etat = prix.getEtatPrix();
+            
+            Produit produit = produitDao.findById(produitId);
+            if(produit == null){
+                throw new ServiceException("Le produit est introuvable");
+            }
+            
+            Marche marche = marcheDao.findById(marcheId);
+            if(marche == null){
+                throw new ServiceException("Le marche est introuvable");
+            }
+            
+            PrixProduitMarche ppm = new PrixProduitMarche();
+            ppm.setMarche(marche);
+            ppm.setProduit(produit);
+            ppm.setPrix(prixP);
+            ppm.setEtatPrix(Util.stringToEtatPrix(etat));
+            ppm.setDatePrix(datep);
+            prixProduitMarcheDao.create(ppm);
+            return prix;
+        } catch (DataAccessException ex) {
+            Logger.getLogger(PrixServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

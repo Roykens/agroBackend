@@ -5,6 +5,7 @@ import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
+import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.IPrixService;
@@ -173,6 +174,16 @@ public class PrixResource implements IPrixResource{
         try {
             ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
             return prixService.saveOrUpdatePrix(ppmZ);
+        } catch (ServiceException ex) {
+            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public PrixProduit modifierPrix(PrixProduit prixProduit) {
+        try {
+            return prixService.mettrePrixAJour(prixProduit);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }

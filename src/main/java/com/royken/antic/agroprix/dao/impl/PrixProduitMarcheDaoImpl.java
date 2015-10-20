@@ -113,7 +113,7 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
         CriteriaBuilder cb = getManager().getCriteriaBuilder();
         CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
         Root<PrixProduitMarche> pRoot = cq.from(PrixProduitMarche.class);
-        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit))).orderBy(cb.desc(pRoot.get(PrixProduitMarche_.datePrix)));
+        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit)));
         try {
             return getManager().createQuery(cq).setMaxResults(fin - debut + 1).setFirstResult(debut).getResultList();
         } catch (Exception e) {

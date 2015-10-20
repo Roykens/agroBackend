@@ -2,6 +2,7 @@ package com.royken.antic.agroprix.resource;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
+import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,22 +17,26 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
  *
  * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
-@Path("prix")
+@Path("/prix")
 public interface IPrixResource {
+    
+    @POST
+    @Produces(value = "application/json")
+    PrixProduit modifierPrix(PrixProduit prixProduit);
     
     @POST
     @Path(value = "{etatPrix}")
     @Produces(value = "application/json")
     PrixProduitMarche createPrix(@PathParam("etatPrix") String etat,PrixProduitMarche ppmZ);
     
-//    @POST
-//    @Path(value = "{etatPrix}/{produitId :\\ d+}/{marcheId : \\d+}")
-//    @Produces(value = "application/json")
-//    PrixProduitMarche createPrixA(@PathParam("etatPrix") String etat,@PathParam("produitId") Long produitId,@PathParam("marcheId") Long marcheId,PrixProduitMarche ppmZ);
-//    
     @POST
+    @Path(value = "{etatPrix}/{produitId :\\ d+}/{marcheId : \\d+}")
     @Produces(value = "application/json")
-    PrixProduitMarche createPrixA(@FormDataParam("etatPrix") String etat,@FormDataParam("produitIdId") Long produitId,@FormDataParam("marcheId") Long marcheId,PrixProduitMarche ppmZ);
+    PrixProduitMarche createPrixA(@PathParam("etatPrix") String etat,@PathParam("produitId") Long produitId,@PathParam("marcheId") Long marcheId,PrixProduitMarche ppmZ);
+//    
+//    @POST
+//    @Produces(value = "application/json")
+//    PrixProduitMarche createPrixA(@FormDataParam("etatPrix") String etat,@FormDataParam("produitIdId") Long produitId,@FormDataParam("marcheId") Long marcheId,PrixProduitMarche ppmZ);
 
     @GET
     @Path(value = "{id : \\d+}")
