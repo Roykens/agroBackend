@@ -9,6 +9,7 @@ import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.antic.agroprix.service.Util;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -149,6 +150,11 @@ public class PrixResource implements IPrixResource{
     @Override
     public PrixProduit modifierPrix(PrixProduit prixProduit) {
         try {
+            //DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+           // Date tot = df.parse("2015-10-28");
+            Date zo = new Date();
+           // System.out.println("zzzzzzzoooooooooooo "+ zo);
+            prixProduit.setDatePrix(zo);
             return prixService.mettrePrixAJour(prixProduit);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);

@@ -258,6 +258,9 @@ public class PrixServiceImpl implements IPrixService {
             ppm.setPrix(prixP);
             ppm.setEtatPrix(Util.stringToEtatPrix(etat));
             ppm.setDatePrix(datep);
+            System.out.println("Le nouveau prix  ");
+            System.out.println(datep);
+            System.out.println(ppm);
             prixProduitMarcheDao.create(ppm);
             return prix;
         } catch (DataAccessException ex) {
