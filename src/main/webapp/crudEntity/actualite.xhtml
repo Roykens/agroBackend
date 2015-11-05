@@ -1,0 +1,109 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:b="http://bootsfaces.net/ui"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+
+    <p:dialog modal="true" closable="false" header="AJOUTER UNE INFORMATION" widgetVar="dlgAjouterActualite" hideEffect="drop" showEffect="blind" >       
+        <h:form id="formAjouterActualite" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterActualite" class="panelGrid_class updateAll" columns="4">
+                    <h:outputText  value="Info: "  class="syntaxe_content" />  
+                    <b:inputText value="#{actualiteBean.actualite.info}"   class="syntaxe_content" />  
+                    <h:outputText  value="Date Info: "  class="syntaxe_content" />  
+                    <b:datepicker value="#{actualiteBean.actualite.dateInfo}"   class="syntaxe_content" showButtonPanel="true"  changeMonth="true" changeYear="true" showWeek="true" mode="popup" />
+                    <h:outputText  value="Contact "  class="syntaxe_content" />  
+                    <b:inputText value="#{actualiteBean.actualite.contact}"   class="syntaxe_content" />  
+                    <h:outputText  value="Image " />
+                    <p:fileUpload   value="#{actualiteBean.image}" mode="simple"
+                                  auto="true"  
+                                  sizeLimit="100000"   
+                                  allowTypes="*.jpg;*.png;*.gif;" class="syntaxe_content" update="feuille" process="@this" invalidFileMessage="fichier invalide" requiredMessage="chargez le fichier" > 
+                        <!--                                    <p:ajax listener="" event="change" update="cities" process="@this"/>-->
+                    </p:fileUpload>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" action ="#{actualiteBean.saveOrUpdateActualite()}" update="@(.updateAll)" oncomplete="PF('dlgAjouterActualite').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler"  actionListener="#{actualiteBean.annuler}" onclick="PF('dlgAjouterActualite').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                    
+        </h:form>  
+    </p:dialog>
+    <p:dialog modal="true" closable="false" header="MODIFIER LA CATEGORIE" widgetVar="dlgModifierActualite" hideEffect="drop" showEffect="blind">
+        <h:form id="formModifierActualite" class="updateAll" >                                                        
+            <h:panelGroup >
+                <h:panelGrid  id="displayAjouterActualite" class="panelGrid_class" columns="2">
+                    <h:outputText  value="Intitulé: "  class="syntaxe_content" />  
+                    <b:inputText value="#{actualiteBean.actualite.contact}"   class="syntaxe_content" />  
+                    <h:inputHidden value="#{actualiteBean.actualite.version}"/>
+                    <h:inputHidden value="#{actualiteBean.actualite.id}"/>
+                </h:panelGrid>  
+            </h:panelGroup>
+            <p:separator/>
+            <div  style="text-align: center;">
+                <p:commandButton class="cmd_button" value="Soumettre" actionListener ="#{actualiteBean.ajouterOuMettreajourActualite}" update="@(.updateAll)" oncomplete="PF('dlgModifierActualite').hide()"  ajax="true"   />
+                <p:commandButton class="cmd_button" value="Annuler" actionListener="#{actualiteBean.annuler}" onclick="PF('dlgModifierActualite').hide()" update="@(.updateAll)" ajax="true"  />
+            </div>                   
+        </h:form>  
+    </p:dialog>
+    <p:confirmDialog  message="voulez-vous vraiment supprimer cette catégorie ?"
+                      header="Initialisation de la suppression" severity="alert"
+                      widgetVar="dlgSupActualite" showEffect="blind" hideEffect="drop"> 
+        <h:form class="updateAll" >
+            <div style="text-align: center;">
+                <p:commandButton class="cmd_button"   value="OUI" actionListener="#{actualiteBean.supprimerActualite}" oncomplete="PF('dlgSupActualite').hide()" update="@(.updateAll)" ajax="true"/>                
+                <p:commandButton class="cmd_button" value="NON"  actionListener="#{actualiteBean.annuler}" onclick ="PF('dlgSupActualite').hide();"  ajax="true" />
+            </div>
+            <h:inputHidden value="#{actualiteBean.actualite.contact}"/>
+            <h:inputHidden value="#{actualiteBean.actualite.version}"/>
+            <h:inputHidden value="#{actualiteBean.actualite.id}"/>
+        </h:form>
+    </p:confirmDialog>
+    <h:form  class="updateAll">           
+
+        <p:dataTable id="dataTableId"  value="#{actualiteBean.actualites}" var="item"
+                     emptyMessage="Aucune info enregistrée" rowKey="#{item.id}" paginator="true" rows="15"   paginatorPosition="bottom" paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}" >
+            <div style="text-align: right;">
+                <f:facet name="header" >  
+                    <p:commandButton  icon="ui-icon-disk" value="Ajouter une info" type="button" onclick="PF('dlgAjouterActualite').show()" />                    
+                </f:facet>  
+            </div>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Date"/>
+                </f:facet>
+                <h:outputText value="#{item.dateInfo}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Info"/>
+                </f:facet>
+                <h:outputText value="#{item.info}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Contact"/>
+                </f:facet>
+                <h:outputText value="#{item.contact}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Image"/>
+                </f:facet>
+                <h:outputText value="#{item.nomImage}"/>
+            </p:column>
+            <p:column headerText="Action" width="200">                                            
+                <p:commandLink  id="modifier" value="Mettre à jour " update="@(.updateAll)" type="button" onclick="PF('dlgModifierActualite').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{actualiteBean.actualite}"/>
+                </p:commandLink>
+                <p:outputLabel value="|"/>                
+                <p:commandLink  id="supprimer" value=" Supprimer" type="button" update="@(.updateAll)"   onclick="PF('dlgSupActualite').show()">
+                    <f:setPropertyActionListener  value="#{item}" target="#{actualiteBean.actualite}"/>
+                </p:commandLink>                
+            </p:column> 
+        </p:dataTable>
+    </h:form>
+</div>

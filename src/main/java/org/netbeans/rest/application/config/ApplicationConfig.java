@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.netbeans.rest.application.config;
 
 import java.util.Set;
@@ -31,6 +26,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.royken.antic.agroprix.resource.impl.ActualiteResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.AuthentificationResource.class);
+        resources.add(com.royken.antic.agroprix.resource.impl.AvisResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.CategoriesResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.MarcheResource.class);
         resources.add(com.royken.antic.agroprix.resource.impl.PrixResource.class);

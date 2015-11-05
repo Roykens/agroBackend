@@ -2,6 +2,7 @@ package com.royken.antic.agroprix.service;
 
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
+import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -12,6 +13,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface IPrixService {
+    
+    public PrixProduit mettrePrixAJour(PrixProduit prix) throws ServiceException;
     
     public PrixProduitMarche saveOrUpdatePrix(PrixProduitMarche prix) throws ServiceException;
     

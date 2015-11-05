@@ -3,20 +3,17 @@ package com.royken.antic.agroprix.dao.impl;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
 import com.royken.antic.agroprix.dao.IPrixProduitMarcheDao;
 import com.royken.antic.agroprix.entities.Marche;
-import com.royken.antic.agroprix.entities.Marche_;
 import com.royken.antic.agroprix.entities.PrixProduitMarche_;
 import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
 import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.generic.dao.DataAccessException;
 import com.royken.generic.dao.impl.GenericDao;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -113,7 +110,7 @@ public class PrixProduitMarcheDaoImpl extends GenericDao<PrixProduitMarche, Long
         CriteriaBuilder cb = getManager().getCriteriaBuilder();
         CriteriaQuery<PrixProduitMarche> cq = cb.createQuery(PrixProduitMarche.class);
         Root<PrixProduitMarche> pRoot = cq.from(PrixProduitMarche.class);
-        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit))).orderBy(cb.desc(pRoot.get(PrixProduitMarche_.datePrix)));
+        cq.where(cb.and(cb.equal(pRoot.get(PrixProduitMarche_.marche), marche), cb.equal(pRoot.get(PrixProduitMarche_.produit), produit)));
         try {
             return getManager().createQuery(cq).setMaxResults(fin - debut + 1).setFirstResult(debut).getResultList();
         } catch (Exception e) {

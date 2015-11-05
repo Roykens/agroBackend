@@ -53,36 +53,60 @@ public class PrixDesProduitBean {
     Long marcheId = null;
     Long categorieId = null;
     Long produitId = null;
-    List<Produit> produits;
+    List<Produit> produits = new ArrayList<Produit>();
     List<Marche> marches;
+    List<Ville> villes = new ArrayList<Ville>();
     Date dateDebut = new Date();
     Date dateFin = new Date();
     private LineChartModel model ;
     List<PrixProduitMarche> prixProduitMarches;
     PrixProduitMarche prixProduitMarche;
     private  DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private int debut = 0;
+    
+    private int fin = 20;
 
+    public void handleVilleChange(ActionEvent event) throws ServiceException {
+        if (villeId != null) {
+            marches = marcheService.findMarcheByVille(villeId);
+            //  produits = new ArrayList<Produit>();
+            prixProduitMarches = new ArrayList<PrixProduitMarche>();
+            System.out.println("" + marches);
+            marches = marcheService.findByProduitAndVille(produitId, villeId);
+        }
+    }
     public PrixDesProduitBean() {
         model = new LineChartModel();
     }
 
-    public void handleVilleChange() throws ServiceException {
-        if (villeId != null) {
-            marches = marcheService.findMarcheByVille(villeId);
-            produits = new ArrayList<Produit>();
-        }
-    }
 
     public void handleMarcheChange() throws ServiceException {
-        if (marcheId != null) {
-            produits = produitService.findProduitByMarche(marcheId);
-           
-        }
+
+       // Marche marche = marcheService.findMarcheById(marcheId);
+       // produits = produitService.findProduitByMarche(marche.getId());
+
+    }
+
+    public void handleProduitChange() throws ServiceException {
+        if (produitId != null) {
+            villes = villeService.findAllByProduit(produitId);
+            prixProduitMarches = new ArrayList<PrixProduitMarche>();
+            // marches = marcheService.findByProduitAndVille(produitId, villeId);
+            marches = new ArrayList<Marche>();
+//        if (marcheId != null) {
+//            produits = produitService.findProduitByMarche(marcheId);
+//        }
+    }
     }
 
     public void handleCategorieChange() throws ServiceException {
         if (categorieId != null) {
+            System.out.println("Je suis ici");
+            System.out.println("L'id " + categorieId);
             produits = produitService.findByCategorie(categorieId);
+            for (Produit produit : produits) {
+                System.out.println(produit);
+            }
         }
     }
 
@@ -99,9 +123,34 @@ public class PrixDesProduitBean {
 
     }
 
+    public int getDebut() {
+        return debut;
+    }
+
+    public void setDebut(int debut) {
+        this.debut = debut;
+    }
+
+    public int getFin() {
+        return fin;
+    }
+
+    public void setFin(int fin) {
+        this.fin = fin;
+    }
+    
+    
+    
+    public void plus(){
+        fin += 20;
+    }
+
     public String voirVariationPrixProduit() throws ServiceException {
+        System.out.println("ttttttttttttttttttttttttttttttttt");
+        System.out.println("");
         if (marcheId != null && produitId != null && dateFin.after(dateDebut)) {
-            prixProduitMarches = prixService.findByProduitAndMarcheBetweenDate(marcheId, produitId, dateDebut, dateFin);
+          //  prixProduitMarches = prixService.findByProduitAndMarcheBetweenDate(marcheId, produitId, dateDebut, dateFin);
+            prixProduitMarches = prixService.findByProduitAndMarcheBetweenRange(marcheId, produitId, debut, fin);
         }
         marcheId = null;
         produitId = null;
@@ -117,13 +166,13 @@ public class PrixDesProduitBean {
         voirPrixProduit();
         String result = "";
         if (prixProduitMarche != null && prixProduitMarche.getProduit() != null && prixProduitMarche.getProduit().getNom() != null && prixProduitMarche.getMarche() != null && prixProduitMarche.getMarche().getNom() != null) {
-            result = "le produit <<" + prixProduitMarche.getProduit().getNom() + ">> au " + prixProduitMarche.getMarche().getNom();
+            result = "Le produit << " + prixProduitMarche.getProduit().getNom() + " >> au " + prixProduitMarche.getMarche().getNom();
             if (prixProduitMarche.getMarche().getVille() != null && prixProduitMarche.getMarche().getVille().getId() != null) {
                 result += " de " + prixProduitMarche.getMarche().getVille().getNom();
             }
             result += " coûte " + prixProduitMarche.getPrix() + " FCFA";
         } else {
-            result = "auccun prix associer au produit";
+            result = "Aucun prix associé au produit";
         }
         return result;
     }

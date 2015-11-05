@@ -1,16 +1,15 @@
 package com.royken.antic.agroprix.resource.impl;
 
-import com.royken.antic.agroprix.entities.EtatPrix;
-import com.royken.antic.agroprix.entities.Marche;
 import com.royken.antic.agroprix.entities.PrixProduitMarche;
-import com.royken.antic.agroprix.entities.Produit;
 import com.royken.antic.agroprix.entities.projection.PrixMarche;
+import com.royken.antic.agroprix.entities.projection.PrixProduit;
 import com.royken.antic.agroprix.resource.IPrixResource;
 import com.royken.antic.agroprix.service.IMarcheService;
 import com.royken.antic.agroprix.service.IPrixService;
 import com.royken.antic.agroprix.service.IProduitService;
 import com.royken.antic.agroprix.service.ServiceException;
 import com.royken.antic.agroprix.service.Util;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -65,26 +64,6 @@ public class PrixResource implements IPrixResource{
     
     
 
-//    @Override
-//    public PrixProduitMarche createPrix(String etat, Long produitId, Long marcheId, PrixProduitMarche ppmZ) {
-//        try {
-//            Produit produit = produitService.findProduitById(produitId);
-//            if(produit == null){
-//                throw new WebApplicationException(Response.Status.NOT_FOUND);
-//            }
-//            ppmZ.setProduit(produit);
-//            Marche marche = marcheService.findMarcheById(marcheId);
-//            if(marche == null){
-//                throw new WebApplicationException(Response.Status.NOT_FOUND);
-//            }
-//            ppmZ.setMarche(marche);
-//            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
-//            return prixService.saveOrUpdatePrix(ppmZ);
-//        } catch (ServiceException ex) {
-//            Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
-//    }
 
     @Override
     public PrixProduitMarche getPrixProduitMarche(long id) {
@@ -169,10 +148,14 @@ public class PrixResource implements IPrixResource{
     }
 
     @Override
-    public PrixProduitMarche createPrix(String etat, PrixProduitMarche ppmZ) {
+    public PrixProduit modifierPrix(PrixProduit prixProduit) {
         try {
-            ppmZ.setEtatPrix(Util.stringToEtatPrix(etat));
-            return prixService.saveOrUpdatePrix(ppmZ);
+            //DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+           // Date tot = df.parse("2015-10-28");
+            Date zo = new Date();
+           // System.out.println("zzzzzzzoooooooooooo "+ zo);
+            prixProduit.setDatePrix(zo);
+            return prixService.mettrePrixAJour(prixProduit);
         } catch (ServiceException ex) {
             Logger.getLogger(PrixResource.class.getName()).log(Level.SEVERE, null, ex);
         }
