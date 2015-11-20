@@ -20,8 +20,14 @@
             <div id="menu_id" class="menu_class " align="center">
                 <ui:include src="#{connexionBean.menu}"/>
             </div>            
-            <div id="content_id" class="content_class ">                     
-                <ui:include src="/accueil/contenu_accueil.xhtml"/>                                      
+            <div id="content_id" class="content_class ">  
+                <div class="row-fluid">
+                <ui:include src="/accueil/contenu_accueil.xhtml"/>  
+                </div>
+                <div class="row-fluid">
+                    <ui:include src="/avis/contenu_avis.xhtml"/> 
+                </div>
+                
             </div>            
             <div id="pied_id" class="pied_class">
                 <ui:include src="/autres/pieddepage.xhtml"/>

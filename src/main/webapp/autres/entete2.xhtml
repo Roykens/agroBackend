@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <table style="width: 100%;">
+        <tr>
+            <td valign="left">
+                <img src="./pictures/logo.png" width="150" style="float: left;"/> 
+            </td>
+            <td valign="center">
+
+                <b style="font-family: monospace;font-style: italic;">un slogan ...</b>   
+
+            </td>
+            <td >
+                <table style="text-align: right;" class="text-right">
+                    <tr><td>
+                            <p:galleria value="#{accueilBean.images}"  var="image" panelWidth="150" panelHeight="75" showFilmstrip="false" >  
+                                <p:graphicImage value="./pictures/#{image}" width="150" height="75" />  
+                            </p:galleria> 
+                        </td></tr>  
+                    <tr><td>
+                            <h:form>
+                                <p:commandLink value="#{connexionBean.connecter}" update="@this" action="#{connexionBean.connection()}"/>
+                            </h:form>
+                        </td></tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    </body>
+</html>

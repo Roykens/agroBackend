@@ -21,6 +21,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -62,7 +63,9 @@ public class ConnexionBean {
             menu = "/autres/menuSimple.xhtml";
             return "accueil.xhtml";
         } else {
-            return "connexion.xhtml";
+            RequestContext.getCurrentInstance().execute("PF('dlgConnexion').show()");
+//            return "connexion.xhtml";
+            return "";
         }
     }
 
@@ -76,11 +79,13 @@ public class ConnexionBean {
                     nom = new String();
                     pwd = new String();
                     menu = "/autres/menuAdmin.xhtml";
+                    RequestContext.getCurrentInstance().execute("PF('dlgConnexion').hide()");
                     return "administrateur";
                 } else if (agent.getRoleType().compareTo(RoleType.AGENT) == 0) {
                     nom = new String();
                     pwd = new String();
                     menu = "/autres/menuAgent.xhtml";
+                    RequestContext.getCurrentInstance().execute("PF('dlgConnexion').hide()");
                     return "agent_marche";
                 } else {
                     pwd = new String();
@@ -100,7 +105,19 @@ public class ConnexionBean {
         message = "nom d'utilisateur ou mot de passe incorrect";
         agent = new Agent();
         pwd = "";
-        return "connexion";
+
+        return "";
+    }
+
+    public String cancel() {
+        connecter = "connexion";
+        menu = "/autres/menuSimple.xhtml";
+        message = "";
+        agent = new Agent();
+        nom = "";
+        pwd = "";
+        RequestContext.getCurrentInstance().execute("PF('dlgConnexion').hide()");
+        return "accueil.xhtml";
     }
 
     public IAgentService getAgentService() {

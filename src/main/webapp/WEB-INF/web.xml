@@ -15,7 +15,22 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
         <param-name>BootsFaces_USETHEME</param-name>
         <param-value>true</param-value>
     </context-param>
-  
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>auto</param-value>
+    </context-param>
+    <context-param>
+        <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>auto</param-value>
+    </context-param>
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -28,11 +43,17 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    <welcome-file-list>
-        
-        <welcome-file>accueil.xhtml</welcome-file> 
-        <welcome-file>agent_marche.xhtml</welcome-file>
-        <welcome-file>index.xhtml</welcome-file>
-        <welcome-file>administrateur.xhtml</welcome-file>                      
+    <filter>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <filter-class>
+            org.primefaces.webapp.filter.FileUploadFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <welcome-file-list>  
+        <welcome-file>accueil.xhtml</welcome-file>                                  
     </welcome-file-list>
 </web-app>

@@ -4,12 +4,13 @@
      xmlns:p="http://primefaces.org/ui"
      xmlns:f="http://xmlns.jcp.org/jsf/core"
      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <b:tabView >          
+    <b:tabView > 
+        <b:tab title="Actualités"><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/actualite.xhtml"/></b:panel></b:tab>          
         <b:tab title="Catégorie"><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/categorie.xhtml"/></b:panel></b:tab>          
         <b:tab title="Produit" ><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/produit.xhtml"/></b:panel></b:tab>  
         <b:tab title="Prix pour produit"><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/prixPourProduit.xhtml"/></b:panel></b:tab>          
         <b:tab title="Ville"><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/ville.xhtml"/></b:panel></b:tab>  
         <b:tab title="Marchés"><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/marche.xhtml"/></b:panel></b:tab>                     
-        <b:tab title="Utilisateur" ><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/utilisateur.xhtml"/></b:panel></b:tab>                  
+        <b:tab title="Utilisateur" ><b:panel style="margin-top: 2%"><ui:include src="../crudEntity/utilisateur.xhtml"/></b:panel></b:tab>                         
     </b:tabView>
 </div>

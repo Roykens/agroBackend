@@ -56,73 +56,52 @@ public class PrixDesProduitBean {
     List<Produit> produits = new ArrayList<Produit>();
     List<Marche> marches;
     List<Ville> villes = new ArrayList<Ville>();
-    Date dateDebut = new Date();
-    Date dateFin = new Date();
-    private LineChartModel model ;
+//    Date dateDebut = new Date();
+//    Date dateFin = new Date();
+    private LineChartModel model;
     List<PrixProduitMarche> prixProduitMarches;
     PrixProduitMarche prixProduitMarche;
-    private  DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    private DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     private int debut = 0;
-    
+
     private int fin = 20;
 
-    public void handleVilleChange(ActionEvent event) throws ServiceException {
-        if (villeId != null) {
-            marches = marcheService.findMarcheByVille(villeId);
-            //  produits = new ArrayList<Produit>();
-            prixProduitMarches = new ArrayList<PrixProduitMarche>();
-            System.out.println("" + marches);
-            marches = marcheService.findByProduitAndVille(produitId, villeId);
-        }
-    }
     public PrixDesProduitBean() {
         model = new LineChartModel();
     }
 
-
-    public void handleMarcheChange() throws ServiceException {
-
-       // Marche marche = marcheService.findMarcheById(marcheId);
-       // produits = produitService.findProduitByMarche(marche.getId());
-
-    }
-
-    public void handleProduitChange() throws ServiceException {
-        if (produitId != null) {
-            villes = villeService.findAllByProduit(produitId);
-            prixProduitMarches = new ArrayList<PrixProduitMarche>();
-            // marches = marcheService.findByProduitAndVille(produitId, villeId);
-            marches = new ArrayList<Marche>();
-//        if (marcheId != null) {
-//            produits = produitService.findProduitByMarche(marcheId);
-//        }
-    }
-    }
-
-    public void handleCategorieChange() throws ServiceException {
-        if (categorieId != null) {
-            System.out.println("Je suis ici");
-            System.out.println("L'id " + categorieId);
-            produits = produitService.findByCategorie(categorieId);
-            for (Produit produit : produits) {
-                System.out.println(produit);
+    public void handleVilleChange() throws ServiceException {
+        if (villeId != null) {
+            marches = marcheService.findMarcheByVille(villeId);
+            if (produitId != null) {
+                prixProduitMarches = new ArrayList<PrixProduitMarche>();
+                marches = marcheService.findByProduitAndVille(produitId, villeId);
             }
         }
     }
 
-    public void voirPrixProduit() throws ServiceException {
-        if (marcheId != null && produitId != null) {
-            prixProduitMarche = prixService.findByMarche(marcheId, produitId);
-        }
-        villeId = null;
-        marcheId = null;
-        categorieId = null;
-        produitId = null;
-        produits = null;
-        marches = null;
+    public void handleProduitChange() throws ServiceException {
+        if (produitId != null) {
 
+            villes = villeService.findAllByProduit(produitId);
+            System.out.println("" + villes);
+            prixProduitMarches = new ArrayList<PrixProduitMarche>();
+
+        }
     }
 
+    public void handleCategorieChange() throws ServiceException {
+        if (categorieId != null) {
+            produits = produitService.findByCategorie(categorieId);
+
+        }
+    }
+
+//    public void voirPrixProduit() throws ServiceException {
+//        if (marcheId != null && produitId != null) {
+//            prixProduitMarche = prixService.findByMarche(marcheId, produitId);
+//        }
+//    }
     public int getDebut() {
         return debut;
     }
@@ -138,33 +117,40 @@ public class PrixDesProduitBean {
     public void setFin(int fin) {
         this.fin = fin;
     }
-    
-    
-    
-    public void plus(){
+
+    public void plus() {
         fin += 20;
     }
 
-    public String voirVariationPrixProduit() throws ServiceException {
-        System.out.println("ttttttttttttttttttttttttttttttttt");
-        System.out.println("");
-        if (marcheId != null && produitId != null && dateFin.after(dateDebut)) {
-          //  prixProduitMarches = prixService.findByProduitAndMarcheBetweenDate(marcheId, produitId, dateDebut, dateFin);
+//    public String voirVariationPrixProduit() throws ServiceException {
+//        if (marcheId != null && produitId != null) {
+//            //  prixProduitMarches = prixService.findByProduitAndMarcheBetweenDate(marcheId, produitId, dateDebut, dateFin);
+//            prixProduitMarches = prixService.findByProduitAndMarcheBetweenRange(marcheId, produitId, debut, fin);
+//        }
+//
+//        return "accueil";
+//    }
+    public String voirEvolution() throws ServiceException {
+        if (marcheId != null && produitId != null) {
             prixProduitMarches = prixService.findByProduitAndMarcheBetweenRange(marcheId, produitId, debut, fin);
         }
-        marcheId = null;
-        produitId = null;
-        return "accueil";
+        return annuler();
     }
 
     public String annuler() throws ServiceException {
         prixProduitMarche = new PrixProduitMarche();
+        villeId = null;
+        marcheId = null;
+        produitId = null;
+        categorieId = null;
         return "prix_des_produits";
     }
 
     public String afficherPrixProduit() throws ServiceException {
-        voirPrixProduit();
         String result = "";
+        if (marcheId != null && produitId != null) {
+            prixProduitMarche = prixService.findByMarche(marcheId, produitId);
+        }        
         if (prixProduitMarche != null && prixProduitMarche.getProduit() != null && prixProduitMarche.getProduit().getNom() != null && prixProduitMarche.getMarche() != null && prixProduitMarche.getMarche().getNom() != null) {
             result = "Le produit << " + prixProduitMarche.getProduit().getNom() + " >> au " + prixProduitMarche.getMarche().getNom();
             if (prixProduitMarche.getMarche().getVille() != null && prixProduitMarche.getMarche().getVille().getId() != null) {
@@ -211,16 +197,29 @@ public class PrixDesProduitBean {
 
     public List<Produit> getProduits() throws ServiceException {
 
-        if (marcheId != null) {
-            produits = produitService.findProduitByMarche(marcheId);
-            return produits;
+//        if (marcheId != null) {
+//            produits = produitService.findProduitByMarche(marcheId);
+//            return produits;
+//        }
+//        if (categorieId != null) {
+//            produits = produitService.findByCategorie(categorieId);
+//            return produits;
+//        }
+        if (categorieId == null || categorieId == 0) {
+            return produitService.findAllProduit();
         }
-        if (categorieId != null) {
-            produits = produitService.findByCategorie(categorieId);
-            return produits;
-        }
-        produits = produitService.findAllProduit();
         return produits;
+    }
+
+    public List<Ville> getVilles() throws ServiceException {
+        if (produitId == null) {
+            return villeService.findAllVille();
+        }
+        return villes;
+    }
+
+    public void setVilles(List<Ville> villes) {
+        this.villes = villes;
     }
 
     public void setProduits(List<Produit> produits) {
@@ -228,9 +227,12 @@ public class PrixDesProduitBean {
     }
 
     public List<Marche> getMarches() throws ServiceException {
-        marches = marcheService.findAllMarche();
-        if (villeId != null) {
-            marches = marcheService.findMarcheByVille(villeId);
+
+//        if (villeId != null) {
+//            marches = marcheService.findMarcheByVille(villeId);
+//        }       
+        if (villeId == null) {
+            return marcheService.findAllMarche();
         }
         return marches;
     }
@@ -295,23 +297,7 @@ public class PrixDesProduitBean {
         this.prixProduitMarche = prixProduitMarche;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public Date getDateFin() {
-        return dateFin;
-    }
-
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
-    }
-
-    public LineChartModel getModel() throws ServiceException {      
+    public LineChartModel getModel() throws ServiceException {
         int max = 0;
         if (prixProduitMarches != null && !prixProduitMarches.isEmpty()) {
             PrixProduitMarche p = prixProduitMarches.get(0);
@@ -324,16 +310,15 @@ public class PrixDesProduitBean {
                         series1.setLabel("" + p.getProduit().getNom() + " au " + p.getMarche().getNom() + " de " + p.getMarche().getVille().getNom());
                     }
                 }
-            }            
+            }
             for (PrixProduitMarche ppm : prixProduitMarches) {
                 series1.set("" + df.format(ppm.getDatePrix()), ppm.getPrix());
                 if (max < ppm.getPrix()) {
                     max = ppm.getPrix();
                 }
-                System.out.println(""+ppm);
             }
             model.addSeries(series1);
-            model.setTitle("VARIATION DES PRIX DU " + df.format(dateDebut) + " AU " + df.format(dateFin));
+            model.setTitle("GRAPHE DE VARITION DES PRIX");
             model.setLegendPosition("n");
             Axis yAxis = model.getAxis(AxisType.Y);
             yAxis.setMin(0);
@@ -341,10 +326,11 @@ public class PrixDesProduitBean {
             yAxis.setLabel("Prix");
             model.setShowPointLabels(true);
             model.getAxes().put(AxisType.X, new CategoryAxis("Date"));
-        }else{
-        return new LineChartModel();
+            return model;
+        } else {
+            return new LineChartModel();
         }
-        return model;
+
     }
 
     public void setModel(LineChartModel model) {
@@ -358,7 +344,5 @@ public class PrixDesProduitBean {
     public void setDf(DateFormat df) {
         this.df = df;
     }
-
- 
 
 }

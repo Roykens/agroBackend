@@ -37,7 +37,7 @@
         margin-bottom: 5px;*/
 }
 
-table.panelGrid_class tr td:first-child{
+.textRight, table.panelGrid_class tr td:first-child{
     text-align: right;
 }
 .commande_button_class, .space_elt {
@@ -57,7 +57,7 @@ table.panelGrid_class tr td:first-child{
     margin-top: 2px;
     margin-bottom: 2px;
 }
-#center_content_div{
+#center_content_div, .textCenter {
     text-align: center;
 }
 .cmd_button{

@@ -105,6 +105,11 @@ public class Actualite implements Serializable{
     public void setNomImage(String nomImage) {
         this.nomImage = nomImage;
     }
+
+    @Override
+    public String toString() {
+        return "Actualite{" + "version=" + version + ", id=" + id + ", nomImage=" + nomImage + ", photo=" + photo + ", contact=" + contact + ", info=" + info + ", dateInfo=" + dateInfo + '}';
+    }
     
     
         
