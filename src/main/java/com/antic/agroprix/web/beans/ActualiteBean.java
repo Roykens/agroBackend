@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
@@ -40,7 +41,8 @@ public class ActualiteBean {
 
     UploadedFile file;
 
-    private DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    private final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    //private final String destination = new File("actualite").getAbsoluteFile().toString();
 
     /**
      * Creates a new instance of ActualiteBean
@@ -104,6 +106,15 @@ public class ActualiteBean {
         }
     }
 
+    String notreChemin() {
+        String view = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        javax.faces.application.ViewHandler vh = FacesContext.getCurrentInstance().getApplication().getViewHandler();
+        String pageURI = vh.getActionURL(FacesContext.getCurrentInstance(), view);
+        int index = pageURI.lastIndexOf("/") + 1;
+        pageURI = pageURI.substring(0, index);
+        return pageURI + "PhotoActualites/";
+    }
+
     public void saveOrUpdateActualite() throws IOException, ServiceException {
         if (actualite != null && actualite.getInfo() != null && actualite.getInfo().length() != 0) {
             System.out.println("Le fichier = " + file);
@@ -112,7 +123,8 @@ public class ActualiteBean {
                 //byte[] img = file.getContents();
                 byte[] img = IOUtils.toByteArray(file.getInputstream());
                 actualite.setNomImage(file.getFileName());
-                copyFile(file, "/home/dorimene/Bureau/projet agro/agroBackend/photo/");
+                
+                copyFile(file, "/home/dorimene/Bureau/projet agro/agroBackend/src/main/webapp/PhotoActualites/");
                 //actualite.setPhoto(img);
             }
             actualite.setDateInfo(new Date());
@@ -140,10 +152,11 @@ public class ActualiteBean {
         }
         return "";
     }
-    public String dateAvis(Date date){
-    if (date != null) {
+
+    public String dateAvis(Date date) {
+        if (date != null) {
             return "Le " + df.format(date);
         }
         return "";
-    }
+    } 
 }

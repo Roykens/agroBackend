@@ -8,8 +8,8 @@
                
     <p:dataScroller id="dataTableId"  value="#{actualiteBean.actualites}" var="item"  >        
         <div class="row">
-            <div class="span9 container-fluid " >
-                <img src="./pictures/n.jpg" style="float: left;" width="200" height="200" class="img-rounded" />
+            <div class="span9 container-fluid " >              
+                <img src="./PhotoActualites/#{item.nomImage}" style="float: left;" width="200" height="200" class="img-rounded" />
 
                 <p>  #{item.info}</p>
             </div>
